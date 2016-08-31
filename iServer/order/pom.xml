@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.handsome</groupId>
+		<artifactId>iServer</artifactId>
+		<version>${pro-version}</version>
+	</parent>
+
+	<groupId>com.handsome</groupId>
+	<artifactId>order.impl</artifactId>
+	<version>${pro-version}</version>
+	<name>order.impl</name>
+	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<!-- self -->
+		<dependency>
+			<groupId>com.handsome</groupId>
+			<artifactId>db</artifactId>
+			<version>${pro-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.handsome</groupId>
+			<artifactId>order.api</artifactId>
+			<version>${pro-version}</version>
+		</dependency>
+		
+		<!-- junit lib -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>
