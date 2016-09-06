@@ -3,9 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.handsome</groupId>
-	<artifactId>iServer</artifactId>
+	<artifactId>imp</artifactId>
 	<version>${pro-version}</version>
 	<packaging>pom</packaging>
+	<name>imp</name>
+	<description>interface message processor</description>
 
 	<properties>
 		<pro-version>0.0.1-SNAPSHOT</pro-version>
@@ -23,13 +25,10 @@
 	</properties>
 
 	<modules>
-		<module>db</module>
-		<module>admin</module>
-		<module>common</module>
-		<module>product</module>
-		<module>order</module>
-		<module>order.api</module>
-		<module>product.api</module>
+		<module>gateway</module>
+		<module>imp.base</module>
+		<module>andriod</module>
+		<module>ios</module>
 	</modules>
 
 </project>

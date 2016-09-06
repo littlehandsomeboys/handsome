@@ -21,14 +21,14 @@
 	</properties>
 
 	<dependencies>
-	
+
 		<!-- self -->
 		<dependency>
 			<groupId>com.handsome</groupId>
 			<artifactId>common</artifactId>
 			<version>${pro-version}</version>
 		</dependency>
-	
+
 		<!-- mysql lib -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -61,13 +61,6 @@
 			<version>1.2.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -207,6 +200,14 @@
 			<version>${spring.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+			<type>jar</type>
 		</dependency>
 	</dependencies>
 

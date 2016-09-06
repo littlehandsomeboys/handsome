@@ -3,40 +3,32 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>com.handsome</groupId>
-		<artifactId>iServer</artifactId>
+		<artifactId>imp</artifactId>
 		<version>${pro-version}</version>
 	</parent>
 
 	<groupId>com.handsome</groupId>
-	<artifactId>product.impl</artifactId>
+	<artifactId>andriod</artifactId>
 	<version>${pro-version}</version>
-	<name>product.impl</name>
-	<url>http://maven.apache.org</url>
+	<name>andriod</name>
 	<packaging>jar</packaging>
+	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-
 	<dependencies>
+
 		<!-- self -->
 		<dependency>
 			<groupId>com.handsome</groupId>
-			<artifactId>db</artifactId>
+			<artifactId>imp.base</artifactId>
 			<version>${pro-version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.handsome</groupId>
-			<artifactId>product.api</artifactId>
-			<version>${pro-version}</version>
-		</dependency>
-
-		<!-- junit lib -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -44,6 +36,7 @@
 			<scope>test</scope>
 			<type>jar</type>
 		</dependency>
+		
 	</dependencies>
 
 </project>
