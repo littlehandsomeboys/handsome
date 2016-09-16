@@ -35,7 +35,7 @@ public class AuthApiController
 	private SiteUserService siteUserService;
 
 	@ApiOperation("新用户注册接口")
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup.do", method = RequestMethod.POST)
 	public @ResponseBody String signup(
 			@ApiParam(value = "用户名", required = true) @RequestParam("username") String userName,
 			@ApiParam(value = "密码", required = true) @RequestParam("password") String password)
@@ -54,7 +54,7 @@ public class AuthApiController
 	}
 	
 	@ApiOperation("用户登录接口")
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public @ResponseBody String login(
 			@ApiParam(value = "用户名", required = true) @RequestParam("username") String userName,
 			@ApiParam(value = "密码", required = true) @RequestParam("password") String password)

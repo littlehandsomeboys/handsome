@@ -27,7 +27,7 @@ public class IndexViewController
 	 * 登录页面请求
 	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public ModelAndView login()
 	{
 		ModelAndView view = new ModelAndView();
@@ -39,7 +39,7 @@ public class IndexViewController
 	 * 注册页面请求
 	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	@RequestMapping(value = "/signup.do", method = RequestMethod.GET)
 	public ModelAndView signup()
 	{
 		ModelAndView view = new ModelAndView();
