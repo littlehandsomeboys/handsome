@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.handsome.admin.auth.bean.SiteUser;
-import com.handsome.admin.auth.service.SiteUserService;
 import com.handsome.admin.common.bean.ResponseObject;
 import com.handsome.product.api.bean.Product;
 import com.handsome.product.api.service.ProductService;
+import com.handsome.siteuser.api.bean.SiteUser;
+import com.handsome.siteuser.api.service.SiteUserService;
 
 /**
  * 
