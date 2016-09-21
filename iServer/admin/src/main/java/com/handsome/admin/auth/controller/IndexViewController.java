@@ -15,35 +15,19 @@ import com.handsome.siteuser.api.service.SiteUserService;
  *
  */
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/")
 public class IndexViewController
 {
 
-	@Autowired
-	@Qualifier(value = "siteUserServiceImpl")
-	private SiteUserService siteUserService;
-
 	/**
-	 * 登录页面请求
+	 * 主菜单请求
 	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
-	public ModelAndView login()
+	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
+	public ModelAndView main()
 	{
 		ModelAndView view = new ModelAndView();
-		view.setViewName("/auth/login");
-		return view;
-	}
-
-	/**
-	 * 注册页面请求
-	 * @return ModelAndView
-	 */
-	@RequestMapping(value = "/signup.do", method = RequestMethod.GET)
-	public ModelAndView signup()
-	{
-		ModelAndView view = new ModelAndView();
-		view.setViewName("/auth/signup");
+		view.setViewName("/main");
 		return view;
 	}
 	

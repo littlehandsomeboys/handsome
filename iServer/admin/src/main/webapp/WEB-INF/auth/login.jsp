@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         method: 'POST',
         data: data
       }).success(function(data) {
-    	  location.href = "<%=path%>/";
+    	  location.href = "<%=path%>/main.do";
       }).failure(function() {
         alert('登录失败!');
       }).always(function() {
