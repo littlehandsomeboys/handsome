@@ -15,14 +15,9 @@ public interface SiteUserDao
 	void add(SiteUser siteUser);
 
 	/**
-	 * 根据id获取对象
+	 * 获取对象
 	 */
-	SiteUser get(String id);
-
-	/**
-	 * 根据账号获取对象
-	 */
-	SiteUser getByUserName(String userName);
+	SiteUser find(SiteUser su);
 	
 	/**
 	 * 修改

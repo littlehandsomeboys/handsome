@@ -3,67 +3,77 @@
         'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 
 <mapper namespace="siteuser.api.SiteUser">
-     <sql id="cols">
-         id,userName,name,password,authorities,enabled,age,sex
-     </sql>
-     <sql id="ucols">
-         id=#{id},userName=#{userName},name=#{name},password=#{password},authorities=#{authorities},enabled=#{enabled},age=#{age},sex=#{sex}
-     </sql>
- 
-     <!-- 查询所有记录
-     <select id="listAll" resultType="aliasesUser">
-         select <include refid="cols"/> from t_siteuser
-     </select> -->
-     
-     <!-- 按条件查询
-     <select id="find" parameterType="aliasesUser" resultType="aliasesUser">
-         select * from t_siteuser 
-         <where>
-         <if test="name!=null">
-             and userName like "%"#{userName}"%"
-         </if>
-         </where>
-     </select> -->
-     
-     <!-- 查询一个用户 -->
-     <select id="getSiteUser" parameterType="aliasesUser" resultType="aliasesUser">
-         select <include refid="cols"/> from t_siteuser 
-         <where>  
-        <if test="id !=null ">  
-            id = #{id, jdbcType=VARCHAR}  
-        </if>  
-        <if test="userName != null">  
-            or userName = #{userName, jdbcType=VARCHAR}  
-        </if>  
-        </where>  
-     </select>
-     
-     <!-- 新增 -->
-     <insert id="createSiteUser" parameterType="aliasesUser">
-         insert into t_siteuser (<include refid="cols"/>)
-		values(<include refid="ucols"/>)
-     </insert>
-     
-     <!-- 修改 -->
-     <update id="updateSiteUser" parameterType="aliasesUser">
-         update t_siteuser
-          <set>
-              <if test="userName!=null">
-                 userName=#{userName},
-              </if>
-              <if test="password!=null">
-                  password=#{password},
-              </if>
-              <if test="enabled!=null">
-                  enabled=#{enabled},
-              </if>
-          </set>
-          
-         where id=#{id}
-     </update>
-     
-     <!-- 删除 -->
-     <delete id="deleteSiteUser" parameterType="string">
-         delete from t_siteuser where id=#{id}
-     </delete>
- </mapper>
+	<sql id="cols">
+		siteUserId,account,password,authorities,enabled,ecName,createDate,updateDate
+	</sql>
+	<sql id="ucols">
+		siteUserId=#{siteUserId},account=#{account},password=#{password},authorities=#{authorities},enabled=#{enabled},ecName=#{ecName},createDate=#{createDate},updateDate=#{updateDate}
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="list" resultType="aliasesUser">
+		select
+		<include refid="cols" />
+		from t_siteuser
+		<where>
+			<if test="ecName !=null ">
+				ecName = #{ecName, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询一个用户 -->
+	<select id="find" parameterType="aliasesUser" resultType="aliasesUser">
+		select
+		<include refid="cols" />
+		from t_siteuser
+		<where>
+			<if test="siteUserId !=null ">
+				siteUserId = #{siteUserId, jdbcType=VARCHAR}
+			</if>
+			<if test="account != null">
+				or account = #{account, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesUser">
+		insert into t_siteuser (
+		<include refid="cols" />
+		)
+		values(
+		<include refid="ucols" />
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="aliasesUser">
+		update t_siteuser
+		<set>
+			<if test="ecName">
+				ecName=#{ecName},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="enabled!=null">
+				enabled=#{enabled},
+			</if>
+			<if test="authorities!=null">
+				authorities=#{authorities},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+
+		where siteUserId=#{siteUserId}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="string">
+		delete from t_siteuser where siteUserId=#{siteUserId}
+	</delete>
+
+</mapper>

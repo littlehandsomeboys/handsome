@@ -1,9 +1,5 @@
 package com.handsome.siteuser.impl.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.dao.SiteUserDao;
 import com.handsome.siteuser.api.service.SiteUserService;
@@ -12,15 +8,15 @@ import com.handsome.siteuser.api.service.SiteUserService;
 public class SiteUserServiceImpl implements SiteUserService
 {
 
-//	@Autowired
-//	@Qualifier(value = "siteUserDaoImpl")
+	// @Autowired
+	// @Qualifier(value = "siteUserDaoImpl")
 	private SiteUserDao siteUserDao;
 
 	@Override
 	public void addSystemUser(String loginName, String loginPwd)
 	{
 		SiteUser user = new SiteUser();
-		user.setUserName(loginName);
+		user.setAccount(loginName);
 		user.setPassword(loginPwd);
 		// 用户类型 1 管理员 2 普通用户
 		user.setAuthorities("1");
@@ -31,7 +27,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	public void addNormalUser(String loginName, String loginPwd)
 	{
 		SiteUser user = new SiteUser();
-		user.setUserName(loginName);
+		user.setAccount(loginName);
 		user.setPassword(loginPwd);
 		// 用户类型 1 管理员 2 普通用户
 		user.setAuthorities("2");
@@ -41,17 +37,21 @@ public class SiteUserServiceImpl implements SiteUserService
 	@Override
 	public SiteUser getUserById(String userId)
 	{
-		return siteUserDao.get(userId);
+		SiteUser su = new SiteUser();
+		su.setSiteUserId(userId);
+		return siteUserDao.find(su);
 	}
 
 	@Override
 	public void updateUser(String userId, String loginName, String loginPwd)
 	{
+		SiteUser su = new SiteUser();
+		su.setSiteUserId(userId);
 		// 先根据用户Id查询用户对象
-		SiteUser siteUser = siteUserDao.get(userId);
+		SiteUser siteUser = siteUserDao.find(su);
 		if (siteUser != null)
 		{
-			siteUser.setUserName(loginName);
+			siteUser.setAccount(loginName);
 			siteUser.setPassword(loginPwd);
 			// 修改用户
 			siteUserDao.update(siteUser);
@@ -80,8 +80,10 @@ public class SiteUserServiceImpl implements SiteUserService
 	@Override
 	public SiteUser getUserByUserName(String userName)
 	{
+		SiteUser su = new SiteUser();
+		su.setAccount(userName);
 		// TODO Auto-generated method stub
-		return siteUserDao.getByUserName(userName);
+		return siteUserDao.find(su);
 	}
 
 	public SiteUserDao getSiteUserDao()

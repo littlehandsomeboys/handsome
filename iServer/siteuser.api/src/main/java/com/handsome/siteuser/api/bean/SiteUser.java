@@ -1,26 +1,29 @@
 package com.handsome.siteuser.api.bean;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * 
  * @author dell
  *
  */
-public class SiteUser
+public class SiteUser implements Serializable
 {
 	/**
-	 * 用户id
+	 * 
 	 */
-	private String id;
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 管理员id
+	 */
+	private String siteUserId;
 
 	/**
 	 * 账号
 	 */
-	private String userName;
-
-	/**
-	 * 昵称
-	 */
-	private String name;
+	private String account;
 
 	/**
 	 * 密码
@@ -28,53 +31,48 @@ public class SiteUser
 	private String password;
 
 	/**
-	 * 权限
+	 * 权限类型：1 超级管理员 2 企业管理员
 	 */
 	private String authorities;
 
 	/**
-	 * 状态
+	 * 使能：1 启用 2 禁用
 	 */
 	private String enabled;
 
 	/**
-	 * 年龄
+	 * 归属企业名称，超级管理员为空
 	 */
-	private String age;
+	private String ecName;
 
 	/**
-	 * 性别
+	 * 创建时间
 	 */
-	private String sex;
+	private Date createDate;
 
-	public String getId()
+	/**
+	 * 更新时间
+	 */
+	private Date updateDate;
+
+	public String getSiteUserId()
 	{
-		return id;
+		return siteUserId;
 	}
 
-	public void setId(String id)
+	public void setSiteUserId(String siteUserId)
 	{
-		this.id = id;
+		this.siteUserId = siteUserId;
 	}
 
-	public String getUserName()
+	public String getAccount()
 	{
-		return userName;
+		return account;
 	}
 
-	public void setUserName(String userName)
+	public void setAccount(String account)
 	{
-		this.userName = userName;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
+		this.account = account;
 	}
 
 	public String getPassword()
@@ -107,32 +105,44 @@ public class SiteUser
 		this.enabled = enabled;
 	}
 
-	public String getAge()
+	public String getEcName()
 	{
-		return age;
+		return ecName;
 	}
 
-	public void setAge(String age)
+	public void setEcName(String ecName)
 	{
-		this.age = age;
+		this.ecName = ecName;
 	}
 
-	public String getSex()
+	public Date getCreateDate()
 	{
-		return sex;
+		return createDate;
 	}
 
-	public void setSex(String sex)
+	public void setCreateDate(Date createDate)
 	{
-		this.sex = sex;
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate()
+	{
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate)
+	{
+		this.updateDate = updateDate;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "SiteUser [id=" + id + ", userName=" + userName + ", name="
-				+ name + ", password=" + password + ", authorities="
-				+ authorities + ", enabled=" + enabled + ", age=" + age
-				+ ", sex=" + sex + "]";
+		return "SiteUser [siteUserId=" + siteUserId + ", account=" + account
+				+ ", password=" + password + ", authorities=" + authorities
+				+ ", enabled=" + enabled + ", ecName=" + ecName
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ "]";
 	}
+
 }

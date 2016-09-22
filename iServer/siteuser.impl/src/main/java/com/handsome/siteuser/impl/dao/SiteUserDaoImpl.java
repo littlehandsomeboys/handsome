@@ -1,10 +1,8 @@
 package com.handsome.siteuser.impl.dao;
 
-import javax.annotation.Resource;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.dao.SiteUserDao;
@@ -28,13 +26,13 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	public int delete(String id)
 	{
 		return this.getSqlSession().delete(
-				"siteuser.api.SiteUser.deleteSiteUser", id);
+				"siteuser.api.SiteUser.delete", id);
 	}
 
 	@Override
 	public void add(SiteUser u)
 	{
-		this.getSqlSession().insert("siteuser.api.SiteUser.createSiteUser", u);
+		this.getSqlSession().insert("siteuser.api.SiteUser.create", u);
 	}
 
 	// // 列表
@@ -47,25 +45,17 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public void update(SiteUser u)
 	{
-		this.getSqlSession().update("siteuser.api.SiteUser.updateSiteUser", u);
+		this.getSqlSession().update("siteuser.api.SiteUser.update", u);
 	}
 
 	@Override
-	public SiteUser get(String id)
+	public SiteUser find(SiteUser su)
 	{
-		SiteUser su = new SiteUser();
-		su.setId(id);
+		if (StringUtils.isEmpty(su.getAccount()) && StringUtils.isEmpty(su.getSiteUserId()))
+			return new SiteUser();
+			
 		return this.getSqlSession().selectOne(
-				"siteuser.api.SiteUser.getSiteUser", su);
-	}
-
-	@Override
-	public SiteUser getByUserName(String userName)
-	{
-		SiteUser su = new SiteUser();
-		su.setUserName(userName);
-		return this.getSqlSession().selectOne(
-				"siteuser.api.SiteUser.getSiteUser", su);
+				"siteuser.api.SiteUser.find", su);
 	}
 
 //	@Resource
