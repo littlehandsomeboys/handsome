@@ -2,6 +2,7 @@ package com.handsome.siteuser.impl.dao;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.handsome.siteuser.api.bean.SiteUser;
@@ -16,7 +17,8 @@ import com.handsome.siteuser.api.dao.SiteUserDao;
 public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 		SiteUserDao
 {
-
+	private static Logger log = Logger.getLogger(SiteUserDaoImpl.class);
+	
 	public SiteUserDaoImpl()
 	{
 		// TODO Auto-generated constructor stub
@@ -32,7 +34,17 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public void add(SiteUser u)
 	{
-		this.getSqlSession().insert("siteuser.api.SiteUser.create", u);
+		try
+		{
+			log.debug("begin"+u.toString());
+			this.getSqlSession().insert("siteuser.api.SiteUser.create", u);
+			log.debug("end");
+		}
+		catch (Exception e)
+		{
+			log.error(e.toString(), e);
+			System.out.println(e);
+		}
 	}
 
 	// // 列表

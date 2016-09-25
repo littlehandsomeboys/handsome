@@ -16,5 +16,16 @@
 		<!-- 接口定义 -->
 		<property name="serviceInterface" value="com.handsome.product.api.service.ProductService"/>
 	</bean>
+	
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="siteUserService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->
+		<property name="serviceUrl">
+			<value>http://127.0.0.1:8200/admin/remoting/HessianSiteUserService</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface" value="com.handsome.siteuser.api.service.SiteUserService"/>
+	</bean>
 
 </beans>
