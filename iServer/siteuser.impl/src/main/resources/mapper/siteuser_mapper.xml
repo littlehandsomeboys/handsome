@@ -7,7 +7,7 @@
 		siteUserId,account,password,authorities,enabled,ecName,createDate,updateDate
 	</sql>
 	<sql id="ucols">
-		siteUserId=#{siteUserId},account=#{account},password=#{password},authorities=#{authorities},enabled=#{enabled},ecName=#{ecName},createDate=#{createDate},updateDate=#{updateDate}
+		#{siteUserId},#{account},#{password},#{authorities},#{enabled},#{ecName},#{createDate},#{updateDate}
 	</sql>
 
 	<!-- 查询列表 -->

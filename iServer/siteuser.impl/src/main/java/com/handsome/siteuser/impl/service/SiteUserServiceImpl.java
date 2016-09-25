@@ -1,6 +1,10 @@
 package com.handsome.siteuser.impl.service;
 
+import java.util.Date;
+
+import com.handsome.common.util.UUIDTool;
 import com.handsome.siteuser.api.bean.SiteUser;
+import com.handsome.siteuser.api.constent.SiteUserConstent;
 import com.handsome.siteuser.api.dao.SiteUserDao;
 import com.handsome.siteuser.api.service.SiteUserService;
 
@@ -13,25 +17,18 @@ public class SiteUserServiceImpl implements SiteUserService
 	private SiteUserDao siteUserDao;
 
 	@Override
-	public void addSystemUser(String loginName, String loginPwd)
+	public void creatSiteUser(String account, String password, String ecName)
 	{
-		SiteUser user = new SiteUser();
-		user.setAccount(loginName);
-		user.setPassword(loginPwd);
-		// 用户类型 1 管理员 2 普通用户
-		user.setAuthorities("1");
-		siteUserDao.add(null);
-	}
+		SiteUser su = new SiteUser();
+		su.setAccount(account);
+		su.setPassword(password);
+		su.setEcName(ecName);
+		su.setAuthorities(SiteUserConstent.AUTHORITIES_EC);
+		su.setEnabled(SiteUserConstent.ENABLED_ON);
+		su.setSiteUserId(UUIDTool.getUUID32());
+		su.setCreateDate(new Date());
 
-	@Override
-	public void addNormalUser(String loginName, String loginPwd)
-	{
-		SiteUser user = new SiteUser();
-		user.setAccount(loginName);
-		user.setPassword(loginPwd);
-		// 用户类型 1 管理员 2 普通用户
-		user.setAuthorities("2");
-		siteUserDao.add(null);
+		siteUserDao.add(su);
 	}
 
 	@Override
@@ -43,16 +40,49 @@ public class SiteUserServiceImpl implements SiteUserService
 	}
 
 	@Override
-	public void updateUser(String userId, String loginName, String loginPwd)
+	public void updateStieUserPwd(String loginName, String loginPwd)
 	{
 		SiteUser su = new SiteUser();
-		su.setSiteUserId(userId);
+		su.setAccount(loginName);
 		// 先根据用户Id查询用户对象
 		SiteUser siteUser = siteUserDao.find(su);
 		if (siteUser != null)
 		{
-			siteUser.setAccount(loginName);
 			siteUser.setPassword(loginPwd);
+			siteUser.setUpdateDate(new Date());
+			// 修改用户
+			siteUserDao.update(siteUser);
+		}
+	}
+
+	@Override
+	public void updateStieUserEnabled(String loginName)
+	{
+		SiteUser su = new SiteUser();
+		su.setAccount(loginName);
+		// 先根据用户Id查询用户对象
+		SiteUser siteUser = siteUserDao.find(su);
+		if (siteUser != null)
+		{
+			siteUser.setEnabled(SiteUserConstent.ENABLED_ON);
+			;
+			siteUser.setUpdateDate(new Date());
+			// 修改用户
+			siteUserDao.update(siteUser);
+		}
+	}
+
+	@Override
+	public void updateStieUserUnabled(String loginName)
+	{
+		SiteUser su = new SiteUser();
+		su.setAccount(loginName);
+		// 先根据用户Id查询用户对象
+		SiteUser siteUser = siteUserDao.find(su);
+		if (siteUser != null)
+		{
+			siteUser.setEnabled(SiteUserConstent.ENABLED_OFF);
+			siteUser.setUpdateDate(new Date());
 			// 修改用户
 			siteUserDao.update(siteUser);
 		}
@@ -67,7 +97,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	@Override
 	public String findAuthorities(String authorities)
 	{
-		if ("1".equals(authorities))
+		if (SiteUserConstent.AUTHORITIES_SUPER.equals(authorities))
 		{
 			return "系统管理员";
 		}
