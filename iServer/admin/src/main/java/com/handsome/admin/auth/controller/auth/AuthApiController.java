@@ -43,7 +43,8 @@ public class AuthApiController
 		ResponseObject res = new ResponseObject();
 		try
 		{
-			siteUserService.addNormalUser(userName, password);
+			//TODO:添加企业
+			siteUserService.creatSiteUser(userName, password, "");
 		}
 		catch (Exception e)
 		{
@@ -62,7 +63,7 @@ public class AuthApiController
 		ResponseObject res = new ResponseObject();
 		try
 		{
-			SiteUser su = siteUserService.getUserByUserName(userName);
+			SiteUser su = siteUserService.getSiteUserByUserName(userName);
 			System.out.println(su);
 			
 			
