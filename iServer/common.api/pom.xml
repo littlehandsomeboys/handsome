@@ -8,10 +8,11 @@
 		<artifactId>iServer</artifactId>
 		<version>${pro-version}</version>
 	</parent>
+
 	<groupId>com.handsome</groupId>
-	<artifactId>product.api</artifactId>
+	<artifactId>common.api</artifactId>
 	<version>${pro-version}</version>
-	<name>product.api</name>
+	<name>common.api</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -19,12 +20,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.handsome</groupId>
-			<artifactId>common.api</artifactId>
-			<version>${pro-version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

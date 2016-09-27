@@ -34,6 +34,7 @@
     <module>user.api</module>
     <module>user.impl</module>
     <module>server.test</module>
+    <module>common.api</module>
   </modules>
 
 </project>

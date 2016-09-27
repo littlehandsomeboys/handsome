@@ -1,7 +1,9 @@
 package com.handsome.siteuser.impl.service;
 
 import java.util.Date;
+import java.util.List;
 
+import com.handsome.common.bean.PageInfo;
 import com.handsome.common.util.UUIDTool;
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.constent.SiteUserConstent;
@@ -32,13 +34,46 @@ public class SiteUserServiceImpl implements SiteUserService
 	}
 
 	@Override
-	public SiteUser getUserById(String userId)
+	public SiteUser getSiteUserById(String userId)
 	{
 		SiteUser su = new SiteUser();
 		su.setSiteUserId(userId);
 		return siteUserDao.find(su);
 	}
 
+	@Override
+	public SiteUser getSiteUserByUserName(String userName)
+	{
+		SiteUser su = new SiteUser();
+		su.setAccount(userName);
+		// TODO Auto-generated method stub
+		return siteUserDao.find(su);
+	}
+
+	@Override
+	public List<SiteUser> getSiteUserList(SiteUser su, PageInfo pi)
+	{
+		int offset;
+		int rows;
+		if (null == pi)
+		{
+			offset = 0;
+			rows = siteUserDao.count();
+		}
+		else
+		{
+			offset = pi.getPageNo() * pi.getPageSize();
+			rows = pi.getPageSize();
+		}
+		return siteUserDao.list(su, offset, rows);
+	}
+
+	@Override
+	public int countSiteUser()
+	{
+		return siteUserDao.count();
+	}
+	
 	@Override
 	public void updateStieUserPwd(String loginName, String loginPwd)
 	{
@@ -92,28 +127,6 @@ public class SiteUserServiceImpl implements SiteUserService
 	public int deleteUser(String userId)
 	{
 		return siteUserDao.delete(userId);
-	}
-
-	@Override
-	public String findAuthorities(String authorities)
-	{
-		if (SiteUserConstent.AUTHORITIES_SUPER.equals(authorities))
-		{
-			return "系统管理员";
-		}
-		else
-		{
-			return "普通用户";
-		}
-	}
-
-	@Override
-	public SiteUser getUserByUserName(String userName)
-	{
-		SiteUser su = new SiteUser();
-		su.setAccount(userName);
-		// TODO Auto-generated method stub
-		return siteUserDao.find(su);
 	}
 
 	public SiteUserDao getSiteUserDao()

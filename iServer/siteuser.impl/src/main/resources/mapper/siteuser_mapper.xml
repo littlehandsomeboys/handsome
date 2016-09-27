@@ -11,15 +11,23 @@
 	</sql>
 
 	<!-- 查询列表 -->
-	<select id="list" resultType="aliasesUser">
+	<select id="list" parameterType="java.util.Map" resultType="aliasesUser">
 		select
 		<include refid="cols" />
 		from t_siteuser
 		<where>
-			<if test="ecName !=null ">
-				ecName = #{ecName, jdbcType=VARCHAR}
+			<if test="ecName != null ">
+				ecName = CONCAT('${ecName}')
+			</if>
+			<if test="account != null">
+				and account like CONCAT('%','${account}','%' )
 			</if>
 		</where>
+		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_siteuser;
 	</select>
 
 	<!-- 查询一个用户 -->

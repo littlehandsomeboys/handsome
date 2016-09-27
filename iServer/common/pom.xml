@@ -22,6 +22,12 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>com.handsome</groupId>
+			<artifactId>common.api</artifactId>
+			<version>${pro-version}</version>
+		</dependency>
+
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>

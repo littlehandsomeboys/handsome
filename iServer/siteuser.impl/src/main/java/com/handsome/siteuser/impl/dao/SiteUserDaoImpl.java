@@ -1,5 +1,9 @@
 package com.handsome.siteuser.impl.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
@@ -13,12 +17,12 @@ import com.handsome.siteuser.api.dao.SiteUserDao;
  * @author dell
  *
  */
-//@Repository(value = "siteUserDaoImpl")
+// @Repository(value = "siteUserDaoImpl")
 public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 		SiteUserDao
 {
 	private static Logger log = Logger.getLogger(SiteUserDaoImpl.class);
-	
+
 	public SiteUserDaoImpl()
 	{
 		// TODO Auto-generated constructor stub
@@ -27,8 +31,7 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public int delete(String id)
 	{
-		return this.getSqlSession().delete(
-				"siteuser.api.SiteUser.delete", id);
+		return this.getSqlSession().delete("siteuser.api.SiteUser.delete", id);
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	{
 		try
 		{
-			log.debug("begin"+u.toString());
+			log.debug("begin" + u.toString());
 			this.getSqlSession().insert("siteuser.api.SiteUser.create", u);
 			log.debug("end");
 		}
@@ -47,12 +50,29 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 		}
 	}
 
-	// // 列表
-	// public List<SiteUser> list()
-	// {
-	// return this.getSqlSession().selectList(
-	// "cn.itcast.mybatis.domain.User.listAll");
-	// }
+	@Override
+	public List<SiteUser> list(SiteUser su, Integer offset, Integer rows)
+	{
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("ecName", su.getEcName());
+		parameterMap.put("account", su.getAccount());
+		parameterMap.put("offset", su.getEcName());
+		parameterMap.put("rows", su.getEcName());
+		parameterMap.put("offset", offset);
+		parameterMap.put("rows", rows);
+		List<SiteUser> siteUserList = this.getSqlSession().selectList(
+				"siteuser.api.SiteUser.list", parameterMap);
+		return siteUserList;
+	}
+
+	@Override
+	public int count()
+	{
+		Integer count = this.getSqlSession().selectOne(
+				"siteuser.api.SiteUser.count");
+		return count;
+
+	}
 
 	@Override
 	public void update(SiteUser u)
@@ -63,14 +83,14 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public SiteUser find(SiteUser su)
 	{
-		if (StringUtils.isEmpty(su.getAccount()) && StringUtils.isEmpty(su.getSiteUserId()))
+		if (StringUtils.isEmpty(su.getAccount())
+				&& StringUtils.isEmpty(su.getSiteUserId()))
 			return new SiteUser();
-			
-		return this.getSqlSession().selectOne(
-				"siteuser.api.SiteUser.find", su);
+
+		return this.getSqlSession().selectOne("siteuser.api.SiteUser.find", su);
 	}
 
-//	@Resource
+	// @Resource
 	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory)
 	{
 		super.setSqlSessionFactory(sqlSessionFactory);

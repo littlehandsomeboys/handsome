@@ -1,5 +1,7 @@
 package com.handsome.server.test;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.handsome.common.bean.PageInfo;
 import com.handsome.product.api.bean.Product;
 import com.handsome.product.api.service.ProductService;
 import com.handsome.siteuser.api.bean.SiteUser;
@@ -37,8 +40,24 @@ public class AppTest
 		siteUserService.updateStieUserPwd("test", "321");
 		
 		//查询
-		siteUser = siteUserService.getUserByUserName("test");
+		siteUser = siteUserService.getSiteUserByUserName("test");
 		System.out.println(siteUser.toString());
+		
+		//查询列表
+		PageInfo pi = new PageInfo();
+		List<SiteUser> siteUserList = siteUserService.getSiteUserList(siteUser, pi);
+		System.out.println("条件查询:"+siteUserList.size());
+		siteUserList = siteUserService.getSiteUserList(new SiteUser(), pi);
+		System.out.println("空条件查询:"+siteUserList.size());
+		pi.setPageNo(1);
+		pi.setPageSize(1);
+		siteUserList = siteUserService.getSiteUserList(new SiteUser(), pi);
+		System.out.println("第二页查询:"+siteUserList.size());
+		siteUserList = siteUserService.getSiteUserList(new SiteUser(), null);
+		System.out.println("全查询:"+siteUserList.size());
+		
+		//查询总数
+		System.out.println(siteUserService.countSiteUser());
 		
 		//删除
 		siteUserService.deleteUser(siteUser.getSiteUserId());

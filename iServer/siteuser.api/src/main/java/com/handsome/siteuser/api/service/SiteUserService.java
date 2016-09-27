@@ -1,5 +1,8 @@
 package com.handsome.siteuser.api.service;
 
+import java.util.List;
+
+import com.handsome.common.bean.PageInfo;
 import com.handsome.siteuser.api.bean.SiteUser;
 
 /**
@@ -25,7 +28,7 @@ public interface SiteUserService
 	 * @param userId
 	 * @return
 	 */
-	SiteUser getUserById(String userId);
+	SiteUser getSiteUserById(String userId);
 
 	/**
 	 * 根据用户名查询用户
@@ -33,8 +36,22 @@ public interface SiteUserService
 	 * @param userName
 	 * @return
 	 */
-	SiteUser getUserByUserName(String userName);
+	SiteUser getSiteUserByUserName(String userName);
 
+	/**
+	 * 查询管理员列表  支持分页 PageInfo为空时查询所有
+	 * @param su
+	 * @param pi
+	 * @return
+	 */
+	List<SiteUser> getSiteUserList(SiteUser su, PageInfo pi);
+	
+	/**
+	 * 管理员总数
+	 * @return
+	 */
+	int countSiteUser();
+	
 	/**
 	 * 修改用户密码
 	 * @param loginName
@@ -61,12 +78,5 @@ public interface SiteUserService
 	 * @return
 	 */
 	int deleteUser(String userId);
-
-	/**
-	 * 查询权限
-	 * 
-	 * @param aAuthorities
-	 * @return
-	 */
-	public String findAuthorities(String aAuthorities);
+	
 }
