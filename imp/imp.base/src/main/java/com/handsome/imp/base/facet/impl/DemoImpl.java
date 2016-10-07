@@ -28,7 +28,7 @@ public class DemoImpl implements Demo
 	{
 		// TODO Auto-generated method stub
 		//hessian接口测试
-		productService.addProduct(new Product());
+		productService.createProduct(new Product());
 	}
 
 	public ProductService getProductService()

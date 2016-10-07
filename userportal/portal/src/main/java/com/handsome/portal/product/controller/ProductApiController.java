@@ -48,7 +48,7 @@ public class ProductApiController
 		System.out.println(procuctInfo);
 		ResponseObject res = new ResponseObject();
 		// 此处测试
-		productService.addProduct(new Product());
+		productService.createProduct(new Product());
 
 		res.setData("{procuct:'产品1'}");
 		return JSON.toJSONString(res);
