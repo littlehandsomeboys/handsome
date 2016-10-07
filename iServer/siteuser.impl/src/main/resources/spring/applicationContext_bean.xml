@@ -18,4 +18,12 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
 	
+	<bean id="ecServiceImpl" class="com.handsome.ec.impl.service.ECServiceImpl">
+		<property name="ecDao" ref="ecDaoImpl"></property>
+	</bean>
+
+	<bean id="ecDaoImpl" class="com.handsome.ec.impl.dao.ECDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
 </beans>

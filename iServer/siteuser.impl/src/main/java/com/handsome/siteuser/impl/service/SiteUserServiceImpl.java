@@ -19,7 +19,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	private SiteUserDao siteUserDao;
 
 	@Override
-	public void creatSiteUser(String account, String password, String ecName)
+	public void createSiteUser(String account, String password, String ecName)
 	{
 		SiteUser su = new SiteUser();
 		su.setAccount(account);
@@ -75,7 +75,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	}
 	
 	@Override
-	public void updateStieUserPwd(String loginName, String loginPwd)
+	public void updateSiteUserPwd(String loginName, String loginPwd)
 	{
 		SiteUser su = new SiteUser();
 		su.setAccount(loginName);
@@ -91,7 +91,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	}
 
 	@Override
-	public void updateStieUserEnabled(String loginName)
+	public void updateSiteUserEnabled(String loginName)
 	{
 		SiteUser su = new SiteUser();
 		su.setAccount(loginName);
@@ -108,7 +108,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	}
 
 	@Override
-	public void updateStieUserUnabled(String loginName)
+	public void updateSiteUserUnabled(String loginName)
 	{
 		SiteUser su = new SiteUser();
 		su.setAccount(loginName);

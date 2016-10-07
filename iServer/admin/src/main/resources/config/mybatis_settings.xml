@@ -5,10 +5,20 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias type="com.handsome.siteuser.api.bean.SiteUser" alias="aliasesUser"></typeAlias>
+		<typeAlias type="com.handsome.siteuser.api.bean.SiteUser" alias="aliasesSiteUser"></typeAlias>
+		<typeAlias type="com.handsome.ec.api.bean.EC" alias="aliasesEC"></typeAlias>
+		<typeAlias type="com.handsome.user.api.bean.User" alias="aliasesUser"></typeAlias>
+		<typeAlias type="com.handsome.product.api.bean.Product" alias="aliasesProduct"></typeAlias>
+		<typeAlias type="com.handsome.producttype.api.bean.ProductType" alias="aliasesProductType"></typeAlias>
+		<typeAlias type="com.handsome.order.api.bean.Order" alias="aliasesOrder"></typeAlias>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/siteuser_mapper.xml" />
+		<mapper resource="mapper/ec_mapper.xml" />
+		<mapper resource="mapper/user_mapper.xml" />
+		<mapper resource="mapper/product_mapper.xml" />
+		<mapper resource="mapper/producttype_mapper.xml" />
+		<mapper resource="mapper/order_mapper.xml" />
 	</mappers>
 </configuration>
  

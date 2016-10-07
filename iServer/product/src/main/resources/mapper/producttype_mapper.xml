@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="producttype.api.ProductType">
+	<sql id="cols">
+		productTypeId,productTypeName,parentTypeId,isRoot,ecName,createDate,updateDate
+	</sql>
+	<sql id="ucols">
+		#{productTypeId},#{productTypeName},#{parentTypeId},#{isRoot},#{ecName},#{createDate},#{updateDate}
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="list" parameterType="java.util.Map" resultType="aliasesProductType">
+		select
+		<include refid="cols" />
+		from t_producttype
+		<where>
+			<if test="productTypeName != null ">
+				productTypeName like CONCAT('%','${productTypeName}','%')
+			</if>
+		</where>
+		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_producttype;
+	</select>
+
+	<!-- 查询一个 -->
+	<select id="find" parameterType="aliasesProductType" resultType="aliasesProductType">
+		select
+		<include refid="cols" />
+		from t_producttype
+		<where>
+			<if test="productTypeId !=null ">
+				productTypeId = #{productTypeId, jdbcType=VARCHAR}
+			</if>
+			<if test="productTypeName != null">
+				or productTypeName = #{productTypeName, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesProductType">
+		insert into t_producttype (
+		<include refid="cols" />
+		)
+		values(
+		<include refid="ucols" />
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="aliasesProductType">
+		update t_producttype
+		<set>
+			<if test="ecName!=null">
+				ecName=#{ecName},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+
+		where productTypeId=#{productTypeId}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="string">
+		delete from t_producttype where productTypeId=#{productTypeId}
+	</delete>
+
+</mapper>

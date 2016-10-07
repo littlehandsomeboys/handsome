@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="user.api.User">
+	<sql id="cols">
+		userId,account,name,password,enabled,age,sex,phone,email,createDate,updateDate
+	</sql>
+	<sql id="ucols">
+		#{userId},#{account},#{name},#{password},#{enabled},#{age},#{sex},#{phone},#{email},#{createDate},#{updateDate}
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="list" parameterType="java.util.Map" resultType="aliasesUser">
+		select
+		<include refid="cols" />
+		from t_user
+		<where>
+			<if test="name != null ">
+				name like CONCAT('%','${name}','%')
+			</if>
+			<if test="account != null">
+				and account like CONCAT('%','${account}','%')
+			</if>
+		</where>
+		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_user;
+	</select>
+
+	<!-- 查询一个用户 -->
+	<select id="find" parameterType="aliasesUser" resultType="aliasesUser">
+		select
+		<include refid="cols" />
+		from t_user
+		<where>
+			<if test="userId !=null ">
+				userId = #{userId, jdbcType=VARCHAR}
+			</if>
+			<if test="account != null">
+				or account = #{account, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesUser">
+		insert into t_user (
+		<include refid="cols" />
+		)
+		values(
+		<include refid="ucols" />
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="aliasesUser">
+		update t_user
+		<set>
+			<if test="name">
+				name=#{name},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="enabled!=null">
+				enabled=#{enabled},
+			</if>
+			<if test="age!=null">
+				age=#{age},
+			</if>
+			<if test="sex!=null">
+				sex=#{sex},
+			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
+			<if test="email!=null">
+				email=#{email},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+
+		where userId=#{userId}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="string">
+		delete from t_user where userId=#{userId}
+	</delete>
+
+</mapper>

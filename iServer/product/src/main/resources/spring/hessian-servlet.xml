@@ -13,5 +13,13 @@
 		<property name="serviceInterface"
 			value="com.handsome.product.api.service.ProductService" />
 	</bean>
+	
+		<!-- 产品类型接口 -->
+	<bean name="/HessianProductTypeService"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="productTypeServiceImpl" />
+		<property name="serviceInterface"
+			value="com.handsome.producttype.api.service.ProductTypeService" />
+	</bean>
 
 </beans>

@@ -13,5 +13,13 @@
 		<property name="serviceInterface"
 			value="com.handsome.siteuser.api.service.SiteUserService" />
 	</bean>
+	
+	<!-- 企业接口 -->
+	<bean name="/HessianECService"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="ecServiceImpl" />
+		<property name="serviceInterface"
+			value="com.handsome.ec.api.service.ECService" />
+	</bean>
 
 </beans>

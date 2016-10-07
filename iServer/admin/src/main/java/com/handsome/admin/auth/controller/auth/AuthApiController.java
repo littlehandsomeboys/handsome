@@ -44,7 +44,7 @@ public class AuthApiController
 		try
 		{
 			//TODO:添加企业
-			siteUserService.creatSiteUser(userName, password, "");
+			siteUserService.createSiteUser(userName, password, "");
 		}
 		catch (Exception e)
 		{
@@ -64,12 +64,6 @@ public class AuthApiController
 		try
 		{
 			SiteUser su = siteUserService.getSiteUserByUserName(userName);
-			System.out.println(su);
-			
-			
-			//hessian接口测试
-			productService.addProduct(new Product());
-			
 		}
 		catch (Exception e)
 		{

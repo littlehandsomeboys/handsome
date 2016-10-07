@@ -10,6 +10,18 @@
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd  
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
-	<bean id="productServiceImpl" class="com.handsome.product.impl.service.ProductServiceImpl"></bean>
-
+	<bean id="productServiceImpl" class="com.handsome.product.impl.service.ProductServiceImpl">
+		<property name="productDao" ref="productDaoImpl"></property>
+	</bean>
+	<bean id="productDaoImpl" class="com.handsome.product.impl.dao.ProductDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<bean id="productTypeServiceImpl" class="com.handsome.producttype.impl.service.ProductTypeServiceImpl">
+		<property name="productTypeDao" ref="productTypeDaoImpl"></property>
+	</bean>
+	<bean id="productTypeDaoImpl" class="com.handsome.producttype.impl.dao.ProductTypeDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
 </beans>

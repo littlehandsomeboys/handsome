@@ -6,15 +6,28 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	
+	
 	<!-- 客户端Hessian代理工厂Bean -->
-	<bean id="productService"
+	<bean id="userService"
 		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<!-- 请求代理Servlet路径 -->
 		<property name="serviceUrl">
-			<value>http://127.0.0.1:8200/admin/remoting/HessianProductService</value>
+			<value>http://127.0.0.1:8200/admin/remoting/HessianUserService</value>
 		</property>
 		<!-- 接口定义 -->
-		<property name="serviceInterface" value="com.handsome.product.api.service.ProductService"/>
+		<property name="serviceInterface" value="com.handsome.user.api.service.UserService"/>
+	</bean>
+	
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="ecService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->
+		<property name="serviceUrl">
+			<value>http://127.0.0.1:8200/admin/remoting/HessianECService</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface" value="com.handsome.ec.api.service.ECService"/>
 	</bean>
 	
 	<!-- 客户端Hessian代理工厂Bean -->
@@ -28,4 +41,36 @@
 		<property name="serviceInterface" value="com.handsome.siteuser.api.service.SiteUserService"/>
 	</bean>
 
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="productService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->
+		<property name="serviceUrl">
+			<value>http://127.0.0.1:8200/admin/remoting/HessianProductService</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface" value="com.handsome.product.api.service.ProductService"/>
+	</bean>
+	
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="productTypeService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->
+		<property name="serviceUrl">
+			<value>http://127.0.0.1:8200/admin/remoting/HessianProductTypeService</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface" value="com.handsome.producttype.api.service.ProductTypeService"/>
+	</bean>
+	
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="orderService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->
+		<property name="serviceUrl">
+			<value>http://127.0.0.1:8200/admin/remoting/HessianOrderService</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface" value="com.handsome.order.api.service.OrderService"/>
+	</bean>
 </beans>

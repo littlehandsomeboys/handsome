@@ -11,7 +11,7 @@
 	</sql>
 
 	<!-- 查询列表 -->
-	<select id="list" parameterType="java.util.Map" resultType="aliasesUser">
+	<select id="list" parameterType="java.util.Map" resultType="aliasesSiteUser">
 		select
 		<include refid="cols" />
 		from t_siteuser
@@ -31,7 +31,7 @@
 	</select>
 
 	<!-- 查询一个用户 -->
-	<select id="find" parameterType="aliasesUser" resultType="aliasesUser">
+	<select id="find" parameterType="aliasesSiteUser" resultType="aliasesSiteUser">
 		select
 		<include refid="cols" />
 		from t_siteuser
@@ -46,7 +46,7 @@
 	</select>
 
 	<!-- 新增 -->
-	<insert id="create" parameterType="aliasesUser">
+	<insert id="create" parameterType="aliasesSiteUser">
 		insert into t_siteuser (
 		<include refid="cols" />
 		)
@@ -56,7 +56,7 @@
 	</insert>
 
 	<!-- 修改 -->
-	<update id="update" parameterType="aliasesUser">
+	<update id="update" parameterType="aliasesSiteUser">
 		update t_siteuser
 		<set>
 			<if test="ecName">

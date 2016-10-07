@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="order.api.Order">
+	<sql id="cols">
+		orderId,products,userAccount,sendType,payType,address,history,status,ecName,createDate,updateDate
+	</sql>
+	<sql id="ucols">
+		#{orderId},#{products},#{userAccount},#{sendType},#{payType},#{address},#{history},#{status},#{ecName},#{createDate},#{updateDate}
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="list" parameterType="java.util.Map" resultType="aliasesOrder">
+		select
+		<include refid="cols" />
+		from t_order
+		<where>
+			<if test="userAccount != null ">
+				userAccount like CONCAT('%','${userAccount}','%')
+			</if>
+		</where>
+		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_order;
+	</select>
+
+	<!-- 查询一个 -->
+	<select id="find" parameterType="aliasesOrder" resultType="aliasesOrder">
+		select
+		<include refid="cols" />
+		from t_order
+		<where>
+			<if test="orderId !=null ">
+				orderId = #{orderId, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesOrder">
+		insert into t_order (
+		<include refid="cols" />
+		)
+		values(
+		<include refid="ucols" />
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="aliasesOrder">
+		update t_order
+		<set>
+			<if test="status!=null">
+				status=#{status},
+			</if>
+			<if test="products!=null">
+				products=#{products},
+			</if>
+			<if test="sendType!=null">
+				sendType=#{sendType},
+			</if>
+			<if test="payType!=null">
+				payType=#{payType},
+			</if>
+			<if test="address!=null">
+				address=#{address},
+			</if>
+			<if test="history!=null">
+				history=#{history},
+			</if>
+			<if test="ecName!=null">
+				ecName=#{ecName},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+
+		where orderId=#{orderId}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="string">
+		delete from t_order where orderId=#{orderId}
+	</delete>
+
+</mapper>

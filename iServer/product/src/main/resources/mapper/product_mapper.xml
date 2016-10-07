@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="product.api.Product">
+	<sql id="cols">
+		productId,productName,productType,`desc`,price,picSmall,picBig,status,ecName,createDate,updateDate
+	</sql>
+	<sql id="ucols">
+		#{productId},#{productName},#{productType},#{desc},#{price},#{picSmall},#{picBig},#{status},#{ecName},#{createDate},#{updateDate}
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="list" parameterType="java.util.Map" resultType="aliasesProduct">
+		select
+		<include refid="cols" />
+		from t_product
+		<where>
+			<if test="productName != null ">
+				productName like CONCAT('%','${productName}','%')
+			</if>
+		</where>
+		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_product;
+	</select>
+
+	<!-- 查询一个 -->
+	<select id="find" parameterType="aliasesProduct" resultType="aliasesProduct">
+		select
+		<include refid="cols" />
+		from t_product
+		<where>
+			<if test="productId !=null ">
+				productId = #{productId, jdbcType=VARCHAR}
+			</if>
+			<if test="productName != null">
+				or productName = #{productName, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesProduct">
+		insert into t_product (
+		<include refid="cols" />
+		)
+		values(
+		<include refid="ucols" />
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="aliasesProduct">
+		update t_product
+		<set>
+			<if test="productType!=null">
+				productType=#{productType},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="desc!=null">
+				`desc`=#{desc},
+			</if>
+			<if test="price!=null">
+				price=#{price},
+			</if>
+			<if test="picSmall!=null">
+				picSmall=#{picSmall},
+			</if>
+			<if test="picBig!=null">
+				picBig=#{picBig},
+			</if>
+			<if test="status!=null">
+				status=#{status},
+			</if>
+			<if test="ecName!=null">
+				ecName=#{ecName},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+
+		where productId=#{productId}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="string">
+		delete from t_product where productId=#{productId}
+	</delete>
+
+</mapper>

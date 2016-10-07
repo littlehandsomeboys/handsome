@@ -19,7 +19,7 @@ public interface SiteUserService
 	 * @param password
 	 * @param ecName
 	 */
-	void creatSiteUser(String account, String password,
+	void createSiteUser(String account, String password,
 			String ecName);
 
 	/**
@@ -57,19 +57,19 @@ public interface SiteUserService
 	 * @param loginName
 	 * @param loginPwd
 	 */
-	void updateStieUserPwd(String loginName, String loginPwd);
+	void updateSiteUserPwd(String loginName, String loginPwd);
 
 	/**
 	 * 启用
 	 * @param loginName
 	 */
-	void updateStieUserEnabled(String loginName);
+	void updateSiteUserEnabled(String loginName);
 	
 	/**
 	 * 禁用
 	 * @param loginName
 	 */
-	void updateStieUserUnabled(String loginName);
+	void updateSiteUserUnabled(String loginName);
 	
 	/**
 	 * 根据用户Id删除用户
