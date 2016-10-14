@@ -3,10 +3,18 @@
 --  ('siteuser001','chencheng','陈澄','Huawei123','2','1','27','0');
 
 
-INSERT INTO `t_siteuser` (`siteUserId`, `Account`, `password`, `authorities`, `enabled`, `ecName`, `createDate`, `updateDate`) VALUES
-  ('siteuser001','chencheng','Huawei123','1','1','大蓝鲸',SYSDATE(),SYSDATE());
+INSERT INTO `t_siteuser` (`siteUserId`, `Account`, `password`, `authorities`, `enabled`, `ecName`,`reserve0`,`reserve1`,`reserve2`,`reserve3`,`reserve4`,`reserve5`,`reserve6`,`reserve7`,`reserve8`,`reserve9`, `createDate`, `updateDate`) VALUES
+  ('siteuser001','chencheng','Huawei123','1','1','','','','','','','','','','','',SYSDATE(),SYSDATE());
 
+INSERT INTO `t_siteuser` (`siteUserId`, `Account`, `password`, `authorities`, `enabled`, `ecName`,`reserve0`,`reserve1`,`reserve2`,`reserve3`,`reserve4`,`reserve5`,`reserve6`,`reserve7`,`reserve8`,`reserve9`, `createDate`, `updateDate`) VALUES
+  ('siteuser002','fulu','Huawei123','2','1','大蓝鲸','','','','','','','','','','',SYSDATE(),SYSDATE());
+  
+INSERT INTO `t_siteuser` (`siteUserId`, `Account`, `password`, `authorities`, `enabled`, `ecName`,`reserve0`,`reserve1`,`reserve2`,`reserve3`,`reserve4`,`reserve5`,`reserve6`,`reserve7`,`reserve8`,`reserve9`, `createDate`, `updateDate`) VALUES
+  ('siteuser003','youliangdong','Huawei123','3','1','大蓝鲸','简介...','https://www.baidu.com/img/baidu_jgylogo3.gif','https://www.baidu.com/img/bd_logo1.png','CET4、数据库工程师','没有执教过','有两洞','0','本科','','',SYSDATE(),SYSDATE());
 
+INSERT INTO `t_siteuser` (`siteUserId`, `Account`, `password`, `authorities`, `enabled`, `ecName`,`reserve0`,`reserve1`,`reserve2`,`reserve3`,`reserve4`,`reserve5`,`reserve6`,`reserve7`,`reserve8`,`reserve9`, `createDate`, `updateDate`) VALUES
+  ('siteuser004','zhangyong','Huawei123','3','1','大蓝鲸','简介...','https://www.baidu.com/img/baidu_jgylogo3.gif','https://www.baidu.com/img/bd_logo1.png','CET4、高级工程师','没有执教过','勇哥','1','本科','','',SYSDATE(),SYSDATE());
+  
 INSERT INTO `t_ec` (`ecId`, `ecName`, `desc`, `createDate`, `updateDate`) VALUES
   ('ec001','大蓝鲸','这是企业',SYSDATE(),SYSDATE());
   

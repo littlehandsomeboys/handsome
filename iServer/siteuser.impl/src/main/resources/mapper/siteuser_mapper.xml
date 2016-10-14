@@ -4,10 +4,10 @@
 
 <mapper namespace="siteuser.api.SiteUser">
 	<sql id="cols">
-		siteUserId,account,password,authorities,enabled,ecName,createDate,updateDate
+		siteUserId,account,password,authorities,enabled,ecName,reserve0,reserve1,reserve2,reserve3,reserve4,reserve5,reserve6,reserve7,reserve8,reserve9,createDate,updateDate
 	</sql>
 	<sql id="ucols">
-		#{siteUserId},#{account},#{password},#{authorities},#{enabled},#{ecName},#{createDate},#{updateDate}
+		#{siteUserId},#{account},#{password},#{authorities},#{enabled},#{ecName},#{reserve0},#{reserve1},#{reserve2},#{reserve3},#{reserve4},#{reserve5},#{reserve6},#{reserve7},#{reserve8},#{reserve9},#{createDate},#{updateDate}
 	</sql>
 
 	<!-- 查询列表 -->
@@ -21,6 +21,36 @@
 			</if>
 			<if test="account != null">
 				and account like CONCAT('%','${account}','%' )
+			</if>
+			<if test="reserve0 != null">
+				and reserve0 like CONCAT('%','${reserve0}','%' )
+			</if>
+			<if test="reserve1 != null">
+				and reserve1 like CONCAT('%','${reserve1}','%' )
+			</if>
+			<if test="reserve2 != null">
+				and reserve2 like CONCAT('%','${reserve2}','%' )
+			</if>
+			<if test="reserve3 != null">
+				and reserve3 like CONCAT('%','${reserve3}','%' )
+			</if>
+			<if test="reserve4 != null">
+				and reserve4 like CONCAT('%','${reserve4}','%' )
+			</if>
+			<if test="reserve5 != null">
+				and reserve5 like CONCAT('%','${reserve5}','%' )
+			</if>
+			<if test="reserve6 != null">
+				and reserve6 like CONCAT('%','${reserve6}','%' )
+			</if>
+			<if test="reserve7 != null">
+				and reserve7 like CONCAT('%','${reserve7}','%' )
+			</if>
+			<if test="reserve8 != null">
+				and reserve8 like CONCAT('%','${reserve8}','%' )
+			</if>
+			<if test="reserve9 != null">
+				and reserve9 like CONCAT('%','${reserve9}','%' )
 			</if>
 		</where>
 		ORDER BY createDate DESC LIMIT #{offset},#{rows}
@@ -41,6 +71,36 @@
 			</if>
 			<if test="account != null">
 				or account = #{account, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve0 != null">
+				and reserve0 = #{reserve0, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve1 != null">
+				and reserve1 = #{reserve1, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve2 != null">
+				and reserve2 = #{reserve2, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve3 != null">
+				and reserve3 = #{reserve3, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve4 != null">
+				and reserve4 = #{reserve4, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve5 != null">
+				and reserve5 = #{reserve5, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve6 != null">
+				and reserve6 = #{reserve6, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve7 != null">
+				and reserve7 = #{reserve7, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve8 != null">
+				and reserve8 = #{reserve8, jdbcType=VARCHAR}
+			</if>
+			<if test="reserve9 != null">
+				and reserve9 = #{reserve9, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
@@ -70,6 +130,36 @@
 			</if>
 			<if test="authorities!=null">
 				authorities=#{authorities},
+			</if>
+			<if test="reserve0!=null">
+				reserve0=#{reserve0},
+			</if>
+			<if test="reserve1!=null">
+				reserve1=#{reserve1},
+			</if>
+			<if test="reserve2!=null">
+				reserve2=#{reserve2},
+			</if>
+			<if test="reserve3!=null">
+				reserve3=#{reserve3},
+			</if>
+			<if test="reserve4!=null">
+				reserve4=#{reserve4},
+			</if>
+			<if test="reserve5!=null">
+				reserve5=#{reserve5},
+			</if>
+			<if test="reserve6!=null">
+				reserve6=#{reserve6},
+			</if>
+			<if test="reserve7!=null">
+				reserve7=#{reserve7},
+			</if>
+			<if test="reserve8!=null">
+				reserve8=#{reserve8},
+			</if>
+			<if test="reserve9!=null">
+				reserve9=#{reserve9},
 			</if>
 			<if test="updateDate!=null">
 				updateDate=#{updateDate},

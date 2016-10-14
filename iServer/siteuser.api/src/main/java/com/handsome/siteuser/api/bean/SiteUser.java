@@ -31,7 +31,7 @@ public class SiteUser implements Serializable
 	private String password;
 
 	/**
-	 * 权限类型：1 超级管理员 2 企业管理员
+	 * 权限类型：1 超级管理员 2 企业管理员 3部门管理员
 	 */
 	private String authorities;
 
@@ -45,6 +45,56 @@ public class SiteUser implements Serializable
 	 */
 	private String ecName;
 
+	/**
+	 * 预留属性
+	 */
+	private String reserve0;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve1;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve2;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve3;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve4;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve5;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve6;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve7;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve8;
+	
+	/**
+	 * 预留属性
+	 */
+	private String reserve9;
+	
 	/**
 	 * 创建时间
 	 */
@@ -110,6 +160,106 @@ public class SiteUser implements Serializable
 		return ecName;
 	}
 
+	public String getReserve0()
+	{
+		return reserve0;
+	}
+
+	public void setReserve0(String reserve0)
+	{
+		this.reserve0 = reserve0;
+	}
+
+	public String getReserve1()
+	{
+		return reserve1;
+	}
+
+	public void setReserve1(String reserve1)
+	{
+		this.reserve1 = reserve1;
+	}
+
+	public String getReserve2()
+	{
+		return reserve2;
+	}
+
+	public void setReserve2(String reserve2)
+	{
+		this.reserve2 = reserve2;
+	}
+
+	public String getReserve3()
+	{
+		return reserve3;
+	}
+
+	public void setReserve3(String reserve3)
+	{
+		this.reserve3 = reserve3;
+	}
+
+	public String getReserve4()
+	{
+		return reserve4;
+	}
+
+	public void setReserve4(String reserve4)
+	{
+		this.reserve4 = reserve4;
+	}
+
+	public String getReserve5()
+	{
+		return reserve5;
+	}
+
+	public void setReserve5(String reserve5)
+	{
+		this.reserve5 = reserve5;
+	}
+
+	public String getReserve6()
+	{
+		return reserve6;
+	}
+
+	public void setReserve6(String reserve6)
+	{
+		this.reserve6 = reserve6;
+	}
+
+	public String getReserve7()
+	{
+		return reserve7;
+	}
+
+	public void setReserve7(String reserve7)
+	{
+		this.reserve7 = reserve7;
+	}
+
+	public String getReserve8()
+	{
+		return reserve8;
+	}
+
+	public void setReserve8(String reserve8)
+	{
+		this.reserve8 = reserve8;
+	}
+
+	public String getReserve9()
+	{
+		return reserve9;
+	}
+
+	public void setReserve9(String reserve9)
+	{
+		this.reserve9 = reserve9;
+	}
+
 	public void setEcName(String ecName)
 	{
 		this.ecName = ecName;
@@ -140,9 +290,13 @@ public class SiteUser implements Serializable
 	{
 		return "SiteUser [siteUserId=" + siteUserId + ", account=" + account
 				+ ", password=" + password + ", authorities=" + authorities
-				+ ", enabled=" + enabled + ", ecName=" + ecName
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ "]";
+				+ ", enabled=" + enabled + ", ecName=" + ecName + ", reserve0="
+				+ reserve0 + ", reserve1=" + reserve1 + ", reserve2="
+				+ reserve2 + ", reserve3=" + reserve3 + ", reserve4="
+				+ reserve4 + ", reserve5=" + reserve5 + ", reserve6="
+				+ reserve6 + ", reserve7=" + reserve7 + ", reserve8="
+				+ reserve8 + ", reserve9=" + reserve9 + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + "]";
 	}
 
 }

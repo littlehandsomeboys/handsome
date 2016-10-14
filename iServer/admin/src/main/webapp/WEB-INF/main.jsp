@@ -60,7 +60,7 @@
 						"menuid":"41",
 						"menuname":"管理员管理",
 						"icon":"icon-nav",
-						"url":"demo.html"
+						"url":"menu/siteuser/query.html"
 					},
 					{
 						"menuid":"42",

@@ -14,6 +14,11 @@ public interface SiteUserConstent
 	static final String AUTHORITIES_EC = "2";
 	
 	/**
+	 * 部门理员
+	 */
+	static final String AUTHORITIES_DEPT = "3";
+	
+	/**
 	 * 状态 启用
 	 */
 	static final String ENABLED_ON = "1";
