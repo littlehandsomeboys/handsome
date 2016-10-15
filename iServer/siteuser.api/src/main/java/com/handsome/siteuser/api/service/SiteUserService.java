@@ -15,12 +15,9 @@ public interface SiteUserService
 
 	/**
 	 * 添加系统管理员
-	 * @param account
-	 * @param password
-	 * @param ecName
+	 * @param su
 	 */
-	void createSiteUser(String account, String password,
-			String ecName);
+	void createSiteUser(SiteUser su);
 
 	/**
 	 * 根据用户Id查询用户
@@ -70,6 +67,12 @@ public interface SiteUserService
 	 * @param loginName
 	 */
 	void updateSiteUserUnabled(String loginName);
+	
+	/**
+	 * 修改用户基础信息
+	 * @param loginName
+	 */
+	void updateSiteUserInfo(SiteUser su);
 	
 	/**
 	 * 根据用户Id删除用户

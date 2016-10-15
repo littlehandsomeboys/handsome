@@ -70,22 +70,7 @@
 				siteUserId = #{siteUserId, jdbcType=VARCHAR}
 			</if>
 			<if test="account != null">
-				or account = #{account, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve0 != null">
-				and reserve0 = #{reserve0, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve1 != null">
-				and reserve1 = #{reserve1, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve2 != null">
-				and reserve2 = #{reserve2, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve3 != null">
-				and reserve3 = #{reserve3, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve4 != null">
-				and reserve4 = #{reserve4, jdbcType=VARCHAR}
+				and account = #{account, jdbcType=VARCHAR}
 			</if>
 			<if test="reserve5 != null">
 				and reserve5 = #{reserve5, jdbcType=VARCHAR}
@@ -131,34 +116,34 @@
 			<if test="authorities!=null">
 				authorities=#{authorities},
 			</if>
-			<if test="reserve0!=null">
+			<if test="siteUserId!=null">
 				reserve0=#{reserve0},
 			</if>
-			<if test="reserve1!=null">
+			<if test="siteUserId!=null">
 				reserve1=#{reserve1},
 			</if>
-			<if test="reserve2!=null">
+			<if test="siteUserId!=null">
 				reserve2=#{reserve2},
 			</if>
-			<if test="reserve3!=null">
+			<if test="siteUserId!=null">
 				reserve3=#{reserve3},
 			</if>
-			<if test="reserve4!=null">
+			<if test="siteUserId!=null">
 				reserve4=#{reserve4},
 			</if>
-			<if test="reserve5!=null">
+			<if test="siteUserId!=null">
 				reserve5=#{reserve5},
 			</if>
-			<if test="reserve6!=null">
+			<if test="siteUserId!=null">
 				reserve6=#{reserve6},
 			</if>
-			<if test="reserve7!=null">
+			<if test="siteUserId!=null">
 				reserve7=#{reserve7},
 			</if>
-			<if test="reserve8!=null">
+			<if test="siteUserId!=null">
 				reserve8=#{reserve8},
 			</if>
-			<if test="reserve9!=null">
+			<if test="siteUserId!=null">
 				reserve9=#{reserve9},
 			</if>
 			<if test="updateDate!=null">

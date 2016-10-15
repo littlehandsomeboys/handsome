@@ -39,8 +39,37 @@ public class AppTest
 		SiteUserService siteUserService = (SiteUserService)ac.getBean("siteUserService");
 		SiteUser siteUser = new SiteUser();
 		//新增
-		siteUserService.createSiteUser("test", "123", "大蓝鲸");
+		siteUser.setAccount("test");
+		siteUser.setPassword("123");
+		siteUser.setEcName("大蓝鲸");
+		siteUser.setReserve0("介绍");
+		siteUser.setReserve1("头像");
+		siteUser.setReserve2("生活照");
+		siteUser.setReserve3("相关证书");
+		siteUser.setReserve4("执教经历");
+		siteUser.setReserve5("教师名字");
+		siteUser.setReserve6("普通");
+		siteUser.setReserve7("学历");
+		siteUser.setReserve8("");
+		siteUser.setReserve9("");
+		siteUserService.createSiteUser(siteUser);
+		
+		//查询
+		siteUser = siteUserService.getSiteUserByUserName("test");
+		System.out.println(siteUser.toString());
+		
 		//修改
+		siteUser.setReserve0("");
+		siteUser.setReserve1("");
+		siteUser.setReserve2("");
+		siteUser.setReserve3("");
+		siteUser.setReserve4("");
+		siteUser.setReserve5("");
+		siteUser.setReserve6("");
+		siteUser.setReserve7("");
+		siteUser.setReserve8("");
+		siteUser.setReserve9("");
+		siteUserService.updateSiteUserInfo(siteUser);
 		siteUserService.updateSiteUserPwd("test", "321");
 		
 		//查询

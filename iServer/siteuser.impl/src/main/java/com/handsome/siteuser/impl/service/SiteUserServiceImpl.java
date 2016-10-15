@@ -19,12 +19,8 @@ public class SiteUserServiceImpl implements SiteUserService
 	private SiteUserDao siteUserDao;
 
 	@Override
-	public void createSiteUser(String account, String password, String ecName)
+	public void createSiteUser(SiteUser su)
 	{
-		SiteUser su = new SiteUser();
-		su.setAccount(account);
-		su.setPassword(password);
-		su.setEcName(ecName);
 		su.setAuthorities(SiteUserConstent.AUTHORITIES_EC);
 		su.setEnabled(SiteUserConstent.ENABLED_ON);
 		su.setSiteUserId(UUIDTool.getUUID32());
@@ -100,7 +96,6 @@ public class SiteUserServiceImpl implements SiteUserService
 		if (siteUser != null)
 		{
 			siteUser.setEnabled(SiteUserConstent.ENABLED_ON);
-			;
 			siteUser.setUpdateDate(new Date());
 			// 修改用户
 			siteUserDao.update(siteUser);
@@ -123,6 +118,32 @@ public class SiteUserServiceImpl implements SiteUserService
 		}
 	}
 
+	@Override
+	public void updateSiteUserInfo(SiteUser su)
+	{
+		// 先根据用户名查询用户对象
+		SiteUser siteUser = new SiteUser();
+		siteUser.setAccount(su.getAccount());
+		siteUser = siteUserDao.find(siteUser);
+		if (siteUser != null)
+		{
+			siteUser.setReserve0(su.getReserve0());
+			siteUser.setReserve1(su.getReserve1());
+			siteUser.setReserve2(su.getReserve2());
+			siteUser.setReserve3(su.getReserve3());
+			siteUser.setReserve4(su.getReserve4());
+			siteUser.setReserve5(su.getReserve5());
+			siteUser.setReserve6(su.getReserve6());
+			siteUser.setReserve7(su.getReserve7());
+			siteUser.setReserve8(su.getReserve8());
+			siteUser.setReserve9(su.getReserve9());
+			
+			siteUser.setUpdateDate(new Date());
+			// 修改用户
+			siteUserDao.update(siteUser);
+		}
+	}
+	
 	@Override
 	public int deleteUser(String userId)
 	{
