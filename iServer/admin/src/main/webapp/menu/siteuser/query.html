@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,28 +9,146 @@
 	<script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
 	<script>
-		$(function(){
-			$('#tt').datagrid({
-				url: 'datagrid_data2.json',
-				title: '修改的类',
-				width:600,
-				height:300,
+		$(function () {  
+			//清空查询条件  
+		    $("#btnClear").click(function () {
+		        //$('#queryForm').form('clear'); 
+		        $("#account").val("");
+		        $("#ecName").val("");
+		        $("#name").val("");
+			});
+			$("#btnSearch").click(function () { 
+				
+				//var pageopt = $('#dg').datagrid('getPager').data("pagination").options;
+				//alert(pageopt.pageNumber);
+				//alert(pageopt.pageSize);
+				
+	            var pars = {
+	            		"account":$("#account").val(),
+	            		"ecName":$("#ecName").val()}; 
+	            //有参数时执行此方法  
+	            initTable(pars)  
+	        });
+			
+	         //无参数时执行此方法  
+	         initTable("");  
+	     });
+		
+		
+		
+		function initTable(pars){
+			$('#resTable').datagrid({
+				//url: 'datagrid_data2.json',
+				url: '../../siteuser/api/querySiteUsers.do',
+				title: '结果列表',
+				width:800,
+				height:400,
+				method:'post',
 				fitColumns: true,
+				queryParams: pars,  //异步查询的参数
+				loadMsg: '正在加载用户的信息...',
+				autoRowHeight: false,
+				striped: true,  
+                collapsible: true,  
+                pagination: true,  
+                rownumbers: true,//添加列数字
+             	//sortName: 'ID',    //根据某个字段给easyUI排序  
+                //sortOrder: 'asc',  
+                remoteSort: false,
+                pageList: [5, 10, 15, 20, 25,30],//分页的分组设置  
+                pageSize: 10,//每页的默认值大小
+                idField: 'ID',//主键
 				columns:[[
-					{field:'name',title:'类名',width:80},
-					{field:'role',title:'作用',width:80},
-					{field:'path',title:'路径',width:80},
-					{field:'method',title:'修改方法',width:80},
-					{field:'property',title:'修改属性',width:80}
+					{field:'account',title:'账号',width:80},
+					{field:'authorities',title:'账号类型',width:80},
+					{field:'enabled',title:'状态',width:80},
+					{field:'ecName',title:'归属企业',width:80},
+					{field:'reserve5',title:'教师姓名',width:80},
+					//{field:'operate',title:'操作',width:80}
 			
 				]],
+				//表头的按钮  
+                toolbar: [{  
+                    id: 'btnCancle',  
+                    text: '删除',  
+                    iconCls: 'icon-cancel',  
+                    handler: function () {  
+                        //实现直接删除所有数据的方法  
+                        //Delete();  
+                    }  
+                }, '-', {  
+                    id: 'btnDetail',  
+                    text: '详细',  
+                    iconCls: 'icon-remove',  
+                    handler: function () {  
+                        //展示所选人员的详细信息方法  
+                        //Show();  
+                    }  
+                }, '-', {  
+                    id: 'btnEdit',  
+                    text: '编辑',  
+                    iconCls: 'icon-edit',  
+                    handler: function () {  
+                        //编辑所选人员的信息方法  
+                        //Update();  
+                    }  
+                }, '-', {  
+                    id: 'btnCheckout',  
+                    text: '导出',  
+                    iconCls: 'icon-undo',  
+                    handler: function () {  
+                        //实现修改的方法  
+                        //Checkout();  
+                    }  
+   
+                }],
+               /*  onLoadSuccess:function(){  
+                    $('#resTable').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题  
+                }  */
 			});
-		});
+		};
 	
+		/* //表格查询  
+	    function searchRes(){  
+	        var params = $('#resTable').datagrid('options').queryParams; //先取得 datagrid 的查询参数  
+	        var fields =$('#queryForm').serializeArray(); //自动序列化表单元素为JSON对象  
+	        $.each( fields, function(i, field){  
+	            params[field.name] = field.value; //设置查询参数  
+	        });   
+	        $('#resTable').datagrid('reload'); //设置好查询参数 reload 一下就可以了  
+	    }   */
+		
+		
 	</script>
 	</head>
 	<body>
-    <table id="tt">
-    </table>
+		<div class="easyui-panel">
+			<div>
+				账号：<input type="text" id="account" />  
+				企业：<input type="text" id="ecName" /> 
+				姓名：<input type="text" id="name" /> 
+			    <input type="button" id="btnSearch" value="查询" />
+			    <input type="button" id="btnClear" value="清空" />
+		    </div>
+		   <!--  <form id="queryForm" style="margin:10;text-align: center;">  
+		       	 <table width="100%">  
+		            <tr>  
+		            <td>账号 ：<input name="account" id="account" style="width: 200"></td>
+					<td>企业 ：<input name="ecName" id="ecName" style="width: 200"></td>
+					<td>姓名 ：<input name="name" id="name" style="width: 200"></td>  
+		            <td>年龄：<input class="easyui-numberspinner" name="age" min="1" max="120" increment="1" style="width:200px;"></input></td>  
+		            <td align="center"><a href="#" onclick="clearForm();" class="easyui-linkbutton" iconCls="icon-search">清空</a></td>  
+		            </tr>  
+		            <tr>  
+		            <td>生日：<input name="birthday" style="width: 200" class="Wdate" onClick="WdatePicker()"></td>  
+		            <td  id="btnSearch" align="center"><a href="#" onclick="searchRes();" class="easyui-linkbutton" iconCls="icon-search">查询</a></td>  
+		            </tr>  
+		        </table>
+		    </form>  --> 
+		    <br/>
+		    <div>
+		   	 	<table id="resTable" ></table>
+		    </div>
+    	</div>
 </body>
 </html>

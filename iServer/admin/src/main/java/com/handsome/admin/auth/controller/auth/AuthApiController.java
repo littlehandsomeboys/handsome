@@ -43,8 +43,11 @@ public class AuthApiController
 		ResponseObject res = new ResponseObject();
 		try
 		{
+			SiteUser su = new SiteUser();
+			su.setAccount(userName);
+			su.setPassword(password);
 			//TODO:添加企业
-			siteUserService.createSiteUser(userName, password, "");
+			siteUserService.createSiteUser(su);
 		}
 		catch (Exception e)
 		{

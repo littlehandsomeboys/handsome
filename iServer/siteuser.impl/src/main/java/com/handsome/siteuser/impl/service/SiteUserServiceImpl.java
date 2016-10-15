@@ -58,7 +58,7 @@ public class SiteUserServiceImpl implements SiteUserService
 		}
 		else
 		{
-			offset = pi.getPageNo() * pi.getPageSize();
+			offset = (pi.getPageNo() - 1) * pi.getPageSize();
 			rows = pi.getPageSize();
 		}
 		return siteUserDao.list(su, offset, rows);
@@ -69,7 +69,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	{
 		return siteUserDao.count();
 	}
-	
+
 	@Override
 	public void updateSiteUserPwd(String loginName, String loginPwd)
 	{
@@ -137,13 +137,13 @@ public class SiteUserServiceImpl implements SiteUserService
 			siteUser.setReserve7(su.getReserve7());
 			siteUser.setReserve8(su.getReserve8());
 			siteUser.setReserve9(su.getReserve9());
-			
+
 			siteUser.setUpdateDate(new Date());
 			// 修改用户
 			siteUserDao.update(siteUser);
 		}
 	}
-	
+
 	@Override
 	public int deleteUser(String userId)
 	{
