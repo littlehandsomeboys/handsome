@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="pic.api.Pic">
+	<sql id="cols">
+		picId,dir,url,createDate,updateDate
+	</sql>
+	<sql id="ucols">
+		#{picId},#{dir},#{url},#{createDate},#{updateDate}
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="list" parameterType="java.util.Map" resultType="aliasesPic">
+		selaliasesPict
+		<include refid="cols" />
+		from t_pic
+		<where>
+			<if test="dir != null ">
+				dir like CONCAT('%','${dir}','%')
+			</if>
+			<if test="url != null ">
+				url like CONCAT('%','${url}','%')
+			</if>
+		</where>
+		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_pic;
+	</select>
+
+	<!-- 查询一个 -->
+	<select id="find" parameterType="aliasesPic" resultType="aliasesPic">
+		select
+		<include refid="cols" />
+		from t_pic
+		<where>
+			<if test="picId !=null ">
+				picId = #{picId, jdbcType=VARCHAR}
+			</if>
+			<if test="dir !=null ">
+				dir = #{dir, jdbcType=VARCHAR}
+			</if>
+			<if test="url !=null ">
+				url = #{url, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesPic">
+		insert into t_pic (
+		<include refid="cols" />
+		)
+		values(
+		<include refid="ucols" />
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="aliasesPic">
+		update t_pic
+		<set>
+			<if test="dir!=null">
+				dir=#{dir},
+			</if>
+			<if test="url!=null">
+				url=#{url},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+
+		where picId=#{picId}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="string">
+		delete from t_pic where picId=#{picId}
+	</delete>
+
+</mapper>

@@ -21,5 +21,13 @@
 		<property name="serviceInterface"
 			value="com.handsome.ec.api.service.ECService" />
 	</bean>
+	
+	<!-- 图片接口 -->
+	<bean name="/HessianPicService"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="picServiceImpl" />
+		<property name="serviceInterface"
+			value="com.handsome.pic.api.service.PicService" />
+	</bean>
 
 </beans>

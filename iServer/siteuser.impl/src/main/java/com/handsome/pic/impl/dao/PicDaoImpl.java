@@ -1,4 +1,4 @@
-package com.handsome.ec.impl.dao;
+package com.handsome.pic.impl.dao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,18 +11,20 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.handsome.ec.api.bean.EC;
 import com.handsome.ec.api.dao.ECDao;
+import com.handsome.pic.api.bean.Pic;
+import com.handsome.pic.api.dao.PicDao;
 
 /**
  * 
  * @author dell
  *
  */
-public class ECDaoImpl extends SqlSessionDaoSupport implements
-		ECDao
+public class PicDaoImpl extends SqlSessionDaoSupport implements
+		PicDao
 {
-	private static Logger log = Logger.getLogger(ECDaoImpl.class);
+	private static Logger log = Logger.getLogger(PicDaoImpl.class);
 
-	public ECDaoImpl()
+	public PicDaoImpl()
 	{
 		// TODO Auto-generated constructor stub
 	}
@@ -30,16 +32,16 @@ public class ECDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public int delete(String id)
 	{
-		return this.getSqlSession().delete("ec.api.EC.delete", id);
+		return this.getSqlSession().delete("pic.api.Pic.delete", id);
 	}
 
 	@Override
-	public void add(EC ec)
+	public void add(Pic pic)
 	{
 		try
 		{
-			log.debug("begin" + ec.toString());
-			this.getSqlSession().insert("ec.api.EC.create", ec);
+			log.debug("begin" + pic.toString());
+			this.getSqlSession().insert("pic.api.Pic.create", pic);
 			log.debug("end");
 		}
 		catch (Exception e)
@@ -50,40 +52,40 @@ public class ECDaoImpl extends SqlSessionDaoSupport implements
 	}
 
 	@Override
-	public List<EC> list(EC su, Integer offset, Integer rows)
+	public List<Pic> list(Pic pic, Integer offset, Integer rows)
 	{
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		parameterMap.put("ecName", su.getEcName());
+		parameterMap.put("dir", pic.getDir());
+		parameterMap.put("url", pic.getUrl());
 		parameterMap.put("offset", offset);
 		parameterMap.put("rows", rows);
-		List<EC> ecList = this.getSqlSession().selectList(
-				"ec.api.EC.list", parameterMap);
-		return ecList;
+		List<Pic> picList = this.getSqlSession().selectList(
+				"pic.api.Pic.list", parameterMap);
+		return picList;
 	}
 
 	@Override
 	public int count()
 	{
 		Integer count = this.getSqlSession().selectOne(
-				"ec.api.EC.count");
+				"pic.api.Pic.count");
 		return count;
 
 	}
 
 	@Override
-	public void update(EC ec)
+	public void update(Pic pic)
 	{
-		this.getSqlSession().update("ec.api.EC.update", ec);
+		this.getSqlSession().update("pic.api.Pic.update", pic);
 	}
 
 	@Override
-	public EC find(EC ec)
+	public Pic find(Pic pic)
 	{
-		if (StringUtils.isEmpty(ec.getEcName())
-				&& StringUtils.isEmpty(ec.getEcId()))
-			return new EC();
+		if (StringUtils.isEmpty(pic.getPicId()))
+			return new Pic();
 
-		return this.getSqlSession().selectOne("ec.api.EC.find", ec);
+		return this.getSqlSession().selectOne("pic.api.Pic.find", pic);
 	}
 
 	// @Resource

@@ -26,4 +26,12 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
 	
+	<bean id="picServiceImpl" class="com.handsome.pic.impl.service.PicServiceImpl">
+		<property name="picDao" ref="picDaoImpl"></property>
+	</bean>
+	
+	<bean id="picDaoImpl" class="com.handsome.pic.impl.dao.PicDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
 </beans>

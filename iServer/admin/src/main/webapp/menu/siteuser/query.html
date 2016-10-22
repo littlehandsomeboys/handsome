@@ -1,140 +1,405 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <html>
-	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>jQuery EasyUI</title>
-	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-	<script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
-	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
-	<script>
-		$(function () {  
-			//清空查询条件  
-		    $("#btnClear").click(function () {
-		        //$('#queryForm').form('clear'); 
-		        $("#account").val("");
-		        $("#ecName").val("");
-		        $("#name").val("");
-			});
-			$("#btnSearch").click(function () { 
-				
-				//var pageopt = $('#dg').datagrid('getPager').data("pagination").options;
-				//alert(pageopt.pageNumber);
-				//alert(pageopt.pageSize);
-				
-	            var pars = {
-	            		"account":$("#account").val(),
-	            		"ecName":$("#ecName").val()}; 
-	            //有参数时执行此方法  
-	            initTable(pars)  
-	        });
-			
-	         //无参数时执行此方法  
-	         initTable("");  
-	     });
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jQuery EasyUI</title>
+<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+<script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+#fm {
+	margin: 0;
+	padding: 10px 30px;
+}
+
+.ftitle {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 5px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+	margin-bottom: 5px;
+}
+
+.fitem label {
+	display: inline-block;
+	width: 80px;
+}
+</style>
+
+<script>
+	//防止重复提交标志
+	var checkSubmitFlg = true;
+
+	$(function() {
+		//清空查询条件  
+		$("#btnClear").click(function() {
+			//$('#queryForm').form('clear'); 
+			$("#account").val("");
+			$("#ecName").val("");
+			$("#name").val("");
+		});
+		$("#btnSearch").click(function() {
+			var pars = {
+				"account" : $("#account").val(),
+				"ecName" : $("#ecName").val()
+			};
+			//有参数时执行此方法  
+			initTable(pars)
+		});
+		$('#authorities_a').combobox({
+			url : 'combobox_authorities.json',
+			valueField : 'id',
+			textField : 'text'
+		});
+		$('#reserve6_a').combobox({
+			url : 'combobox_reserve6.json',
+			valueField : 'id',
+			textField : 'text'
+		});
+		$('#reserve6_u').combobox({
+			url : 'combobox_reserve6.json',
+			valueField : 'id',
+			textField : 'text'
+		});
+
+		$("#butadd").click(
+				function() {
+					if (!checkSubmitFlg) {
+						return;
+					}
+					checkSubmitFlg = false;
+					var validate = $('#account_a').val();
+					if (validate == null || validate == undefined
+							|| validate == '') {
+						$.messager.alert("提交信息校验", "“账号”必填！");
+						return;
+					}
+					validate = $('#authorities_a').combobox('getValue');
+					if (validate == null || validate == undefined
+							|| validate == '') {
+						$.messager.alert("提交信息校验", "“账号类型”必填！");
+						return;
+					}
+					if (validate == '2' || validate == '3') {
+						validate = $('#ecName_a').val();
+						if (validate == null || validate == undefined
+								|| validate == '') {
+							$.messager.alert("提交信息校验", "账号类型为校长或教师时“学校名称”必填！");
+							return;
+						}
+					}
+					validate = $('#reserve6_a').combobox('getValue');
+					if (validate == null || validate == undefined
+							|| validate == '') {
+						$.messager.alert("提交信息校验", "“等级”必填！");
+						return;
+					}
+
+					$.ajax({
+						url : '../../siteuser/api/addSiteUser.do',
+						type : "POST",
+						//contentType : "multipart/form-data",
+						data : $('#fma').serialize(),
+						success : function(result) {
+							if (typeof result === 'object') {
+								result = result;
+							} else {
+								result = eval("(" + result + ")")
+							}
+							if (result.result == "0") {
+								$.messager.alert("提示信息", "新增成功");
+								$("#addsource").dialog("close");
+								$('#resTable').datagrid("load");
+							} else {
+								$.messager.alert("提示信息", result.mes + "操作失败");
+							}
+						},
+						error : function(XMLResponse) {
+							alert(XMLResponse.responseText)
+						}
+					});
+					checkSubmitFlg = true;
+				});
+		$("#butupd").click(
+				function() {
+					if (!checkSubmitFlg) {
+						return;
+					}
+					checkSubmitFlg = false;
+					var validate = $('#account_u').val();
+					if (validate == null || validate == undefined
+							|| validate == '') {
+						$.messager.alert("提交信息校验", "“账号”必填！");
+						return;
+					}
+					validate = $('#authorities_u').val('getValue');
+					if (validate == null || validate == undefined
+							|| validate == '') {
+						$.messager.alert("提交信息校验", "“账号类型”必填！");
+						return;
+					}
+					if (validate == '2' || validate == '3') {
+						validate = $('#ecName_u').val();
+						if (validate == null || validate == undefined
+								|| validate == '') {
+							$.messager.alert("提交信息校验", "账号类型为校长或教师时“学校名称”必填！");
+							return;
+						}
+					}
+					validate = $('#reserve6_u').combobox('getValue');
+					if (validate == null || validate == undefined
+							|| validate == '') {
+						$.messager.alert("提交信息校验", "“等级”必填！");
+						return;
+					}
+					$.ajax({
+						url : '../../siteuser/api/updateSiteUser.do',
+						type : "POST",
+						//contentType : "multipart/form-data",
+						data : $('#fmu').serialize(),
+						success : function(result) {
+							if (typeof result === 'object') {
+								result = result;
+							} else {
+								result = eval("(" + result + ")")
+							}
+							if (result.result == "0") {
+								$.messager.alert("提示信息", "修改成功");
+								$("#updatesource").dialog("close");
+								$('#resTable').datagrid("load");
+							} else {
+								$.messager.alert("提示信息", result.mes + "操作失败");
+							}
+						},
+						error : function(XMLResponse) {
+							alert(XMLResponse.responseText)
+						}
+					});
+					checkSubmitFlg = true;
+				});
+		//无参数时执行此方法  
+		initTable("");
+	});
+
+	function initTable(pars) {
+		$('#resTable')
+				.datagrid(
+						{
+							//url: 'datagrid_data2.json',
+							url : '../../siteuser/api/querySiteUsers.do',
+							title : '结果列表',
+							width : 800,
+							height : 400,
+							method : 'post',
+							fitColumns : true,
+							queryParams : pars, //异步查询的参数
+							loadMsg : '正在加载用户的信息...',
+							autoRowHeight : false,
+							striped : true,
+							collapsible : true,
+							pagination : true,
+							rownumbers : true,//添加列数字
+							//sortName: 'ID',    //根据某个字段给easyUI排序  
+							//sortOrder: 'asc',  
+							remoteSort : false,
+							pageList : [ 5, 10, 15, 20, 25, 30 ],//分页的分组设置  
+							pageSize : 10,//每页的默认值大小
+							idField : 'ID',//主键
+							columns : [ [ {
+								field : 'account',
+								title : '账号',
+								width : 80
+							}, /* {
+								field : 'authorities',
+								title : '账号类型',
+								width : 80,
+							}, {
+								field : 'enabled',
+								title : '状态',
+								width : 80
+							},  */{
+								field : 'ecName',
+								title : '归属学校',
+								width : 80
+							}, {
+								field : 'reserve5',
+								title : '教师姓名',
+								width : 80
+							}, {
+								field : 'operate',
+								title : '操作',
+								width : 80,
+								align : 'center',
+								formatter : formatOper
+							}
+
+							] ],
+							//表头的按钮  
+							toolbar : [
+									{
+										id : 'btnAdd',
+										text : '新增',
+										iconCls : 'icon-add',
+										handler : function() {
+											$("#addsource").dialog("open")
+													.dialog('setTitle', '新增');
+											$(':input', '#fma')
+													.not(
+															':button, :submit, :reset, :hidden')
+													.val('').removeAttr(
+															'checked')
+													.removeAttr('selected');
+
+											$("#mytitle").html("请填写教师信息");
+										}
+									}/* , '-', {
+										id : 'btnCancle',
+										text : '删除',
+										iconCls : 'icon-cancel',
+										handler : function() {
+											//实现直接删除所有数据的方法  
+											//Delete();  
+										}
+									}, '-', {
+										id : 'btnDetail',
+										text : '详细',
+										iconCls : 'icon-remove',
+										handler : function() {
+											//展示所选人员的详细信息方法  
+											//Show();  
+										}
+									}, '-', {
+										id : 'btnEdit',
+										text : '编辑',
+										iconCls : 'icon-edit',
+										handler : function() {
+											//编辑所选人员的信息方法  
+											//Update();  
+										}
+									}, '-', {
+										id : 'btnCheckout',
+										text : '导出',
+										iconCls : 'icon-undo',
+										handler : function() {
+											//实现修改的方法  
+											//Checkout();  
+										}
+
+									} */ ],
+						});
+	};
+
+	function formatOper(val, row, index) {
+		return '<a href="#" onclick="edit(' + index
+				+ ')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="deleterow(' + index
+				+ ')">删除</a>';
+	}
+
+	function edit(index) {
+		var row = $('#resTable').datagrid('getData').rows[index];// 关键在这里  
+		if (row) {
+			$("#fmu").form("load", row);
+			$("#reserve1_u").attr("src", row.reserve1);
+			$("#reserve2_u").attr("src", row.reserve2);
+			if (row.authorities == 1) {
+				$("#authorities_s").val("超级管理员");
+			} else if (row.authorities == 2) {
+				$("#authorities_s").val("校长");
+			} else if (row.authorities == 3) {
+				$("#authorities_s").val("老师");
+			}
+			$("#updatesource").dialog("open").dialog('setTitle', '更新');
+			$("#mytitle").html("更新教师信息");
+		}
+	}
+
+	function deleterow(index) {
+		if (!checkSubmitFlg) {
+			return;
+		}
+		checkSubmitFlg = false;
+		$("#button1").attr("disabled", "disabled");
+		var makesure = $.messager.confirm("确认", "确认删除？", function(r) {
+			if (r) {
+				var row = $('#resTable').datagrid('getData').rows[index];
+				$.ajax({
+					url : '../../siteuser/api/deletSiteUser.do',
+					type : "POST",
+					data : {
+						account : row.account
+					},
+					success : function(result) {
+						if (typeof result === 'object') {
+							result = result;
+						} else {
+							result = eval("(" + result + ")")
+						}
+						if (result.result == "0") {
+							$.messager.alert("提示信息", "删除成功");
+							$('#resTable').datagrid("load");
+						} else {
+							$.messager.alert("提示信息", result.mes + "操作失败");
+						}
+					},
+					error : function(XMLResponse) {
+						alert(XMLResponse.responseText)
+					}
+				});
+			}
+		});
+		checkSubmitFlg = true;
+	}
+
+	function ajaxFileUpload(param, paramtype, showid) {
+		var name = param + "_" + paramtype;
+		var elementIds = [ name ]; //flag为id、name属性名
+		$.ajaxFileUpload({
+			url : '../../siteuser/api/uploadPic.do?param=' + param,
+			type : 'post',
+			secureuri : false, //一般设置为false
+			fileElementId : name, // 上传文件的id、name属性名
+			dataType : 'text', //返回值类型，一般设置为json、application/json
+			elementIds : elementIds, //传递参数到服务器
+			success : function(picres, status) {
+				picres = $.parseJSON(picres.replace(/<.*?>/ig, ""));
+				if (picres.res == 'ok') {
+					$.messager.alert("提示", "上传成功");
+					$("#"+showid).attr("src", picres.url);
+					$("#"+name+"h").val(picres.url);
+				}
+				if (picres.res == 'empty') {
+					$.messager.alert("提示", "未选择图片，请先选择图片");
+				}
+			},
+			error : function(data, status, e) {
+				alert(e);
+			}
+		});
 		
-		
-		
-		function initTable(pars){
-			$('#resTable').datagrid({
-				//url: 'datagrid_data2.json',
-				url: '../../siteuser/api/querySiteUsers.do',
-				title: '结果列表',
-				width:800,
-				height:400,
-				method:'post',
-				fitColumns: true,
-				queryParams: pars,  //异步查询的参数
-				loadMsg: '正在加载用户的信息...',
-				autoRowHeight: false,
-				striped: true,  
-                collapsible: true,  
-                pagination: true,  
-                rownumbers: true,//添加列数字
-             	//sortName: 'ID',    //根据某个字段给easyUI排序  
-                //sortOrder: 'asc',  
-                remoteSort: false,
-                pageList: [5, 10, 15, 20, 25,30],//分页的分组设置  
-                pageSize: 10,//每页的默认值大小
-                idField: 'ID',//主键
-				columns:[[
-					{field:'account',title:'账号',width:80},
-					{field:'authorities',title:'账号类型',width:80},
-					{field:'enabled',title:'状态',width:80},
-					{field:'ecName',title:'归属企业',width:80},
-					{field:'reserve5',title:'教师姓名',width:80},
-					//{field:'operate',title:'操作',width:80}
-			
-				]],
-				//表头的按钮  
-                toolbar: [{  
-                    id: 'btnCancle',  
-                    text: '删除',  
-                    iconCls: 'icon-cancel',  
-                    handler: function () {  
-                        //实现直接删除所有数据的方法  
-                        //Delete();  
-                    }  
-                }, '-', {  
-                    id: 'btnDetail',  
-                    text: '详细',  
-                    iconCls: 'icon-remove',  
-                    handler: function () {  
-                        //展示所选人员的详细信息方法  
-                        //Show();  
-                    }  
-                }, '-', {  
-                    id: 'btnEdit',  
-                    text: '编辑',  
-                    iconCls: 'icon-edit',  
-                    handler: function () {  
-                        //编辑所选人员的信息方法  
-                        //Update();  
-                    }  
-                }, '-', {  
-                    id: 'btnCheckout',  
-                    text: '导出',  
-                    iconCls: 'icon-undo',  
-                    handler: function () {  
-                        //实现修改的方法  
-                        //Checkout();  
-                    }  
-   
-                }],
-               /*  onLoadSuccess:function(){  
-                    $('#resTable').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题  
-                }  */
-			});
-		};
-	
-		/* //表格查询  
-	    function searchRes(){  
-	        var params = $('#resTable').datagrid('options').queryParams; //先取得 datagrid 的查询参数  
-	        var fields =$('#queryForm').serializeArray(); //自动序列化表单元素为JSON对象  
-	        $.each( fields, function(i, field){  
-	            params[field.name] = field.value; //设置查询参数  
-	        });   
-	        $('#resTable').datagrid('reload'); //设置好查询参数 reload 一下就可以了  
-	    }   */
-		
-		
-	</script>
-	</head>
-	<body>
-		<div class="easyui-panel">
-			<div>
-				账号：<input type="text" id="account" />  
-				企业：<input type="text" id="ecName" /> 
-				姓名：<input type="text" id="name" /> 
-			    <input type="button" id="btnSearch" value="查询" />
-			    <input type="button" id="btnClear" value="清空" />
-		    </div>
-		   <!--  <form id="queryForm" style="margin:10;text-align: center;">  
+	}
+</script>
+</head>
+<body>
+	<div class="easyui-panel">
+		<div>
+			账号：<input type="text" id="account" /> 学校：<input type="text"
+				id="ecName" /> 姓名：<input type="text" id="name" /> <input
+				type="button" id="btnSearch" value="查询" /> <input type="button"
+				id="btnClear" value="清空" />
+		</div>
+		<!--  <form id="queryForm" style="margin:10;text-align: center;">  
 		       	 <table width="100%">  
 		            <tr>  
 		            <td>账号 ：<input name="account" id="account" style="width: 200"></td>
-					<td>企业 ：<input name="ecName" id="ecName" style="width: 200"></td>
+					<td>学校 ：<input name="ecName" id="ecName" style="width: 200"></td>
 					<td>姓名 ：<input name="name" id="name" style="width: 200"></td>  
 		            <td>年龄：<input class="easyui-numberspinner" name="age" min="1" max="120" increment="1" style="width:200px;"></input></td>  
 		            <td align="center"><a href="#" onclick="clearForm();" class="easyui-linkbutton" iconCls="icon-search">清空</a></td>  
@@ -144,11 +409,139 @@
 		            <td  id="btnSearch" align="center"><a href="#" onclick="searchRes();" class="easyui-linkbutton" iconCls="icon-search">查询</a></td>  
 		            </tr>  
 		        </table>
-		    </form>  --> 
-		    <br/>
-		    <div>
-		   	 	<table id="resTable" ></table>
-		    </div>
-    	</div>
+		    </form>  -->
+		<br />
+		<div>
+			<table id="resTable"></table>
+		</div>
+	</div>
+	<div id="addsource" class="easyui-dialog"
+		style="width: 800px; height: 500px; padding: 10px 20px;" closed="true"
+		buttons="#dlg-buttons"
+		data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<div class="ftitle" id="mytitle">新增</div>
+		<form id="fma" method="post" enctype="multipart/form-data">
+			<div class="fitem">
+				<label> 账号 </label>
+				<!--  <input name="id" type="hidden"/>   -->
+				<input id="account_a" name="account" class="easyui-validatebox"
+					required="true" />
+				<!-- 	<input name="createDate" type="hidden"/> -->
+				<label> 姓名 </label> <input id="reserve5_a" name="reserve5"
+					class="easyui-validatebox" />
+			</div>
+			<div class="fitem">
+				<label> 学校名称 </label> <input id="ecName_a" name="ecName"
+					class="easyui-validatebox" /> <label> 学历 </label> <input
+					id="reserve7_a" name="reserve7" class="easyui-validatebox" />
+			</div>
+			<div class="fitem">
+				<label> 账号类型 </label> <input id="authorities_a" name="authorities"
+					class="easyui-combobox" required="true" /> <label> 等级 </label> <input
+					id="reserve6_a" name="reserve6" class="easyui-combobox"
+					required="true" />
+			</div>
+			<div class="fitem">
+				<label> 头像 </label>
+				<input id="reserve1_fa" type="file" name="picFile" />
+				<input type="button" onclick="javascript:ajaxFileUpload('reserve1','fa','reserve1_a')" class="icon-save" style="width:21px" />
+				</br>
+				<img id="reserve1_a" src="">
+				<input id="reserve1_fah" name="reserve1" type="hidden" />
+			</div>
+			<div class="fitem">
+				<label> 生活照 </label>
+				<input id="reserve2_fa" type="file" name="picFile" />
+				<input type="button" onclick="javascript:ajaxFileUpload('reserve2','fa','reserve2_a')" class="icon-save" style="width:21px" />
+				</br>
+				<img id="reserve2_a" src="">
+				<input id="reserve2_fah" name="reserve2" type="hidden" />
+			</div>
+			<div class="fitem">
+				<label> 证书 </label>
+				<textarea id="reserve3_a" name="reserve3" cols="46" rows="2"></textarea>
+			</div>
+			<div class="fitem">
+				<label> 执教经历 </label>
+				<textarea id="reserve4_a" name="reserve4" cols="46" rows="2"></textarea>
+			</div>
+			<div class="fitem">
+				<label> 简介 </label>
+				<textarea id="reserve0_a" name="reserve0" cols="46" rows="5"></textarea>
+			</div>
+			<input id="butadd" type="button" value="提交">
+			<button onclick="javascript:$('#addsource').dialog('close')">取消</button>
+		</form>
+		<div id="dlg-buttons">
+
+			<!-- <a href="javascript:void(0)" class="easyui-linkbutton" onclick="adddata()" iconcls="icon-save">保存</a>
+		    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#addsource').dialog('close')" iconcls="icon-cancel">取消</a> -->
+		</div>
+	</div>
+	<div id="updatesource" class="easyui-dialog"
+		style="width: 800px; height: 500px; padding: 10px 20px;" closed="true"
+		buttons="#dlg-buttons"
+		data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<div class="ftitle" id="mytitle">修改</div>
+		<form id="fmu" method="post" enctype="multipart/form-data">
+			<div class="fitem">
+				<label> 账号 </label>
+				<!--  <input name="id" type="hidden"/>   -->
+				<input id="account_u" name="account" class="easyui-validatebox"
+					required="true" readonly="readonly" />
+				<!-- 	<input name="createDate" type="hidden"/> -->
+				<label> 姓名 </label> <input id="reserve5_u" name="reserve5"
+					class="easyui-validatebox" />
+			</div>
+			<div class="fitem">
+				<label> 学校名称 </label> <input id="ecName_u" name="ecName"
+					class="easyui-validatebox" readonly="readonly" /> <label>
+					学历 </label> <input id="reserve7_u" name="reserve7"
+					class="easyui-validatebox" />
+			</div>
+			<div class="fitem">
+				<label> 账号类型 </label> <input id="authorities_u" type="hidden"
+					name="authorities" class="easyui-validatebox" /> <input
+					id="authorities_s" class="easyui-validatebox" readonly="readonly" />
+				<label> 等级 </label> <input id="reserve6_u" name="reserve6"
+					class="easyui-combobox" required="true" />
+			</div>
+			<div class="fitem">
+				<label> 头像 </label>
+				<input id="reserve1_fu" type="file" name="picFile" />
+				<input type="button" onclick="javascript:ajaxFileUpload('reserve1','fu','reserve1_u')" class="icon-save" style="width:21px" />
+				</br>
+				<img id="reserve1_u" src="">
+				<input id="reserve1_fuh" name="reserve1" type="hidden" />
+			</div>
+			<div class="fitem">
+				<label> 生活照 </label>
+				<input id="reserve2_fu" type="file" name="picFile" />
+				<input type="button" onclick="javascript:ajaxFileUpload('reserve2','fu','reserve2_u')" class="icon-save" style="width:21px" />
+				</br>
+				<img id="reserve2_u" src="">
+				<input id="reserve2_fuh" name="reserve2" type="hidden" />
+			</div>
+			<div class="fitem">
+				<label> 证书 </label>
+				<textarea id="reserve3_u" name="reserve3" cols="46" rows="2"></textarea>
+			</div>
+			<div class="fitem">
+				<label> 执教经历 </label>
+				<textarea id="reserve4_u" name="reserve4" cols="46" rows="2"></textarea>
+			</div>
+			<div class="fitem">
+				<label> 简介 </label>
+				<textarea id="reserve0_u" name="reserve0" cols="46" rows="5"></textarea>
+			</div>
+			<input id="butupd" type="button" value="提交" iconcls="icon-save">
+			<button onclick="javascript:$('#updatesource').dialog('close')">取消</button>
+		</form>
+		<div id="dlg-buttons">
+			<!-- <a href="javascript:void(0)" class="easyui-linkbutton" onclick="savedata()" iconcls="icon-save">保存</a>  
+		    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#updatesource').dialog('close')" iconcls="icon-cancel">取消</a>  -->
+		</div>
+	</div>
+
 </body>
 </html>

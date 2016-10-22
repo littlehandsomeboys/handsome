@@ -17,7 +17,7 @@
 	
 	var _menus = {
 		"menus":[
-		    {
+		    /* {
 				"menuid":"1","icon":"icon-sys","menuname":"产品",
 				"menus":[
 			    	{
@@ -52,23 +52,23 @@
 				    	"icon":"icon-nav",
 				    	"url":"demo1.html"
 				    }]
-			},
+			}, */
 			{
 				"menuid":"28","icon":"icon-sys","menuname":"管理员",
 				"menus":[
 					{
 						"menuid":"41",
-						"menuname":"管理员管理",
+						"menuname":"教师管理",
 						"icon":"icon-nav",
 						"url":"menu/siteuser/query.html"
-					},
+					}/* ,
 					{
 						"menuid":"42",
 						"menuname":"企业管理",
 						"icon":"icon-nav",
 						"url":"demo1.html"
-					}]
-			},
+					} */]
+			}/* ,
 			{
 				"menuid":"39","icon":"icon-sys","menuname":"系统",
 				"menus":[
@@ -78,7 +78,7 @@
 						"icon":"icon-nav",
 						"url":"demo.html"
 					}]
-			}]
+			} */]
 	};
         //设置登录窗口
         function openPwd() {

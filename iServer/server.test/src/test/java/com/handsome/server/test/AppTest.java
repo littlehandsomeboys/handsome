@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.handsome.common.bean.PageInfo;
 import com.handsome.ec.api.service.ECService;
 import com.handsome.order.api.service.OrderService;
+import com.handsome.pic.api.bean.Pic;
+import com.handsome.pic.api.service.PicService;
 import com.handsome.product.api.bean.Product;
 import com.handsome.product.api.service.ProductService;
 import com.handsome.producttype.api.service.ProductTypeService;
@@ -94,6 +96,36 @@ public class AppTest
 		
 		//删除
 		siteUserService.deleteUser(siteUser.getSiteUserId());
+	}
+	
+	@Test
+	public void testPic()
+	{
+		PicService picService = (PicService)ac.getBean("picService");
+		Pic pic = new Pic();
+		//新增
+//		pic.setDir("/share/pic");
+//		pic.setUrl("https://www.baidu.com/img/baidu_jgylogo3.gif");
+//		picService.createPic(pic);
+		
+		//查询
+		pic.setPicId("8a8019d8494a47d3a662738cb13129f8");
+		pic = picService.getPic(pic);
+		System.out.println(pic.toString());
+		
+		//修改
+		
+		pic.setDir("/share/head");
+		pic.setUrl("http://avatar.csdn.net/8/6/9/1_u014639561.jpg");;
+		picService.updatePic(pic);
+		
+		//查询
+		pic = picService.getPic(pic);
+		System.out.println(pic.toString());
+		
+		//删除
+//		pic.setPicId("498185bbbba54fce98c63d45a2f35b9c");
+//		picService.deletePic(pic.getPicId());
 	}
 
 	@Test

@@ -18,5 +18,5 @@
 
 	<!-- 加载数据库属性配置文件 -->
 	<context:property-placeholder location="classpath*:*.properties" />
-
+	<!-- <bean id="PropertiesHelper" class="com.handsome.common.util.PropertiesHelper" init-method="init" /> -->
 </beans>  

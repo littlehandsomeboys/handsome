@@ -53,7 +53,7 @@
 	<update id="update" parameterType="aliasesEC">
 		update t_ec
 		<set>
-			<if test="desc">
+			<if test="desc!=null">
 				desc=#{desc},
 			</if>
 			<if test="updateDate!=null">

@@ -45,6 +45,16 @@ CREATE TABLE `t_ec` (
 );
 CREATE UNIQUE INDEX i_ecName ON t_ec(ecName);
 
+CREATE TABLE `t_pic` (
+  `picId` VARCHAR(32) NOT NULL COMMENT '企业id',
+  `dir` VARCHAR(100) COMMENT '相对路径',
+  `url` VARCHAR(200) COMMENT '访问地址',
+  `createDate` date COMMENT '创建时间',
+  `updateDate` date COMMENT '更新时间',
+  PRIMARY KEY (`picId`)
+);
+CREATE UNIQUE INDEX i_picId ON t_pic(picId);
+
 CREATE TABLE `t_user` (
   `UserId` VARCHAR(32) NOT NULL COMMENT '用户id',
   `Account` VARCHAR(32) NOT NULL COMMENT '账号',
