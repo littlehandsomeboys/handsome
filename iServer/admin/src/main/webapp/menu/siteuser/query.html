@@ -96,16 +96,17 @@
 							return;
 						}
 					}
-					validate = $('#reserve6_a').combobox('getValue');
+					/* validate = $('#reserve6_a').combobox('getValue');
 					if (validate == null || validate == undefined
 							|| validate == '') {
 						$.messager.alert("提交信息校验", "“等级”必填！");
 						return;
-					}
+					} */
 
 					$.ajax({
 						url : '../../siteuser/api/addSiteUser.do',
 						type : "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8", 
 						//contentType : "multipart/form-data",
 						data : $('#fma').serialize(),
 						success : function(result) {
@@ -154,15 +155,16 @@
 							return;
 						}
 					}
-					validate = $('#reserve6_u').combobox('getValue');
+					/* validate = $('#reserve6_u').combobox('getValue');
 					if (validate == null || validate == undefined
 							|| validate == '') {
 						$.messager.alert("提交信息校验", "“等级”必填！");
 						return;
-					}
+					} */
 					$.ajax({
 						url : '../../siteuser/api/updateSiteUser.do',
 						type : "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
 						//contentType : "multipart/form-data",
 						data : $('#fmu').serialize(),
 						success : function(result) {
@@ -438,8 +440,7 @@
 			<div class="fitem">
 				<label> 账号类型 </label> <input id="authorities_a" name="authorities"
 					class="easyui-combobox" required="true" /> <label> 等级 </label> <input
-					id="reserve6_a" name="reserve6" class="easyui-combobox"
-					required="true" />
+					id="reserve6_a" name="reserve6" class="easyui-combobox" />
 			</div>
 			<div class="fitem">
 				<label> 头像 </label>
@@ -504,7 +505,7 @@
 					name="authorities" class="easyui-validatebox" /> <input
 					id="authorities_s" class="easyui-validatebox" readonly="readonly" />
 				<label> 等级 </label> <input id="reserve6_u" name="reserve6"
-					class="easyui-combobox" required="true" />
+					class="easyui-combobox"/>
 			</div>
 			<div class="fitem">
 				<label> 头像 </label>

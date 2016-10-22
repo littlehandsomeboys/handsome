@@ -222,6 +222,11 @@ public class SiteUserApiController
 					file = new File(picRootDir + "head/" + fileName);
 					pic.setDir(picRootDir + "head/" + fileName);
 					pic.setUrl(picRootUrl + "head/" + fileName);
+					File dir = new File(picRootDir + "head/");
+					if (!dir.exists())
+					{
+						dir.mkdirs();
+					}
 				}
 				//生活照
 				else if ("reserve2".equals(param))
@@ -229,6 +234,11 @@ public class SiteUserApiController
 					file = new File(picRootDir + "pic/" + fileName);
 					pic.setDir(picRootDir + "pic/" + fileName);
 					pic.setUrl(picRootUrl + "pic/" + fileName);
+					File dir = new File(picRootDir + "pic/");
+					if (!dir.exists())
+					{
+						dir.mkdirs();
+					}
 				}
 				fop = new FileOutputStream(file);
 				if (!file.exists())
