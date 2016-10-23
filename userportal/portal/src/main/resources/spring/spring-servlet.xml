@@ -25,7 +25,21 @@
 
 	<!-- 完成请求和注解POJO的映射 -->
 	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
 
 	<!-- JSP视图文件解析配置 -->
 	<bean
@@ -53,5 +67,6 @@
 		<property name="maxUploadSize">
 			<value>5242880</value>
 		</property>
+		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 </beans>  

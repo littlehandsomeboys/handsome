@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.handsome.portal.common.bean.ResponseObject;
+import com.alibaba.fastjson.JSONObject;
+//import com.handsome.portal.common.bean.ResponseObject;
 import com.handsome.product.api.bean.Product;
 import com.handsome.product.api.service.ProductService;
 
@@ -46,12 +47,15 @@ public class ProductApiController
 	public @ResponseBody String productlist(@RequestBody String procuctInfo)
 	{
 		System.out.println(procuctInfo);
-		ResponseObject res = new ResponseObject();
+//		ResponseObject res = new ResponseObject();
 		// 此处测试
 		productService.createProduct(new Product());
 
-		res.setData("{procuct:'产品1'}");
-		return JSON.toJSONString(res);
+		JSONObject res = new JSONObject();
+//		res.put("total", total);
+//		res.put("rows", rows);
+
+		return res.toJSONString();
 	}
 
 }
