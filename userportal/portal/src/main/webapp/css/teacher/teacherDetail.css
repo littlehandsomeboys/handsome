@@ -1,0 +1,10 @@
+div.container {width:90%;margin: 2% auto;}
+
+.name {font-weight: bold;}
+.level {vertical-align:super; font-size:10px;margin-left: 2px;font-weight: normal;color: red;}
+
+div.item {padding: 2px 0;}
+.item .title {margin-right: 5px;font-weight: bold;}
+.item .detail {border-bottom: 1px dashed black;}
+
+.center-button {margin: 0 auto; padding: 2px 5px;border: 1px solid #AAAAAA; border-radius: 2px;background-color: #77FFEE}
