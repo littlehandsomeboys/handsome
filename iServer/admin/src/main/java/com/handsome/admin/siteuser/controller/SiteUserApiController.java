@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +52,8 @@ import com.handsome.siteuser.api.service.SiteUserService;
 public class SiteUserApiController
 {
 
+	private static Logger log = Logger.getLogger(SiteUserApiController.class);
+
 	@Autowired
 	@Qualifier(value = "siteUserServiceImpl")
 	private SiteUserService siteUserService;
@@ -64,9 +69,26 @@ public class SiteUserApiController
 		SiteUser su = new SiteUser();
 
 		su.setAccount(request.getParameter("account"));
-		su.setReserve5(request.getParameter("reserve5"));
-		su.setEcName("".equals(request.getParameter("ecName")) ? null : request
-				.getParameter("ecName"));
+		try
+		{
+			if (StringUtils.isNotEmpty(request.getParameter("reserve5")))
+			{
+				su.setReserve5(URLDecoder.decode(
+						request.getParameter("reserve5"), "UTF-8"));
+			}
+			if (StringUtils.isNotEmpty(request.getParameter("ecName")))
+			{
+				su.setEcName(URLDecoder.decode(request.getParameter("ecName"),
+						"UTF-8"));
+			}
+			// su.setEcName("".equals(request.getParameter("ecName")) ? null
+			// : URLDecoder.decode(request.getParameter("ecName"), "UTF-8"));
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		PageInfo pi = new PageInfo();
 		pi.setPageNo(NumberUtils.toInt(request.getParameter("page")));
@@ -213,10 +235,10 @@ public class SiteUserApiController
 			fileName = TimeUtil.getTimeStamp() + "_" + fileName;
 			FileOutputStream fop = null;
 			File file = null;
-			
+
 			try
 			{
-				//头像
+				// 头像
 				if ("reserve1".equals(param))
 				{
 					file = new File(picRootDir + "head/" + fileName);
@@ -228,7 +250,7 @@ public class SiteUserApiController
 						dir.mkdirs();
 					}
 				}
-				//生活照
+				// 生活照
 				else if ("reserve2".equals(param))
 				{
 					file = new File(picRootDir + "pic/" + fileName);
@@ -247,7 +269,7 @@ public class SiteUserApiController
 				}
 				fop.write(picFile[0].getBytes());
 				fop.flush();
-				 picService.createPic(pic);
+				picService.createPic(pic);
 
 			}
 			catch (IOException e)

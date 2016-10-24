@@ -57,6 +57,7 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 		parameterMap.put("ecName", su.getEcName());
 		parameterMap.put("account", su.getAccount());
 		parameterMap.put("offset", su.getEcName());
+		parameterMap.put("reserve5", su.getReserve5());
 		parameterMap.put("rows", su.getEcName());
 		parameterMap.put("offset", offset);
 		parameterMap.put("rows", rows);
