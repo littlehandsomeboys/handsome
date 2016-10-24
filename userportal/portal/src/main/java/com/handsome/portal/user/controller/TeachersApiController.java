@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.RequestWrapper;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,15 +53,20 @@ public class TeachersApiController
 	}
 
 	@ApiOperation("教师列表查询接口")
-	@RequestMapping(value = "/teacherList.do", produces="application/json;charset=UTF-8")
+	@RequestMapping(value = "/teacherList.do", produces = "application/json;charset=UTF-8")
 	public @ResponseBody String teacherList(@ModelAttribute Teacher teacher,
 			@RequestParam String pageNo, @RequestParam String pageSize,
 			HttpServletRequest request, HttpServletResponse response)
 	{
 		SiteUser su = new SiteUser();
-		su.setEcName(teacher.getEcName());
-		su.setReserve5(teacher.getReserve5());
-
+		if (StringUtils.isNotEmpty(teacher.getEcName()))
+		{
+			su.setEcName(teacher.getEcName());
+		}
+		if (StringUtils.isNotEmpty(teacher.getReserve5()))
+		{
+			su.setReserve5(teacher.getReserve5());
+		}
 		PageInfo pi = new PageInfo();
 		pi.setPageNo(NumberUtils.toInt(pageNo));
 		pi.setPageSize(NumberUtils.toInt(pageSize));
@@ -99,7 +105,7 @@ public class TeachersApiController
 	}
 
 	@ApiOperation("教师列表查询接口")
-	@RequestMapping(value = "/teacherDetail.do", produces="application/json;charset=UTF-8")
+	@RequestMapping(value = "/teacherDetail.do", produces = "application/json;charset=UTF-8")
 	public @ResponseBody String teacherDetail(@ModelAttribute Teacher teacher,
 			HttpServletRequest request, HttpServletResponse response)
 	{

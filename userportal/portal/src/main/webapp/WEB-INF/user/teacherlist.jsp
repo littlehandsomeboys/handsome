@@ -50,17 +50,17 @@
 </body>
 <script>
 $(function(){
-	getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName="弗恩教育"');
+	getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育');
 	
 	$('#search').click(function(){
 		$('#currentPage').val(0);
-		var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName="弗恩教育"&reserve5='
+		var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育&reserve5='
 		+ $('#searchInput').val();
 		getHandler(url);
 	});
 	$('#nextPageBtn').click(function(){
 		var page = $('#currentPage').val() + 1;
-		var url = 'teacher/api/teacherList.do?pageNo=' + page + '&pageSize=2&ecName="弗恩教育"&reserve5='
+		var url = 'teacher/api/teacherList.do?pageNo=' + page + '&pageSize=2&ecName=弗恩教育&reserve5='
 				+ $('#searchInput').val();
 		getHandler(url);
 	});
@@ -69,7 +69,9 @@ $(function(){
 			type: 'GET',
 			url: url,
 			success: function(data){
-				if(data.result == 0){
+				
+				if(data.result == '0'){
+					alert(JSON.stringify(data));
 					$('#teacherList').append(juicer(document.getElementById('teacherList').innerHTML, data.rows));
 					$('#totalPage').val(data.total);
 					$('#currentPage').val($('#currentPage').val()+1);

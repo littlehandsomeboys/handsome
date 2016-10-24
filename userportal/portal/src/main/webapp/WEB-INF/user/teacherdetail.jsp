@@ -33,29 +33,29 @@
 </head>
 <body>
 <div class="container">
-	<img src="${obj.Reserve2}">
+	<img src="${obj.reserve2}">
 	<div  class="teacher-detail">
-		<h2 class="name">${obj.Reserve5}
+		<h2 class="name">${obj.reserve5}
 			<span class="level">
-				<c:if test="${obj.Reserve6 == '0'}">普通</c:if>
-			    <c:if test="${obj.Reserve6 == '1'}">专家</c:if>
+				<c:if test="${obj.reserve6 == '0'}">普通</c:if>
+			    <c:if test="${obj.reserve6 == '1'}">专家</c:if>
 			</span>
 	     </h2>
 		<div class="item">
 			<span class="title">个人简介:</span>
-			<span class="detail">${obj.Reserve0}</span>
+			<span class="detail">${obj.reserve0}</span>
 		</div>
 		<div class="item">
 			<span class="title">学历:</span>
-			<span class="detail">${obj.Reserve7}</span>
+			<span class="detail">${obj.reserve7}</span>
 		</div>
 		<div class="item">
 			<span class="title">执教经历:</span>
-			<span class="detail">${obj.Reserve4}</span>
+			<span class="detail">${obj.reserve4}</span>
 		</div>
 		<div class="item">
 			<span class="title">证书:</span>
-			<span class="detail">${obj.Reserve3}</span>
+			<span class="detail">${obj.reserve3}</span>
 		</div>
 	</div>
 	<button id="backBtn"  type="button" class="center-button">返回老师列表</button>
