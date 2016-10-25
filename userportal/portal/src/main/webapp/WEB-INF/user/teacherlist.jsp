@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page isELIgnored="true" %>
 <%@ page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
@@ -28,7 +29,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.easyui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/juicer.js"></script>
+<script type="text/javascript"  src="js/juicer.js"></script>
 
 </head>
 <body>
@@ -45,62 +46,69 @@
 	</div>
 	<input type="hidden" id="currentPage" value="0"/>
 	<input type="hidden" id="totalPage" />
-	<button id="nextPageBtn"  type="button" class="center-button">查找更多老师</button>
+	<button id="nextPageBtn"  type="button" class="center-button" style="display:none;">查找更多老师</button>
 </div>
 </body>
 <script>
 $(function(){
+	$('#currentPage').val(0);
 	getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育');
 	
 	$('#search').click(function(){
+		$('#nextPageBtn').hide();
+		$('#teacherList').children().remove();
 		$('#currentPage').val(0);
 		var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育&reserve5='
 		+ $('#searchInput').val();
 		getHandler(url);
 	});
 	$('#nextPageBtn').click(function(){
-		var page = parsInt($('#currentPage').val()) + parsInt(1);
+		var page = parseInt($('#currentPage').val()) + parseInt(1);
 		var url = 'teacher/api/teacherList.do?pageNo=' + page + '&pageSize=2&ecName=弗恩教育&reserve5='
 				+ $('#searchInput').val();
 		getHandler(url);
+	});
+	$("div.teacher").click(function(){
+		window.location.href = "teacher/teacherDetail.do?account=" + $(this).find('input').val();
 	});
 	function getHandler(url){
 		$.ajax({
 			type: 'GET',
 			url: url,
 			success: function(data){
-				
-				if(data.result == '0'){
-					alert(JSON.stringify(data));
-					$('#teacherList').append(juicer(document.getElementById('teacherList').innerHTML, data.rows));
+				if(data.result == "0"){
+					$('#teacherList').append(juicer($("#teacherTPL").html(), data));
 					$('#totalPage').val(data.total);
-					$('#currentPage').val(parsInt($('#currentPage').val()) + parsInt(1));
+					$('#currentPage').val(parseInt($('#currentPage').val()) + parseInt(1));
 				}
+				if(data.total > $('#currentPage').val()){
+					$('#nextPageBtn').show();
+				}
+				$('div.teacher').unbind("click")
+				$("div.teacher").click(function(){
+					window.location.href = "teacher/teacherDetail.do?account=" + $(this).find('input').val();
+				});
 			}		
 		});
 	}
 	
-	$('.teacher').click(function(){
-		window.location.href = "teacher/teacherDetail.do?account=" + $(this).find('input').val();
-	});
-	
 })
 </script>
-<script type="text/juicer" id="teacherList">
-	{@each rows as teacher}
+<script  type="text/template" id="teacherTPL">
+	{@each rows as row}
 	 <div class="form-group clearfix teacher">
-		<input type="hidden" value="${teacher.account}"/>
-		<img src="${teacher.Reserve1}" alt="..."  class="img-circle float-left" height="80" width="80">
+		<input type="hidden" value=${row.account} />
+		<img src="${row.reserve1}" alt="..."  class="img-circle float-left" height="80" width="80">
 		<div class="info float-left">
-			<h4 class="name">${teacher.Reserve5}</h4>
+			<h4 class="name">${row.reserve5}</h4>
 		     <span class="super super1">
-             	{@if teacher.Reserve6 == 0}
+             	{@if row.reserve6 == "0"}
  					普通
 				{@else}
  					 专家
                 {@/if}
 			 </span>
-		     <span class="super super2">${teacher.Reserve4}</span>
+		     <span class="super super2">${row.reserve4}</span>
 		 </div>
 	</div>
 	{@/each}
