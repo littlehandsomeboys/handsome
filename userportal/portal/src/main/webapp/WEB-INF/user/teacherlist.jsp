@@ -59,7 +59,7 @@ $(function(){
 		getHandler(url);
 	});
 	$('#nextPageBtn').click(function(){
-		var page = $('#currentPage').val() + 1;
+		var page = parsInt($('#currentPage').val()) + parsInt(1);
 		var url = 'teacher/api/teacherList.do?pageNo=' + page + '&pageSize=2&ecName=弗恩教育&reserve5='
 				+ $('#searchInput').val();
 		getHandler(url);
@@ -74,7 +74,7 @@ $(function(){
 					alert(JSON.stringify(data));
 					$('#teacherList').append(juicer(document.getElementById('teacherList').innerHTML, data.rows));
 					$('#totalPage').val(data.total);
-					$('#currentPage').val($('#currentPage').val()+1);
+					$('#currentPage').val(parsInt($('#currentPage').val()) + parsInt(1));
 				}
 			}		
 		});

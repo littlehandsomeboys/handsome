@@ -33,7 +33,7 @@
 </head>
 <body>
 <div class="container">
-	<img src="${obj.reserve2}">
+	<img src="${obj.reserve2}" width="200">
 	<div  class="teacher-detail">
 		<h2 class="name">${obj.reserve5}
 			<span class="level">
