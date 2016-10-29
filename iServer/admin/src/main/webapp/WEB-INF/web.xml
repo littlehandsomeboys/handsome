@@ -82,6 +82,10 @@
 			<param-name>loginPass</param-name>
 			<param-value>.do,.jpg,.JPG,.jepg,.JEPG,.gif,.GIF,.png,.PNG,.js,.css,.html,.json</param-value>
 		</init-param>
+		<init-param>
+			<param-name>remotingPass</param-name>
+			<param-value>/admin/remoting/Hessian</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>loginFilter</filter-name>

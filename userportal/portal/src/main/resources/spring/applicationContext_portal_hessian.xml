@@ -14,9 +14,10 @@
 			<value>${hessian_server_url}HessianProductService</value>
 		</property>
 		<!-- 接口定义 -->
-		<property name="serviceInterface" value="com.handsome.product.api.service.ProductService"/>
+		<property name="serviceInterface"
+			value="com.handsome.product.api.service.ProductService" />
 	</bean>
-	
+
 	<!-- 客户端Hessian代理工厂Bean -->
 	<bean id="siteUserService"
 		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
@@ -24,8 +25,12 @@
 		<property name="serviceUrl">
 			<value>${hessian_server_url}HessianSiteUserService</value>
 		</property>
+		<property name="overloadEnabled">
+			<value>true</value>
+		</property>
 		<!-- 接口定义 -->
-		<property name="serviceInterface" value="com.handsome.siteuser.api.service.SiteUserService"/>
+		<property name="serviceInterface"
+			value="com.handsome.siteuser.api.service.SiteUserService" />
 	</bean>
 
 </beans>

@@ -31,6 +31,11 @@ public class LoginFilter implements Filter
 			".GIF", ".png", ".PNG", ".js", ".css", ".html", ".json" };
 	private String loginPass;
 
+	private static String[] remoteNotFilter = new String[]
+	{ "/login.do", "/signup.do", ".jpg", ".JPG", ".jepg", ".JEPG", ".gif",
+			".GIF", ".png", ".PNG", ".js", ".css", ".html", ".json" };
+	private String remotingPass;
+
 	public void init(FilterConfig filterConfig)
 	{
 		this.fc = filterConfig;
@@ -49,6 +54,14 @@ public class LoginFilter implements Filter
 		{
 			loginNotFilter = loginPass.split(",");
 		}
+
+		// 远程数据接口
+		this.remotingPass = filterConfig.getInitParameter("remotingPass");
+		if (null != remotingPass)
+		{
+			remoteNotFilter = remotingPass.split(",");
+		}
+
 	}
 
 	public void destroy()
@@ -67,6 +80,17 @@ public class LoginFilter implements Filter
 
 		// 请求的uri
 		String uri = request.getRequestURI();
+
+		// 是否是远程数据请求
+		for (String s : remoteNotFilter)
+		{
+			if (uri.startsWith(s))
+			{
+				filterChain.doFilter(request, response);
+				return;
+			}
+		}
+
 		// 是否过滤
 		boolean doFilter = true;
 		for (String s : notFilter)
@@ -115,11 +139,11 @@ public class LoginFilter implements Filter
 				if (!doFilter)
 				{
 					filterChain.doFilter(request, response);
+					return;
 				}
 				else
 				{
-					response.sendRedirect(request.getContextPath()
-							+ "/main.do");
+					response.sendRedirect(request.getContextPath() + "/main.do");
 				}
 			}
 		}
@@ -127,6 +151,7 @@ public class LoginFilter implements Filter
 		{
 			// 如果不执行过滤，则继续
 			filterChain.doFilter(request, response);
+			return;
 		}
 
 	}
