@@ -4,6 +4,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.handsome.admin.common.bean.ResponseObject;
-import com.handsome.product.api.bean.Product;
-import com.handsome.product.api.service.ProductService;
+import com.handsome.admin.common.util.SessionInitHelper;
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.service.SiteUserService;
 
@@ -46,7 +48,7 @@ public class AuthApiController
 			SiteUser su = new SiteUser();
 			su.setAccount(userName);
 			su.setPassword(password);
-			//TODO:添加企业
+			// TODO:添加企业
 			siteUserService.createSiteUser(su);
 		}
 		catch (Exception e)
@@ -56,17 +58,44 @@ public class AuthApiController
 		}
 		return JSON.toJSONString(res);
 	}
-	
+
 	@ApiOperation("用户登录接口")
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public @ResponseBody String login(
 			@ApiParam(value = "用户名", required = true) @RequestParam("username") String userName,
-			@ApiParam(value = "密码", required = true) @RequestParam("password") String password)
+			@ApiParam(value = "密码", required = true) @RequestParam("password") String password,
+			HttpServletRequest request)
 	{
 		ResponseObject res = new ResponseObject();
+		if (StringUtils.isEmpty(userName))
+		{
+			res.setCode(2);
+			res.setError("登录失败，用户名为空！");
+			return JSON.toJSONString(res);
+		}
+		
+		if (StringUtils.isEmpty(password))
+		{
+			res.setCode(3);
+			res.setError("登录失败，密码为空！");
+			return JSON.toJSONString(res);
+		}
+		
 		try
 		{
 			SiteUser su = siteUserService.getSiteUserByUserName(userName);
+			if (StringUtils.isNotEmpty(password) && null != su
+					&& password.equals(su.getPassword()))
+			{
+				SessionInitHelper.setSession(request.getSession(), su);
+				res.setCode(0);
+				res.setData("成功");
+			}
+			else
+			{
+				res.setCode(1);
+				res.setError("登录失败，用户名或密码不存在！");
+			}
 		}
 		catch (Exception e)
 		{
@@ -75,10 +104,5 @@ public class AuthApiController
 		}
 		return JSON.toJSONString(res);
 	}
-	
-	//hessian接口测试
-	@Autowired
-	@Qualifier(value = "productService")
-	private ProductService productService;
-	
+
 }

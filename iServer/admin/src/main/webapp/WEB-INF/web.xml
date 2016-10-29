@@ -38,6 +38,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<listener>
+		<listener-class>com.handsome.admin.listener.SessionListener</listener-class>
+	</listener>
+
 	<!-- 支持Restful风格的请求Url -->
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
@@ -64,6 +68,34 @@
 	<filter-mapping>
 		<filter-name>characterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 登录权限过滤器 -->
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.handsome.admin.filter.LoginFilter</filter-class>
+		<init-param>
+			<param-name>pass</param-name>
+			<param-value>/login.do,/signup.do,.jpg,.JPG,.jepg,.JEPG,.gif,.GIF,.png,.PNG,.js,.css,.html,.json</param-value>
+		</init-param>
+		<init-param>
+			<param-name>loginPass</param-name>
+			<param-value>.do,.jpg,.JPG,.jepg,.JEPG,.gif,.GIF,.png,.PNG,.js,.css,.html,.json</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 登出过滤器 -->
+	<filter>
+		<filter-name>logoutFilter</filter-name>
+		<filter-class>com.handsome.admin.filter.LogoutFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>logoutFilter</filter-name>
+		<url-pattern>/logout.do</url-pattern>
 	</filter-mapping>
 
 	<!-- 配置前端控制器 -->
@@ -103,6 +135,14 @@
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.JPG</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jepg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.JEPG</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
