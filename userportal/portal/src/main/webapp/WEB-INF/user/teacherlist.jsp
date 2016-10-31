@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page isELIgnored="true" %>
+<%@ page isELIgnored="true"%>
 <%@ page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
@@ -12,6 +12,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>查找老师</title>
 <base href="<%=basePath%>">
 <meta charset="UTF-8">
@@ -29,72 +32,87 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.easyui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript"  src="js/juicer.js"></script>
+<script type="text/javascript" src="js/juicer.js"></script>
 
 </head>
 <body>
-<div class="container">
-	<div class="form-group " sytle="width: 60%;">
-	<div class="input-group">
-	 	<input id="searchInput" type="text" class="form-control" placeholder="请输入老师姓名">
-	 	<span class="input-group-btn">
-        <button class="btn btn-default" type="button" id="search"> 搜索 </button>
-      </span>
-      </div>
+	<div class="container">
+		<div class="form-group " sytle="width: 60%;">
+			<div class="input-group">
+				<input id="searchInput" type="text" class="form-control"
+					placeholder="请输入老师姓名"> <span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="search">
+						搜索</button>
+				</span>
+			</div>
+		</div>
+		<div class="teacher-list" id="teacherList"></div>
+		<input type="hidden" id="currentPage" value="0" /> <input
+			type="hidden" id="totalPage" />
+		<button id="nextPageBtn" type="button" class="center-button"
+			style="display: none;">查找更多老师</button>
 	</div>
-	<div class="teacher-list" id="teacherList">
-	</div>
-	<input type="hidden" id="currentPage" value="0"/>
-	<input type="hidden" id="totalPage" />
-	<button id="nextPageBtn"  type="button" class="center-button" style="display:none;">查找更多老师</button>
-</div>
 </body>
 <script>
-$(function(){
-	$('#currentPage').val(0);
-	getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育');
-	
-	$('#search').click(function(){
-		$('#nextPageBtn').hide();
-		$('#teacherList').children().remove();
+	$(function() {
 		$('#currentPage').val(0);
-		var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育&reserve5='
-		+ $('#searchInput').val();
-		getHandler(url);
-	});
-	$('#nextPageBtn').click(function(){
-		var page = parseInt($('#currentPage').val()) + parseInt(1);
-		var url = 'teacher/api/teacherList.do?pageNo=' + page + '&pageSize=2&ecName=弗恩教育&reserve5='
-				+ $('#searchInput').val();
-		getHandler(url);
-	});
-	$("div.teacher").click(function(){
-		window.location.href = "teacher/teacherDetail.do?account=" + $(this).find('input').val();
-	});
-	function getHandler(url){
-		$.ajax({
-			type: 'GET',
-			url: url,
-			success: function(data){
-				if(data.result == "0"){
-					$('#teacherList').append(juicer($("#teacherTPL").html(), data));
-					$('#totalPage').val(data.total);
-					$('#currentPage').val(parseInt($('#currentPage').val()) + parseInt(1));
-				}
-				if(data.total > $('#currentPage').val()){
-					$('#nextPageBtn').show();
-				}
-				$('div.teacher').unbind("click")
-				$("div.teacher").click(function(){
-					window.location.href = "teacher/teacherDetail.do?account=" + $(this).find('input').val();
+		getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育');
+
+		$('#search')
+				.click(
+						function() {
+							$('#nextPageBtn').hide();
+							$('#teacherList').children().remove();
+							$('#currentPage').val(0);
+							var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=弗恩教育&reserve5='
+									+ $('#searchInput').val();
+							getHandler(url);
+						});
+		$('#nextPageBtn').click(
+				function() {
+					var page = parseInt($('#currentPage').val()) + parseInt(1);
+					var url = 'teacher/api/teacherList.do?pageNo=' + page
+							+ '&pageSize=2&ecName=弗恩教育&reserve5='
+							+ $('#searchInput').val();
+					getHandler(url);
 				});
-			}		
-		});
-	}
-	
-})
+		$("div.teacher").click(
+				function() {
+					window.location.href = "teacher/teacherDetail.do?account="
+							+ $(this).find('input').val();
+				});
+		function getHandler(url) {
+			$
+					.ajax({
+						type : 'GET',
+						url : url,
+						success : function(data) {
+							if (data.result == "0") {
+								$('#teacherList').append(
+										juicer($("#teacherTPL").html(), data));
+								$('#totalPage').val(data.total);
+								$('#currentPage').val(
+										parseInt($('#currentPage').val())
+												+ parseInt(1));
+							}
+							if (data.total > $('#currentPage').val()) {
+								$('#nextPageBtn').show();
+							}
+							$('div.teacher').unbind("click")
+							$("div.teacher")
+									.click(
+											function() {
+												window.location.href = "teacher/teacherDetail.do?account="
+														+ $(this).find('input')
+																.val();
+											});
+						}
+					});
+		}
+
+	})
 </script>
-<script  type="text/template" id="teacherTPL">
+<script type="text/template" id="teacherTPL">
 	{@each rows as row}
 	 <div class="form-group clearfix teacher">
 		<input type="hidden" value=${row.account} />
