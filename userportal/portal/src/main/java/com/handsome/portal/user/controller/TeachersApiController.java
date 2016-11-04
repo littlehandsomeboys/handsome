@@ -30,6 +30,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.handsome.common.bean.PageInfo;
 import com.handsome.portal.user.bean.Teacher;
 import com.handsome.siteuser.api.bean.SiteUser;
+import com.handsome.siteuser.api.constent.SiteUserConstent;
 import com.handsome.siteuser.api.service.SiteUserService;
 
 /**
@@ -71,7 +72,7 @@ public class TeachersApiController
 		pi.setPageNo(NumberUtils.toInt(pageNo));
 		pi.setPageSize(NumberUtils.toInt(pageSize));
 
-		List<SiteUser> sus = siteUserService.getSiteUserList(su, pi);
+		List<SiteUser> sus = siteUserService.getSiteUserList(su, pi, SiteUserConstent.AUTHORITIES_EC);
 		JSONArray rows = new JSONArray();
 		for (SiteUser siteUser : sus)
 		{

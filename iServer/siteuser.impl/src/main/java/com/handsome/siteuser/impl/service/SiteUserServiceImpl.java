@@ -47,7 +47,7 @@ public class SiteUserServiceImpl implements SiteUserService
 	}
 
 	@Override
-	public List<SiteUser> getSiteUserList(SiteUser su, PageInfo pi)
+	public List<SiteUser> getSiteUserList(SiteUser su, PageInfo pi, String runTimeAuthorities)
 	{
 		int offset;
 		int rows;
@@ -61,7 +61,7 @@ public class SiteUserServiceImpl implements SiteUserService
 			offset = (pi.getPageNo() - 1) * pi.getPageSize();
 			rows = pi.getPageSize();
 		}
-		return siteUserDao.list(su, offset, rows);
+		return siteUserDao.list(su, runTimeAuthorities, offset, rows);
 	}
 
 	@Override

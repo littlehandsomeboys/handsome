@@ -39,9 +39,10 @@ public interface SiteUserService
 	 * 查询管理员列表  支持分页 PageInfo为空时查询所有
 	 * @param su
 	 * @param pi
+	 * @param runTimeAuthorities
 	 * @return
 	 */
-	List<SiteUser> getSiteUserList(SiteUser su, PageInfo pi);
+	List<SiteUser> getSiteUserList(SiteUser su, PageInfo pi, String runTimeAuthorities);
 	
 	/**
 	 * 管理员总数

@@ -10,7 +10,6 @@ import com.handsome.common.util.UUIDTool;
 import com.handsome.pic.api.bean.Pic;
 import com.handsome.pic.api.dao.PicDao;
 import com.handsome.pic.api.service.PicService;
-import com.handsome.siteuser.api.bean.SiteUser;
 
 //@Service(value = "siteUserServiceImpl")
 public class PicServiceImpl implements PicService

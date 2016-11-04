@@ -24,7 +24,7 @@ public class SiteUserViewController
 	private SiteUserService siteUserService;
 
 	/**
-	 * 登录页面请求
+	 * 请求用户列表
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/siteuserlist.do", method = RequestMethod.GET)

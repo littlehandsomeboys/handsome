@@ -9,8 +9,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import com.handsome.ec.api.bean.EC;
-import com.handsome.ec.api.dao.ECDao;
 import com.handsome.pic.api.bean.Pic;
 import com.handsome.pic.api.dao.PicDao;
 
@@ -38,17 +36,7 @@ public class PicDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public void add(Pic pic)
 	{
-		try
-		{
-			log.debug("begin" + pic.toString());
 			this.getSqlSession().insert("pic.api.Pic.create", pic);
-			log.debug("end");
-		}
-		catch (Exception e)
-		{
-			log.error(e.toString(), e);
-			System.out.println(e);
-		}
 	}
 
 	@Override

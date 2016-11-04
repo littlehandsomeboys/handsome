@@ -17,8 +17,7 @@ import com.handsome.ec.api.dao.ECDao;
  * @author dell
  *
  */
-public class ECDaoImpl extends SqlSessionDaoSupport implements
-		ECDao
+public class ECDaoImpl extends SqlSessionDaoSupport implements ECDao
 {
 	private static Logger log = Logger.getLogger(ECDaoImpl.class);
 
@@ -36,17 +35,7 @@ public class ECDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public void add(EC ec)
 	{
-		try
-		{
-			log.debug("begin" + ec.toString());
-			this.getSqlSession().insert("ec.api.EC.create", ec);
-			log.debug("end");
-		}
-		catch (Exception e)
-		{
-			log.error(e.toString(), e);
-			System.out.println(e);
-		}
+		this.getSqlSession().insert("ec.api.EC.create", ec);
 	}
 
 	@Override
@@ -56,16 +45,15 @@ public class ECDaoImpl extends SqlSessionDaoSupport implements
 		parameterMap.put("ecName", su.getEcName());
 		parameterMap.put("offset", offset);
 		parameterMap.put("rows", rows);
-		List<EC> ecList = this.getSqlSession().selectList(
-				"ec.api.EC.list", parameterMap);
+		List<EC> ecList = this.getSqlSession().selectList("ec.api.EC.list",
+				parameterMap);
 		return ecList;
 	}
 
 	@Override
 	public int count()
 	{
-		Integer count = this.getSqlSession().selectOne(
-				"ec.api.EC.count");
+		Integer count = this.getSqlSession().selectOne("ec.api.EC.count");
 		return count;
 
 	}
@@ -82,7 +70,6 @@ public class ECDaoImpl extends SqlSessionDaoSupport implements
 		if (StringUtils.isEmpty(ec.getEcName())
 				&& StringUtils.isEmpty(ec.getEcId()))
 			return new EC();
-
 		return this.getSqlSession().selectOne("ec.api.EC.find", ec);
 	}
 

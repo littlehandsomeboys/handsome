@@ -14,28 +14,24 @@
 	<select id="list" parameterType="java.util.Map" resultType="aliasesEC">
 		select
 		<include refid="cols" />
-		from t_ec
-		<where>
-			<if test="ecName != null ">
-				ecName like CONCAT('%','${ecName}','%')
-			</if>
-		</where>
+		from t_ec where 1=1
+		<if test="ecName != null and ecName != ''">
+			ecName like CONCAT('%','${ecName}','%')
+		</if>
 		ORDER BY createDate DESC LIMIT #{offset},#{rows}
 	</select>
-	
+
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(1) FROM t_ec;
 	</select>
 
-	<!-- 查询一个用户 -->
+	<!-- 查询一个企业 -->
 	<select id="find" parameterType="aliasesEC" resultType="aliasesEC">
 		select
 		<include refid="cols" />
 		from t_ec
 		<where>
-			<if test="ecId !=null ">
-				ecId = #{ecId, jdbcType=VARCHAR}
-			</if>
+			ecId = #{ecId, jdbcType=VARCHAR}
 		</where>
 	</select>
 
@@ -66,7 +62,8 @@
 
 	<!-- 删除 -->
 	<delete id="delete" parameterType="string">
-		delete from t_ec where ecId=#{ecId}
+		delete from t_ec where
+		ecId=#{ecId}
 	</delete>
 
 </mapper>

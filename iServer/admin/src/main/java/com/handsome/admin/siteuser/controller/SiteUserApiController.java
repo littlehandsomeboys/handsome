@@ -3,14 +3,13 @@ package com.handsome.admin.siteuser.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,7 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -33,12 +33,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.handsome.admin.constent.SessionKeyConstent;
 import com.handsome.common.bean.PageInfo;
 import com.handsome.common.util.PropertiesHelper;
 import com.handsome.common.util.TimeUtil;
 import com.handsome.pic.api.bean.Pic;
 import com.handsome.pic.api.service.PicService;
 import com.handsome.siteuser.api.bean.SiteUser;
+import com.handsome.siteuser.api.constent.SiteUserConstent;
 import com.handsome.siteuser.api.service.SiteUserService;
 
 /**
@@ -64,10 +66,12 @@ public class SiteUserApiController
 
 	@ApiOperation("查询用户列表")
 	@RequestMapping(value = "/querySiteUsers.do", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public @ResponseBody String querySiteUsers(HttpServletRequest request)
+	public @ResponseBody String querySiteUsers(HttpServletRequest request, HttpSession session)
 	{
 		SiteUser su = new SiteUser();
 
+		SiteUser runTimeUser = (SiteUser) session.getAttribute(SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN);
+		
 		su.setAccount(request.getParameter("account"));
 		try
 		{
@@ -86,15 +90,28 @@ public class SiteUserApiController
 		}
 		catch (UnsupportedEncodingException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 
 		PageInfo pi = new PageInfo();
 		pi.setPageNo(NumberUtils.toInt(request.getParameter("page")));
 		pi.setPageSize(NumberUtils.toInt(request.getParameter("rows")));
-		// List<SiteUser> sus = siteUserService.getSiteUserList(su, null);
-		List<SiteUser> sus = siteUserService.getSiteUserList(su, pi);
+		
+		List<SiteUser> sus = null;
+		Integer total = 1;
+		//查看管理员的权限，如果是老师只能看自己的信息
+		if (SiteUserConstent.AUTHORITIES_DEPT.equals(runTimeUser.getAuthorities()))
+		{
+			sus = new ArrayList<SiteUser>();
+			sus.add(runTimeUser);
+		}
+		else
+		{
+			sus = siteUserService.getSiteUserList(su, pi, runTimeUser.getAuthorities());
+			total = siteUserService.countSiteUser();
+		}
+		
+		//数据组装
 		JSONArray rows = new JSONArray();
 		for (SiteUser siteUser : sus)
 		{
@@ -117,7 +134,7 @@ public class SiteUserApiController
 			rows.add(user);
 		}
 
-		Integer total = siteUserService.countSiteUser();
+		
 
 		JSONObject res = new JSONObject();
 		res.put("total", total);
@@ -315,8 +332,7 @@ public class SiteUserApiController
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		finally
 		{
@@ -329,8 +345,7 @@ public class SiteUserApiController
 			}
 			catch (IOException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			}
 		}
 

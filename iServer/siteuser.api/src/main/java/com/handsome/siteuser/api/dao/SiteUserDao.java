@@ -28,13 +28,13 @@ public interface SiteUserDao
 
 	/**
 	 * 分页查询列表 
-	 * 
 	 * @param su
+	 * @param runTimeAuthorities
 	 * @param offset
 	 * @param rows
 	 * @return
 	 */
-	List<SiteUser> list(SiteUser su, Integer offset, Integer rows);
+	List<SiteUser> list(SiteUser su, String runTimeAuthorities, Integer offset, Integer rows);
 
 	/**
 	 * 查询总数

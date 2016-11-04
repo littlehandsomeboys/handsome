@@ -37,21 +37,11 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 	@Override
 	public void add(SiteUser u)
 	{
-		try
-		{
-			log.debug("begin" + u.toString());
-			this.getSqlSession().insert("siteuser.api.SiteUser.create", u);
-			log.debug("end");
-		}
-		catch (Exception e)
-		{
-			log.error(e.toString(), e);
-			System.out.println(e);
-		}
+		this.getSqlSession().insert("siteuser.api.SiteUser.create", u);
 	}
 
 	@Override
-	public List<SiteUser> list(SiteUser su, Integer offset, Integer rows)
+	public List<SiteUser> list(SiteUser su, String runTimeAuthorities, Integer offset, Integer rows)
 	{
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("ecName", su.getEcName());
@@ -61,6 +51,7 @@ public class SiteUserDaoImpl extends SqlSessionDaoSupport implements
 		parameterMap.put("rows", su.getEcName());
 		parameterMap.put("offset", offset);
 		parameterMap.put("rows", rows);
+		parameterMap.put("runTimeAuthorities", runTimeAuthorities);
 		List<SiteUser> siteUserList = this.getSqlSession().selectList(
 				"siteuser.api.SiteUser.list", parameterMap);
 		return siteUserList;

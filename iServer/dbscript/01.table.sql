@@ -46,7 +46,7 @@ CREATE TABLE `t_ec` (
 CREATE UNIQUE INDEX i_ecName ON t_ec(ecName);
 
 CREATE TABLE `t_pic` (
-  `picId` VARCHAR(32) NOT NULL COMMENT '企业id',
+  `picId` VARCHAR(32) NOT NULL COMMENT '图片id',
   `dir` VARCHAR(100) COMMENT '相对路径',
   `url` VARCHAR(200) COMMENT '访问地址',
   `createDate` date COMMENT '创建时间',

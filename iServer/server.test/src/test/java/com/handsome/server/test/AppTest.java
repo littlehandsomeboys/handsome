@@ -80,15 +80,15 @@ public class AppTest
 		
 		//查询列表
 		PageInfo pi = new PageInfo();
-		List<SiteUser> siteUserList = siteUserService.getSiteUserList(siteUser, pi);
+		List<SiteUser> siteUserList = siteUserService.getSiteUserList(siteUser, pi, "1");
 		System.out.println("条件查询:"+siteUserList.size());
-		siteUserList = siteUserService.getSiteUserList(new SiteUser(), pi);
+		siteUserList = siteUserService.getSiteUserList(new SiteUser(), pi, "1");
 		System.out.println("空条件查询:"+siteUserList.size());
 		pi.setPageNo(1);
 		pi.setPageSize(1);
-		siteUserList = siteUserService.getSiteUserList(new SiteUser(), pi);
+		siteUserList = siteUserService.getSiteUserList(new SiteUser(), pi, "1");
 		System.out.println("第二页查询:"+siteUserList.size());
-		siteUserList = siteUserService.getSiteUserList(new SiteUser(), null);
+		siteUserList = siteUserService.getSiteUserList(new SiteUser(), null, "1");
 		System.out.println("全查询:"+siteUserList.size());
 		
 		//查询总数

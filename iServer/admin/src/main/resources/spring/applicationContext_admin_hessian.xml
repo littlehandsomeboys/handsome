@@ -6,15 +6,5 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- 客户端Hessian代理工厂Bean -->
-	<bean id="productService"
-		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
-		<!-- 请求代理Servlet路径 -->
-		<property name="serviceUrl">
-			<value>${hessian_server_url}HessianProductService</value>
-		</property>
-		<!-- 接口定义 -->
-		<property name="serviceInterface" value="com.handsome.product.api.service.ProductService"/>
-	</bean>
 
 </beans>

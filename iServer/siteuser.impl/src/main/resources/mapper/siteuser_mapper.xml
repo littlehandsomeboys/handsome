@@ -14,45 +14,49 @@
 	<select id="list" parameterType="java.util.Map" resultType="aliasesSiteUser">
 		select
 		<include refid="cols" />
-		from t_siteuser
-		<where>
-			<if test="ecName != null ">
-				ecName = CONCAT('${ecName}')
+		from t_siteuser where 1=1
+			<if test="runTimeAuthorities != null and runTimeAuthorities != '1'">
+				and authorities in ('2','3')
 			</if>
-			<if test="account != null">
+			<if test="ecName != null and ecName != ''">
+				and ecName = CONCAT('${ecName}')
+			</if>
+			<if test="ecName != null and ecName != ''">
+				and ecName = CONCAT('${ecName}')
+			</if>
+			<if test="account != null and account != ''">
 				and account like CONCAT('%','${account}','%' )
 			</if>
-			<if test="reserve0 != null">
+			<if test="reserve0 != null and reserve0 != ''">
 				and reserve0 like CONCAT('%','${reserve0}','%' )
 			</if>
-			<if test="reserve1 != null">
+			<if test="reserve1 != null and reserve1 != ''">
 				and reserve1 like CONCAT('%','${reserve1}','%' )
 			</if>
-			<if test="reserve2 != null">
+			<if test="reserve2 != null and reserve2 != ''">
 				and reserve2 like CONCAT('%','${reserve2}','%' )
 			</if>
-			<if test="reserve3 != null">
+			<if test="reserve3 != null and reserve3 != ''">
 				and reserve3 like CONCAT('%','${reserve3}','%' )
 			</if>
-			<if test="reserve4 != null">
+			<if test="reserve4 != null and reserve4 != ''">
 				and reserve4 like CONCAT('%','${reserve4}','%' )
 			</if>
-			<if test="reserve5 != null">
+			<if test="reserve5 != null and reserve5 != ''">
 				and reserve5 like CONCAT('%','${reserve5}','%' )
 			</if>
-			<if test="reserve6 != null">
+			<if test="reserve6 != null and reserve6 != ''">
 				and reserve6 like CONCAT('%','${reserve6}','%' )
 			</if>
-			<if test="reserve7 != null">
+			<if test="reserve7 != null and reserve7 != ''">
 				and reserve7 like CONCAT('%','${reserve7}','%' )
 			</if>
-			<if test="reserve8 != null">
+			<if test="reserve8 != null and reserve8 != ''">
 				and reserve8 like CONCAT('%','${reserve8}','%' )
 			</if>
-			<if test="reserve9 != null">
+			<if test="reserve9 != null and reserve9 != ''">
 				and reserve9 like CONCAT('%','${reserve9}','%' )
 			</if>
-		</where>
 		ORDER BY createDate DESC LIMIT #{offset},#{rows}
 	</select>
 	
@@ -64,30 +68,13 @@
 	<select id="find" parameterType="aliasesSiteUser" resultType="aliasesSiteUser">
 		select
 		<include refid="cols" />
-		from t_siteuser
-		<where>
-			<if test="siteUserId !=null ">
-				siteUserId = #{siteUserId, jdbcType=VARCHAR}
+		from t_siteuser where 1=1
+			<if test="siteUserId != null and siteUserId != ''">
+				and siteUserId = #{siteUserId, jdbcType=VARCHAR}
 			</if>
-			<if test="account != null">
+			<if test="account != null and account != ''">
 				and account = #{account, jdbcType=VARCHAR}
 			</if>
-			<if test="reserve5 != null">
-				and reserve5 = #{reserve5, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve6 != null">
-				and reserve6 = #{reserve6, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve7 != null">
-				and reserve7 = #{reserve7, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve8 != null">
-				and reserve8 = #{reserve8, jdbcType=VARCHAR}
-			</if>
-			<if test="reserve9 != null">
-				and reserve9 = #{reserve9, jdbcType=VARCHAR}
-			</if>
-		</where>
 	</select>
 
 	<!-- 新增 -->
@@ -104,7 +91,7 @@
 	<update id="update" parameterType="aliasesSiteUser">
 		update t_siteuser
 		<set>
-			<if test="ecName">
+			<if test="ecName!=null">
 				ecName=#{ecName},
 			</if>
 			<if test="password!=null">

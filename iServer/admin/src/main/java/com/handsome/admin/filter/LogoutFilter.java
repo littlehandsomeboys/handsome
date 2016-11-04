@@ -13,10 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-
-import com.handsome.admin.constent.SessionKeyConstent;
-
 public class LogoutFilter implements Filter
 {
 

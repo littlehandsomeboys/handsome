@@ -12,17 +12,15 @@
 
 	<!-- 查询列表 -->
 	<select id="list" parameterType="java.util.Map" resultType="aliasesPic">
-		selaliasesPict
+		select
 		<include refid="cols" />
-		from t_pic
-		<where>
-			<if test="dir != null ">
-				dir like CONCAT('%','${dir}','%')
-			</if>
-			<if test="url != null ">
-				url like CONCAT('%','${url}','%')
-			</if>
-		</where>
+		from t_pic where 1=1
+		<if test="dir != null and dir != ''">
+			and	dir like CONCAT('%','${dir}','%')
+		</if>
+		<if test="url != null and url != ''">
+			and	url like CONCAT('%','${url}','%')
+		</if>
 		ORDER BY createDate DESC LIMIT #{offset},#{rows}
 	</select>
 	
@@ -36,14 +34,11 @@
 		<include refid="cols" />
 		from t_pic
 		<where>
-			<if test="picId !=null ">
+			<if test="picId != null and picId != ''">
 				picId = #{picId, jdbcType=VARCHAR}
 			</if>
-			<if test="dir !=null ">
-				dir = #{dir, jdbcType=VARCHAR}
-			</if>
-			<if test="url !=null ">
-				url = #{url, jdbcType=VARCHAR}
+			<if test="url != null and url != ''">
+				picId = #{url, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
@@ -72,7 +67,6 @@
 				updateDate=#{updateDate},
 			</if>
 		</set>
-
 		where picId=#{picId}
 	</update>
 
