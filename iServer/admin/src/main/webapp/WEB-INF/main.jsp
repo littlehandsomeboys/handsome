@@ -15,9 +15,10 @@
 <script type="text/javascript" src="js/outlook2.js"> </script>
 <script type="text/javascript">
 	
-	var _menus = {
+	var _menus = ${menu};
+	/*{
 		"menus":[
-		    /* {
+		     {
 				"menuid":"1","icon":"icon-sys","menuname":"产品",
 				"menus":[
 			    	{
@@ -52,7 +53,7 @@
 				    	"icon":"icon-nav",
 				    	"url":"demo1.html"
 				    }]
-			}, */
+			}, 
 			{
 				"menuid":"28","icon":"icon-sys","menuname":"管理员",
 				"menus":[
@@ -61,14 +62,14 @@
 						"menuname":"教师管理",
 						"icon":"icon-nav",
 						"url":"menu/siteuser/query.html"
-					}/* ,
+					} ,
 					{
 						"menuid":"42",
 						"menuname":"企业管理",
 						"icon":"icon-nav",
 						"url":"demo1.html"
-					} */]
-			}/* ,
+					} ]
+			} ,
 			{
 				"menuid":"39","icon":"icon-sys","menuname":"系统",
 				"menus":[
@@ -78,8 +79,8 @@
 						"icon":"icon-nav",
 						"url":"demo.html"
 					}]
-			} */]
-	};
+			} ]
+	};*/
         //设置登录窗口
         function openPwd() {
             $('#w').window({
@@ -161,6 +162,7 @@
 			<img src="images/noscript.gif" alt='抱歉，请开启脚本支持！' />
 		</div>
 	</noscript>
+	<input id="menu" type="hidden" value='${menu}' />
 	<div region="north" split="true" border="false"
 		style="overflow: hidden; height: 30px; background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%; line-height: 20px; color: #fff; font-family: Verdana, 微软雅黑, 黑体">
 		<span style="float: right; padding-right: 20px;" class="head">欢迎
