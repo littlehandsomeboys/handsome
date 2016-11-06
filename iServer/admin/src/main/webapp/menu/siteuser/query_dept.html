@@ -56,7 +56,7 @@
 			initTable(pars)
 		});
 		$('#authorities_a').combobox({
-			url : '../../auth/api/selectAuthorities.do',//'combobox_authorities.json',
+			url : 'combobox_authorities.json',
 			valueField : 'id',
 			textField : 'text'
 		});
@@ -198,7 +198,7 @@
 						{
 							//url: 'datagrid_data2.json',
 							url : '../../siteuser/api/querySiteUsers.do',
-							title : '结果列表',
+							title : '我的信息',
 							width : 800,
 							height : 400,
 							method : 'post',
@@ -247,7 +247,7 @@
 							] ],
 							//表头的按钮  
 							toolbar : [
-									{
+									/*{
 										id : 'btnAdd',
 										text : '新增',
 										iconCls : 'icon-add',
@@ -263,7 +263,7 @@
 
 											$("#mytitle").html("请填写教师信息");
 										}
-									}/* , '-', {
+									} , '-', {
 										id : 'btnCancle',
 										text : '删除',
 										iconCls : 'icon-cancel',
@@ -302,8 +302,7 @@
 
 	function formatOper(val, row, index) {
 		return '<a href="#" onclick="edit(' + index
-				+ ')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="deleterow(' + index
-				+ ')">删除</a>';
+				+ ')">修改</a>';
 	}
 
 	function edit(index) {
@@ -392,13 +391,13 @@
 </head>
 <body>
 	<div class="easyui-panel">
-		<div>
+		<!--<div>
 			账号：<input type="text" id="account" /> 学校：<input type="text"
 				id="ecName" /> 姓名：<input type="text" id="name" /> <input
 				type="button" id="btnSearch" value="查询" /> <input type="button"
 				id="btnClear" value="清空" />
 		</div>
-		<!--  <form id="queryForm" style="margin:10;text-align: center;">  
+		  <form id="queryForm" style="margin:10;text-align: center;">  
 		       	 <table width="100%">  
 		            <tr>  
 		            <td>账号 ：<input name="account" id="account" style="width: 200"></td>

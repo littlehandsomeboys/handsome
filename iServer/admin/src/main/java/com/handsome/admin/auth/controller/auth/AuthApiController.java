@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.handsome.admin.common.bean.ResponseObject;
 import com.handsome.admin.common.util.SessionInitHelper;
+import com.handsome.admin.constent.SessionKeyConstent;
+import com.handsome.common.util.PropertiesHelper;
 import com.handsome.siteuser.api.bean.SiteUser;
+import com.handsome.siteuser.api.constent.SiteUserConstent;
 import com.handsome.siteuser.api.service.SiteUserService;
 
 /**
@@ -103,6 +107,24 @@ public class AuthApiController
 			res.setError(e.getMessage());
 		}
 		return JSON.toJSONString(res);
+	}
+	
+	@ApiOperation("权限选择下拉菜单")
+	@RequestMapping(value = "/selectAuthorities.do", method = RequestMethod.GET)
+	public @ResponseBody Object selectAuthorities(HttpServletRequest request, HttpSession session)
+	{
+		SiteUser runTimeUser = (SiteUser) session.getAttribute(SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN);
+		String authorities = "";
+		if (SiteUserConstent.AUTHORITIES_SUPER.equals(runTimeUser.getAuthorities()))
+		{
+			authorities = "[{\"id\":1,\"text\":\"超级管理员\"},{\"id\":2,\"text\":\"校长\"},{\"id\":3,\"text\":\"老师\"}]";
+		}
+		else
+		{
+			authorities = "[{\"id\":2,\"text\":\"校长\"},{\"id\":3,\"text\":\"老师\"}]";
+		}
+		
+		return JSON.parse(authorities);
 	}
 
 }
