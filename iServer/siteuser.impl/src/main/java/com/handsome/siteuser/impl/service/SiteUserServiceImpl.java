@@ -21,7 +21,6 @@ public class SiteUserServiceImpl implements SiteUserService
 	@Override
 	public void createSiteUser(SiteUser su)
 	{
-		su.setAuthorities(SiteUserConstent.AUTHORITIES_EC);
 		su.setEnabled(SiteUserConstent.ENABLED_ON);
 		su.setSiteUserId(UUIDTool.getUUID32());
 		su.setCreateDate(new Date());
