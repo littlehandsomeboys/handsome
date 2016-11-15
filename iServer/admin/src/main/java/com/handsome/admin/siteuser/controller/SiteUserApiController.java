@@ -33,6 +33,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.handsome.admin.common.util.SessionInitHelper;
+import com.handsome.admin.constent.SessionKeyConstent;
 import com.handsome.common.bean.PageInfo;
 import com.handsome.common.util.PropertiesHelper;
 import com.handsome.common.util.TimeUtil;
@@ -334,5 +336,13 @@ public class SiteUserApiController
 			}
 		}
 
+	}
+	
+	@RequestMapping(value="/updatePwd.do",method=RequestMethod.POST)
+	public @ResponseBody String updateSiteUserPwd(@RequestParam("newpass") String newpass,HttpServletRequest request)
+	{
+		SiteUser siteUser = (SiteUser) SessionInitHelper.getSessionAttribute(request.getSession(), SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN);
+		siteUserService.updateSiteUserPwd(siteUser.getSiteUserId(), newpass);
+		return newpass;
 	}
 }

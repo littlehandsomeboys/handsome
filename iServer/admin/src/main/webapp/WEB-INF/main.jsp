@@ -117,13 +117,20 @@
                 msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
                 return false;
             }
-
-            $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
+            
+            $.post('/siteuser/api/updatePwd.do?newpass=' + $newpass.val(), function(msg) {
                 msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
                 $newpass.val('');
                 $rePass.val('');
                 close();
-            })
+            }) 
+
+           /*  $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
+                msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
+                $newpass.val('');
+                $rePass.val('');
+                close();
+            }) */
             
         }
 
