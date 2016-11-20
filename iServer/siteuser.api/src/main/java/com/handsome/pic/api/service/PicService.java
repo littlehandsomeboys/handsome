@@ -17,7 +17,7 @@ public interface PicService
 	 * 添加图片
 	 * @param pic
 	 */
-	void createPic(Pic pic);
+	String createPic(Pic pic);
 
 	/**
 	 * 修改图片

@@ -65,7 +65,7 @@
 <script>
 	$(function() {
 		$('#currentPage').val(0);
-		getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=大蓝鲸');
+		getHandler('teacher/api/teacherList.do?pageNo=1&pageSize=5&ecName=弗恩教育');
 
 		$('#search')
 				.click(
@@ -73,7 +73,7 @@
 							$('#nextPageBtn').hide();
 							$('#teacherList').children().remove();
 							$('#currentPage').val(0);
-							var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=2&ecName=大蓝鲸&reserve5='
+							var url = 'teacher/api/teacherList.do?pageNo=1&pageSize=5&ecName=弗恩教育&reserve5='
 									+ $('#searchInput').val();
 							getHandler(url);
 						});
@@ -81,7 +81,7 @@
 				function() {
 					var page = parseInt($('#currentPage').val()) + parseInt(1);
 					var url = 'teacher/api/teacherList.do?pageNo=' + page
-							+ '&pageSize=2&ecName=大蓝鲸&reserve5='
+							+ '&pageSize=5&ecName=弗恩教育&reserve5='
 							+ $('#searchInput').val();
 					getHandler(url);
 				});
@@ -125,17 +125,17 @@
 	{@each rows as row}
 	 <div class="form-group clearfix teacher">
 		<input type="hidden" value=${row.account} />
-		<img src="${row.reserve1}" alt="..."  class="img-circle float-left" height="80" width="80">
+		<img src="${row.headUrl}" alt="..."  class="img-circle float-left" height="80" width="80">
 		<div class="info float-left">
 			<h4 class="name">${row.reserve5}</h4>
-		     <span class="super super1">
+		     <span class="super1" style="background-color:#f51b0a;color:#FFF!important">
              	{@if row.reserve6 == "0"}
  					普通
 				{@else}
  					 专家
                 {@/if}
 			 </span>
-		     <span class="super super2">${row.reserve4}</span>
+		     <span>${row.reserve4}</span>
 		 </div>
 	</div>
 	{@/each}

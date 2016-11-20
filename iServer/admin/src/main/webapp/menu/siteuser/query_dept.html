@@ -6,11 +6,42 @@
 <title>jQuery EasyUI</title>
 <link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-<script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
+<link rel="stylesheet" href="../../css/jquery.Jcrop.css" type="text/css" />
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script src="../../js/jquery.Jcrop.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style type="text/css">
+
+.jcrop-holder #preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 10px;
+  right: -280px;
+  padding: 6px;
+  border: 1px rgba(0,0,0,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+#preview-pane .preview-container {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
 #fm {
 	margin: 0;
 	padding: 10px 30px;
@@ -37,7 +68,6 @@
 <script>
 	//防止重复提交标志
 	var checkSubmitFlg = true;
-
 	$(function() {
 		//清空查询条件  
 		$("#btnClear").click(function() {
@@ -56,7 +86,7 @@
 			initTable(pars)
 		});
 		$('#authorities_a').combobox({
-			url : 'combobox_authorities.json',
+			url : '../../auth/api/selectAuthorities.do',//'combobox_authorities.json',
 			valueField : 'id',
 			textField : 'text'
 		});
@@ -107,6 +137,7 @@
 					$.ajax({
 						url : '../../siteuser/api/addSiteUser.do',
 						type : "POST",
+						async: false,
 						contentType: "application/x-www-form-urlencoded; charset=utf-8", 
 						//contentType : "multipart/form-data",
 						data : $('#fma').serialize(),
@@ -119,7 +150,8 @@
 							if (result.result == "0") {
 								$.messager.alert("提示信息", "新增成功");
 								$("#addsource").dialog("close");
-								$('#resTable').datagrid("load");
+								//$("#resTable").datagrid("load");
+								window.location.reload();
 							} else {
 								$.messager.alert("提示信息", result.mes + "操作失败");
 							}
@@ -177,7 +209,8 @@
 							if (result.result == "0") {
 								$.messager.alert("提示信息", "修改成功");
 								$("#updatesource").dialog("close");
-								$('#resTable').datagrid("load");
+								//$("#resTable").datagrid("load");
+								window.location.reload();
 							} else {
 								$.messager.alert("提示信息", result.mes + "操作失败");
 							}
@@ -309,8 +342,60 @@
 		var row = $('#resTable').datagrid('getData').rows[index];// 关键在这里  
 		if (row) {
 			$("#fmu").form("load", row);
-			$("#reserve1_u").attr("src", row.reserve1);
-			$("#reserve2_u").attr("src", row.reserve2);
+			if (row.headUrl != null || row.headUrl != undefined
+					|| row.headUrl == '') {
+				$("#headUrl_u").attr("src", row.headUrl);
+				//$("#headUrl_preview_u").attr("src", row.headUrl);
+			}
+			var jcrop_api,
+		    boundx,
+		    boundy,
+		 	// Grab some information about the preview pane
+		    
+		    $pcnt = $('#preview-pane .preview-container'),
+		    $pimg = $('#preview-pane .preview-container img'),
+		    xsize = $pcnt.width(),
+		    ysize = $pcnt.height();
+			//$('#headUrl_u').empty();
+			$('#headUrl_u').Jcrop({
+			      onChange: updatePreview,
+			      onSelect: updatePreview,
+			      aspectRatio: 1,//xsize / ysize
+			    },function(){
+			      // Use the API to get the real image size
+			      var bounds = this.getBounds();
+			      boundx = bounds[0];
+			      boundy = bounds[1];
+			      // Store the API in the jcrop_api variable
+			      jcrop_api = this;
+
+			      // Move the preview into the jcrop container for css positioning
+			      //$('#preview-pane').appendTo(jcrop_api.ui.holder);
+			    });
+			
+			//console.log('init',[xsize,ysize]);
+			function updatePreview(c)
+		    {
+		      if (parseInt(c.w) > 0)
+		      {
+		        var rx = xsize / c.w;
+		        var ry = ysize / c.h;
+
+		        $pimg.css({
+		          width: Math.round(rx * boundx) + 'px',
+		          height: Math.round(ry * boundy) + 'px',
+		          marginLeft: '-' + Math.round(rx * c.x) + 'px',
+		          marginTop: '-' + Math.round(ry * c.y) + 'px'
+		        });
+		        $("#uboundx").val(boundx);
+		        $("#uboundy").val(boundy);
+		        $("#uw").val(c.w);
+		        $("#uh").val(c.h);
+		        $("#ux").val(c.x);
+		        $("#uy").val(c.y);
+		      }
+		    };
+			$("#picUrl_u").attr("src", row.picUrl);
 			if (row.authorities == 1) {
 				$("#authorities_s").val("超级管理员");
 			} else if (row.authorities == 2) {
@@ -319,6 +404,7 @@
 				$("#authorities_s").val("老师");
 			}
 			$("#updatesource").dialog("open").dialog('setTitle', '更新');
+			$(".panel-tool-close").css("display","none");
 			$("#mytitle").html("更新教师信息");
 		}
 	}
@@ -360,7 +446,7 @@
 		checkSubmitFlg = true;
 	}
 
-	function ajaxFileUpload(param, paramtype, showid) {
+	function ajaxFileUpload(param, paramtype, showid, id) {
 		var name = param + "_" + paramtype;
 		var elementIds = [ name ]; //flag为id、name属性名
 		$.ajaxFileUpload({
@@ -376,6 +462,7 @@
 					$.messager.alert("提示", "上传成功");
 					$("#"+showid).attr("src", picres.url);
 					$("#"+name+"h").val(picres.url);
+					$("#"+id).val(picres.picId);
 				}
 				if (picres.res == 'empty') {
 					$.messager.alert("提示", "未选择图片，请先选择图片");
@@ -509,19 +596,33 @@
 			</div>
 			<div class="fitem">
 				<label> 头像 </label>
-				<input id="reserve1_fu" type="file" name="picFile" />
-				<input type="button" onclick="javascript:ajaxFileUpload('reserve1','fu','reserve1_u')" class="icon-save" style="width:21px" />
-				</br>
-				<img id="reserve1_u" src="" width="200" height="200">
-				<input id="reserve1_fuh" name="reserve1" type="hidden" />
+				<input id="headUrl_fu" type="file" name="picFile" />
+				<input type="button" onclick="javascript:ajaxFileUpload('headUrl','fu','headUrl_u','reserve8_u')" class="icon-save" style="width:21px" />
+			</div>
+			<div style="padding-left:300px">
+				<img id="headUrl_u" width="250" height="250" src="../../pic/default.png" alt="[Jcrop Example]"/>
+					<!-- <div id="preview-pane">
+					    <div class="preview-container">
+					      <img id="headUrl_preview_u" src="../../pic/default.png" class="jcrop-preview" alt="Preview" />
+					    </div>
+					</div> -->
+					<input id="headUrl_fuh" name="headUrl" type="hidden" />
+					<input id="reserve8_u" name="reserve8" type="hidden" />
+					<input id="uboundx" name="boundx" type="hidden" />
+					<input id="uboundy" name="boundy" type="hidden" />
+					<input id="uw" name="w" type="hidden" />
+					<input id="uh" name="h" type="hidden" />
+					<input id="ux" name="x" type="hidden" />
+					<input id="uy" name="y" type="hidden" />
 			</div>
 			<div class="fitem">
 				<label> 生活照 </label>
-				<input id="reserve2_fu" type="file" name="picFile" />
-				<input type="button" onclick="javascript:ajaxFileUpload('reserve2','fu','reserve2_u')" class="icon-save" style="width:21px" />
+				<input id="picUrl_fu" type="file" name="picFile" />
+				<input type="button" onclick="javascript:ajaxFileUpload('picUrl','fu','picUrl_u','reserve9_u')" class="icon-save" style="width:21px" />
 				</br>
-				<img id="reserve2_u" src="" width="400">
-				<input id="reserve2_fuh" name="reserve2" type="hidden" />
+				<img id="picUrl_u" src="" width="400">
+				<input id="picUrl_fuh" name="picUrl" type="hidden" />
+				<input id="reserve9_u" name="reserve9" type="hidden" />
 			</div>
 			<div class="fitem">
 				<label> 证书 </label>
@@ -538,6 +639,7 @@
 			<input id="butupd" type="button" value="提交" iconcls="icon-save">
 			<button onclick="javascript:$('#updatesource').dialog('close')">取消</button>
 		</form>
+		
 		<div id="dlg-buttons">
 			<!-- <a href="javascript:void(0)" class="easyui-linkbutton" onclick="savedata()" iconcls="icon-save">保存</a>  
 		    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#updatesource').dialog('close')" iconcls="icon-cancel">取消</a>  -->

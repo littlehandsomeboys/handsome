@@ -31,10 +31,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.handsome.admin.common.util.SessionInitHelper;
 import com.handsome.admin.constent.SessionKeyConstent;
 import com.handsome.common.bean.PageInfo;
+import com.handsome.common.util.ImageUtil;
 import com.handsome.common.util.PropertiesHelper;
 import com.handsome.common.util.TimeUtil;
 import com.handsome.pic.api.bean.Pic;
@@ -66,12 +69,14 @@ public class SiteUserApiController
 
 	@ApiOperation("查询用户列表")
 	@RequestMapping(value = "/querySiteUsers.do", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public @ResponseBody String querySiteUsers(HttpServletRequest request, HttpSession session)
+	public @ResponseBody String querySiteUsers(HttpServletRequest request,
+			HttpSession session)
 	{
 		SiteUser su = new SiteUser();
 
-		SiteUser runTimeUser = (SiteUser) session.getAttribute(SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN);
-		
+		SiteUser runTimeUser = (SiteUser) session
+				.getAttribute(SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN);
+
 		su.setAccount(request.getParameter("account"));
 		try
 		{
@@ -96,22 +101,25 @@ public class SiteUserApiController
 		PageInfo pi = new PageInfo();
 		pi.setPageNo(NumberUtils.toInt(request.getParameter("page")));
 		pi.setPageSize(NumberUtils.toInt(request.getParameter("rows")));
-		
+
 		List<SiteUser> sus = null;
 		Integer total = 1;
-		//查看管理员的权限，如果是老师只能看自己的信息
-		if (SiteUserConstent.AUTHORITIES_DEPT.equals(runTimeUser.getAuthorities()))
+		// 查看管理员的权限，如果是老师只能看自己的信息
+		if (SiteUserConstent.AUTHORITIES_DEPT.equals(runTimeUser
+				.getAuthorities()))
 		{
 			sus = new ArrayList<SiteUser>();
-			sus.add(runTimeUser);
+			SiteUser self = siteUserService.getSiteUserById(runTimeUser.getSiteUserId());
+			sus.add(self);
 		}
 		else
 		{
-			sus = siteUserService.getSiteUserList(su, pi, runTimeUser.getAuthorities());
+			sus = siteUserService.getSiteUserList(su, pi,
+					runTimeUser.getAuthorities());
 			total = siteUserService.countSiteUser();
 		}
-		
-		//数据组装
+
+		// 数据组装
 		JSONArray rows = new JSONArray();
 		for (SiteUser siteUser : sus)
 		{
@@ -122,8 +130,20 @@ public class SiteUserApiController
 			user.put("ecName", siteUser.getEcName());
 			user.put("enabled", siteUser.getEnabled());
 			user.put("reserve0", siteUser.getReserve0());
-			user.put("reserve1", siteUser.getReserve1());
-			user.put("reserve2", siteUser.getReserve2());
+			Pic pic = new Pic();
+			pic.setPicId(siteUser.getReserve8());
+			pic = picService.getPic(pic);
+			if (null != pic.getUrl())
+			{
+				user.put("headUrl", PropertiesHelper.getProperties("picRootUrl") + pic.getUrl());
+			}
+			pic = new Pic();
+			pic.setPicId(siteUser.getReserve9());
+			pic = picService.getPic(pic);
+			if (null != pic.getUrl())
+			{
+				user.put("picUrl", PropertiesHelper.getProperties("picRootUrl") + pic.getUrl());
+			}
 			user.put("reserve3", siteUser.getReserve3());
 			user.put("reserve4", siteUser.getReserve4());
 			user.put("reserve5", siteUser.getReserve5());
@@ -133,8 +153,6 @@ public class SiteUserApiController
 			user.put("reserve9", siteUser.getReserve9());
 			rows.add(user);
 		}
-
-		
 
 		JSONObject res = new JSONObject();
 		res.put("total", total);
@@ -166,6 +184,16 @@ public class SiteUserApiController
 			su.setAuthorities(request.getParameter("authorities"));
 			su.setEcName(request.getParameter("ecName"));
 			su.setPassword("12345");
+			
+			String boundx = request.getParameter("boundx");
+			String boundy = request.getParameter("boundy");
+			String w = request.getParameter("w");
+			String h = request.getParameter("h");
+			String x = request.getParameter("x");
+			String y = request.getParameter("y");
+			String headId = StringUtils.isEmpty(request.getParameter("reserve8"))? "defaulthead":request.getParameter("reserve8") ;
+			headId = changeHead(boundx, boundy, w, h, x, y, headId);
+			
 			su.setReserve0(request.getParameter("reserve0"));
 			su.setReserve1(request.getParameter("reserve1"));
 			su.setReserve2(request.getParameter("reserve2"));
@@ -174,7 +202,7 @@ public class SiteUserApiController
 			su.setReserve5(request.getParameter("reserve5"));
 			su.setReserve6(request.getParameter("reserve6"));
 			su.setReserve7(request.getParameter("reserve7"));
-			su.setReserve8(request.getParameter("reserve8"));
+			su.setReserve8(headId);
 			su.setReserve9(request.getParameter("reserve9"));
 			siteUserService.createSiteUser(su);
 			res.put("result", "0");
@@ -194,6 +222,16 @@ public class SiteUserApiController
 		res.put("mes", "失败");
 		su = siteUserService.getSiteUserByUserName(request
 				.getParameter("account"));
+
+		String boundx = request.getParameter("boundx");
+		String boundy = request.getParameter("boundy");
+		String w = request.getParameter("w");
+		String h = request.getParameter("h");
+		String x = request.getParameter("x");
+		String y = request.getParameter("y");
+		String headId = request.getParameter("reserve8");
+		headId = changeHead(boundx, boundy, w, h, x, y, headId);
+
 		su.setReserve0(request.getParameter("reserve0"));
 		su.setReserve1(request.getParameter("reserve1"));
 		su.setReserve2(request.getParameter("reserve2"));
@@ -202,13 +240,36 @@ public class SiteUserApiController
 		su.setReserve5(request.getParameter("reserve5"));
 		su.setReserve6(request.getParameter("reserve6"));
 		su.setReserve7(request.getParameter("reserve7"));
-		su.setReserve8(request.getParameter("reserve8"));
+		su.setReserve8(headId);
 		su.setReserve9(request.getParameter("reserve9"));
 
 		siteUserService.updateSiteUserInfo(su);
 		res.put("result", "0");
 		res.put("mes", "成功");
 		return res;
+	}
+
+	private String changeHead(String boundx, String boundy, String w, String h,
+			String x, String y, String headId)
+	{
+		Pic pic = new Pic();
+		// 处理头像
+		pic.setPicId(headId);
+		pic = picService.getPic(pic);
+		if (!StringUtils.isEmpty(boundx) && !StringUtils.isEmpty(boundy) && !"0".equals(boundx) && !"0".equals(boundy))
+		{
+			String picName = ImageUtil.cutImage(
+				PropertiesHelper.getProperties("picRootDir") + pic.getDir(),
+				NumberUtils.toInt(x), NumberUtils.toInt(y),
+				NumberUtils.toInt(w), NumberUtils.toInt(h),
+				NumberUtils.toInt(boundx), NumberUtils.toInt(boundy));
+			pic = new Pic();
+			pic.setType("0");
+			pic.setDir("head/" + picName);
+			pic.setUrl("head/" + picName);
+			headId = picService.createPic(pic);
+		}
+		return headId;
 	}
 
 	@ApiOperation("删除管理员")
@@ -237,6 +298,7 @@ public class SiteUserApiController
 	{
 		String param = request.getParameter("param");
 		String res = "ok";
+		JSONObject jo = new JSONObject();
 		Pic pic = new Pic();
 		if (0 == picFile[0].getSize())
 		{
@@ -256,11 +318,12 @@ public class SiteUserApiController
 			try
 			{
 				// 头像
-				if ("reserve1".equals(param))
+				if ("headUrl".equals(param))
 				{
 					file = new File(picRootDir + "head/" + fileName);
-					pic.setDir(picRootDir + "head/" + fileName);
-					pic.setUrl(picRootUrl + "head/" + fileName);
+					pic.setType("1");
+					pic.setDir("head/" + fileName);
+					pic.setUrl("head/" + fileName);
 					File dir = new File(picRootDir + "head/");
 					if (!dir.exists())
 					{
@@ -268,11 +331,12 @@ public class SiteUserApiController
 					}
 				}
 				// 生活照
-				else if ("reserve2".equals(param))
+				else if ("picUrl".equals(param))
 				{
 					file = new File(picRootDir + "pic/" + fileName);
-					pic.setDir(picRootDir + "pic/" + fileName);
-					pic.setUrl(picRootUrl + "pic/" + fileName);
+					pic.setType("1");
+					pic.setDir("pic/" + fileName);
+					pic.setUrl("pic/" + fileName);
 					File dir = new File(picRootDir + "pic/");
 					if (!dir.exists())
 					{
@@ -286,7 +350,8 @@ public class SiteUserApiController
 				}
 				fop.write(picFile[0].getBytes());
 				fop.flush();
-				picService.createPic(pic);
+				String id = picService.createPic(pic);
+				pic.setPicId(id);
 
 			}
 			catch (IOException e)
@@ -310,10 +375,10 @@ public class SiteUserApiController
 					e.printStackTrace();
 				}
 			}
-
-			res = res + "\",\"url\":\"" + pic.getUrl();
-			// res = res +
-			// "\",\"url\":\""+"http://avatar.csdn.net/8/6/9/1_u014639561.jpg";
+			jo.put("url", picRootUrl + pic.getUrl());
+			jo.put("picId", pic.getPicId());
+			// res = res + "\",\"url\":\"" + pic.getUrl() + ",\"picId\":\"" +
+			// pic.getPicId();
 		}
 		else
 		{
@@ -327,7 +392,9 @@ public class SiteUserApiController
 		{
 			out = response.getOutputStream();
 			ow = new OutputStreamWriter(out, "utf8");
-			ow.write("{\"res\":\"" + res + "\"}");
+			jo.put("res", res);
+			// ow.write("{\"res\":\"" + res + "\"}");
+			ow.write(JSON.toJSONString(jo));
 			ow.flush();
 		}
 		catch (IOException e)
@@ -349,5 +416,13 @@ public class SiteUserApiController
 			}
 		}
 
+	}
+	
+	@RequestMapping(value="/updatePwd.do",method=RequestMethod.POST)
+	public @ResponseBody String updateSiteUserPwd(@RequestParam("newpass") String newpass,HttpServletRequest request)
+	{
+		SiteUser siteUser = (SiteUser) SessionInitHelper.getSessionAttribute(request.getSession(), SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN);
+		siteUserService.updateSiteUserPwd(siteUser.getSiteUserId(), newpass);
+		return newpass;
 	}
 }

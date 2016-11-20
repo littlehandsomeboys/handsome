@@ -46,7 +46,7 @@
 </head>
 <body>
 	<div class="container">
-		<img src="${obj.reserve2}" style="max-width:100%;">
+		<img src="${obj.picUrl}" style="max-width:100%;">
 		<div class="teacher-detail" >
 			<h2 class="name">${obj.reserve5}
 				<span class="level"> <c:if test="${obj.reserve6 == '0'}">普通</c:if>

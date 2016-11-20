@@ -104,6 +104,17 @@ public class SiteUser implements Serializable
 	 * 更新时间
 	 */
 	private Date updateDate;
+	
+	/**
+	 * 图片
+	 */
+	private String picUrl;
+	
+	/**
+	 * 头像
+	 */
+	private String headUrl;
+	
 
 	public String getSiteUserId()
 	{
@@ -285,6 +296,26 @@ public class SiteUser implements Serializable
 		this.updateDate = updateDate;
 	}
 
+	public String getPicUrl()
+	{
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl)
+	{
+		this.picUrl = picUrl;
+	}
+
+	public String getHeadUrl()
+	{
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl)
+	{
+		this.headUrl = headUrl;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -296,7 +327,8 @@ public class SiteUser implements Serializable
 				+ reserve4 + ", reserve5=" + reserve5 + ", reserve6="
 				+ reserve6 + ", reserve7=" + reserve7 + ", reserve8="
 				+ reserve8 + ", reserve9=" + reserve9 + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + "]";
+				+ createDate + ", updateDate=" + updateDate + ", picUrl="
+				+ picUrl + ", headUrl=" + headUrl + "]";
 	}
 
 }

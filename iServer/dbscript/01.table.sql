@@ -49,6 +49,7 @@ CREATE TABLE `t_pic` (
   `picId` VARCHAR(32) NOT NULL COMMENT '图片id',
   `dir` VARCHAR(100) COMMENT '相对路径',
   `url` VARCHAR(200) COMMENT '访问地址',
+  `type` VARCHAR(2) COMMENT '图片类型 0 头像 1 图片',
   `createDate` date COMMENT '创建时间',
   `updateDate` date COMMENT '更新时间',
   PRIMARY KEY (`picId`)

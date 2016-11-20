@@ -13,15 +13,34 @@
 	<!-- 查询列表 -->
 	<select id="list" parameterType="java.util.Map" resultType="aliasesSiteUser">
 		select
-		<include refid="cols" />
-		from t_siteuser where 1=1
+ 			p1.`url` as headUrl,
+ 			p2.`url` as picurl,
+			u.siteUserId,
+			u.account,
+			u.password,
+			u.authorities,
+			u.enabled,
+			u.ecName,
+			u.reserve0,
+			u.reserve1,
+			u.reserve2,
+			u.reserve3,
+			u.reserve4,
+			u.reserve5,
+			u.reserve6,
+			u.reserve7,
+			u.reserve8,
+			u.reserve9,
+			u.createDate,
+			u.updateDate
+		from (select * from t_siteuser where 1=1
 			<if test="runTimeAuthorities != null and runTimeAuthorities != 1">
 				and authorities in ('2','3')
 			</if>
 			<if test="ecName != null and ecName != ''">
 				and ecName = CONCAT('${ecName}')
 			</if>
-			<if test="ecName != null and ecName != ''">
+			<if test="ecName != null">
 				and ecName = CONCAT('${ecName}')
 			</if>
 			<if test="account != null and account != ''">
@@ -42,7 +61,7 @@
 			<if test="reserve4 != null and reserve4 != ''">
 				and reserve4 like CONCAT('%','${reserve4}','%' )
 			</if>
-			<if test="reserve5 != null and reserve5 != ''">
+			<if test="reserve5 != null">
 				and reserve5 like CONCAT('%','${reserve5}','%' )
 			</if>
 			<if test="reserve6 != null and reserve6 != ''">
@@ -57,6 +76,9 @@
 			<if test="reserve9 != null and reserve9 != ''">
 				and reserve9 like CONCAT('%','${reserve9}','%' )
 			</if>
+			) u
+			left join t_pic p1 ON(p1.`picId`=u.`reserve8`)
+			left join t_pic p2 ON(p2.`picId`=u.`reserve9`)
 		ORDER BY createDate DESC LIMIT #{offset},#{rows}
 	</select>
 	
@@ -67,14 +89,36 @@
 	<!-- 查询一个用户 -->
 	<select id="find" parameterType="aliasesSiteUser" resultType="aliasesSiteUser">
 		select
-		<include refid="cols" />
-		from t_siteuser where 1=1
+			p1.`url` as headUrl,
+ 			p2.`url` as picurl,
+			u.siteUserId,
+			u.account,
+			u.password,
+			u.authorities,
+			u.enabled,
+			u.ecName,
+			u.reserve0,
+			u.reserve1,
+			u.reserve2,
+			u.reserve3,
+			u.reserve4,
+			u.reserve5,
+			u.reserve6,
+			u.reserve7,
+			u.reserve8,
+			u.reserve9,
+			u.createDate,
+			u.updateDate
+		from (select * from t_siteuser where 1=1
 			<if test="siteUserId != null and siteUserId != ''">
 				and siteUserId = #{siteUserId, jdbcType=VARCHAR}
 			</if>
 			<if test="account != null and account != ''">
 				and account = #{account, jdbcType=VARCHAR}
 			</if>
+			) u
+			left join t_pic p1 ON(p1.`picId`=u.`reserve8`)
+			left join t_pic p2 ON(p2.`picId`=u.`reserve9`)
 	</select>
 
 	<!-- 新增 -->

@@ -4,10 +4,10 @@
 
 <mapper namespace="pic.api.Pic">
 	<sql id="cols">
-		picId,dir,url,createDate,updateDate
+		picId,dir,url,`type`,createDate,updateDate
 	</sql>
 	<sql id="ucols">
-		#{picId},#{dir},#{url},#{createDate},#{updateDate}
+		#{picId},#{dir},#{url},#{type},#{createDate},#{updateDate}
 	</sql>
 
 	<!-- 查询列表 -->
@@ -21,7 +21,11 @@
 		<if test="url != null and url != ''">
 			and	url like CONCAT('%','${url}','%')
 		</if>
-		ORDER BY createDate DESC LIMIT #{offset},#{rows}
+		ORDER BY c
+		<if test="type != null and type != ''">
+			and	`type` = #{type, jdbcType=VARCHAR}
+		</if>
+		reateDate DESC LIMIT #{offset},#{rows}
 	</select>
 	
 	<select id="count" resultType="java.lang.Integer">
@@ -32,15 +36,16 @@
 	<select id="find" parameterType="aliasesPic" resultType="aliasesPic">
 		select
 		<include refid="cols" />
-		from t_pic
-		<where>
+		from t_pic where 1=1
 			<if test="picId != null and picId != ''">
-				picId = #{picId, jdbcType=VARCHAR}
+				and picId = #{picId, jdbcType=VARCHAR}
 			</if>
 			<if test="url != null and url != ''">
-				picId = #{url, jdbcType=VARCHAR}
+				and url = #{url, jdbcType=VARCHAR}
 			</if>
-		</where>
+			<if test="type != null and type != ''">
+				and `type` = #{type, jdbcType=VARCHAR}
+			</if>
 	</select>
 
 	<!-- 新增 -->

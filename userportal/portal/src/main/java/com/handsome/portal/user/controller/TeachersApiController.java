@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.handsome.common.bean.PageInfo;
+import com.handsome.common.util.PropertiesHelper;
 import com.handsome.portal.user.bean.Teacher;
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.constent.SiteUserConstent;
@@ -60,14 +61,14 @@ public class TeachersApiController
 			HttpServletRequest request, HttpServletResponse response)
 	{
 		SiteUser su = new SiteUser();
-		if (StringUtils.isNotEmpty(teacher.getEcName()))
-		{
+//		if (StringUtils.isNotEmpty(teacher.getEcName()))
+//		{
 			su.setEcName(teacher.getEcName());
-		}
-		if (StringUtils.isNotEmpty(teacher.getReserve5()))
-		{
+//		}
+//		if (StringUtils.isNotEmpty(teacher.getReserve5()))
+//		{
 			su.setReserve5(teacher.getReserve5());
-		}
+//		}
 		PageInfo pi = new PageInfo();
 		pi.setPageNo(NumberUtils.toInt(pageNo));
 		pi.setPageSize(NumberUtils.toInt(pageSize));
@@ -92,6 +93,8 @@ public class TeachersApiController
 			user.put("reserve7", siteUser.getReserve7());
 			user.put("reserve8", siteUser.getReserve8());
 			user.put("reserve9", siteUser.getReserve9());
+			user.put("headUrl", PropertiesHelper.getProperties("picRootUrl") + siteUser.getHeadUrl());
+			user.put("picUrl", PropertiesHelper.getProperties("picRootUrl") + siteUser.getPicUrl());
 			rows.add(user);
 		}
 
@@ -105,7 +108,7 @@ public class TeachersApiController
 		return JSON.toJSONString(res);
 	}
 
-	@ApiOperation("教师列表查询接口")
+	@ApiOperation("教师详情查询接口")
 	@RequestMapping(value = "/teacherDetail.do", produces = "application/json;charset=UTF-8")
 	public @ResponseBody String teacherDetail(@ModelAttribute Teacher teacher,
 			HttpServletRequest request, HttpServletResponse response)
@@ -137,6 +140,8 @@ public class TeachersApiController
 		user.put("reserve7", siteUser.getReserve7());
 		user.put("reserve8", siteUser.getReserve8());
 		user.put("reserve9", siteUser.getReserve9());
+		user.put("headUrl", PropertiesHelper.getProperties("picRootUrl") +  siteUser.getHeadUrl());
+		user.put("picUrl", PropertiesHelper.getProperties("picRootUrl") + siteUser.getPicUrl());
 
 		res.put("obj", user);
 		res.put("result", "0");

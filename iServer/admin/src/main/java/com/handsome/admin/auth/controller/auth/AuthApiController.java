@@ -20,7 +20,6 @@ import com.alibaba.fastjson.JSON;
 import com.handsome.admin.common.bean.ResponseObject;
 import com.handsome.admin.common.util.SessionInitHelper;
 import com.handsome.admin.constent.SessionKeyConstent;
-import com.handsome.common.util.PropertiesHelper;
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.constent.SiteUserConstent;
 import com.handsome.siteuser.api.service.SiteUserService;
@@ -91,7 +90,7 @@ public class AuthApiController
 			if (StringUtils.isNotEmpty(password) && null != su
 					&& password.equals(su.getPassword()))
 			{
-				SessionInitHelper.setSession(request.getSession(), su);
+				SessionInitHelper.setSessionAttribute(request.getSession(),SessionKeyConstent.SESSION_KEY_OBJ_USER_BEAN, su);
 				res.setCode(0);
 				res.setData("成功");
 			}

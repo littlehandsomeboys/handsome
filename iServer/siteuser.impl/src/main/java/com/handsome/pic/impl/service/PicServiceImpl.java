@@ -20,12 +20,14 @@ public class PicServiceImpl implements PicService
 	private PicDao picDao;
 
 	@Override
-	public void createPic(Pic pic)
+	public String createPic(Pic pic)
 	{
-		pic.setPicId(UUIDTool.getUUID32());
+		String id = UUIDTool.getUUID32();
+		pic.setPicId(id);
 		pic.setCreateDate(new Date());
 
 		picDao.add(pic);
+		return id;
 	}
 
 	@Override

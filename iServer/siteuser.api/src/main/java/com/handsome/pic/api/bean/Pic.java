@@ -32,6 +32,11 @@ public class Pic implements Serializable
 	private String url;
 	
 	/**
+	 * 类型 0 头像 1图片
+	 */
+	private String type;
+	
+	/**
 	 * 创建时间
 	 */
 	private Date createDate;
@@ -91,14 +96,22 @@ public class Pic implements Serializable
 		this.updateDate = updateDate;
 	}
 
+	public String getType()
+	{
+		return type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
 	@Override
 	public String toString()
 	{
 		return "Pic [picId=" + picId + ", dir=" + dir + ", url=" + url
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ "]";
+				+ ", type=" + type + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + "]";
 	}
-	
-	
 
 }

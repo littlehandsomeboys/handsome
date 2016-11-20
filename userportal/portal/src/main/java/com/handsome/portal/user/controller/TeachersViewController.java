@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.handsome.common.util.PropertiesHelper;
 import com.handsome.portal.user.bean.Teacher;
 import com.handsome.siteuser.api.bean.SiteUser;
 import com.handsome.siteuser.api.service.SiteUserService;
@@ -58,6 +59,8 @@ public class TeachersViewController
 		
 		SiteUser siteUser = siteUserService.getSiteUserByUserName(teacher
 				.getAccount());
+		siteUser.setHeadUrl(PropertiesHelper.getProperties("picRootUrl") + siteUser.getHeadUrl());
+		siteUser.setPicUrl(PropertiesHelper.getProperties("picRootUrl") + siteUser.getPicUrl());
 		view.addObject("obj", siteUser);
 		return view;
 	}
