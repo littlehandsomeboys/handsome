@@ -1,4 +1,5 @@
-﻿//监测session是否已经超时
+
+//监测session是否已经超时
 function isTimeOut() {
 	$.ajax({
 		url : '/admin/auth/api/isTimeOut.do',
