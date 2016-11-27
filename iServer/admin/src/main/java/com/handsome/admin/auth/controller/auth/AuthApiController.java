@@ -125,5 +125,16 @@ public class AuthApiController
 		
 		return JSON.parse(authorities);
 	}
+	
+	@ApiOperation("是否登录超时")
+	@RequestMapping(value = "/isTimeOut.do", method = RequestMethod.POST)
+	public @ResponseBody Object isTimeOut(HttpServletRequest request, HttpSession session)
+	{
+		
+		ResponseObject res = new ResponseObject();
+		res.setCode(0);
+		res.setData("success");
+		return JSON.toJSONString(res);
+	}
 
 }

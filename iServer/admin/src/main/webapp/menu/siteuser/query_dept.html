@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../../js/jquery.min.js"></script>
 <script src="../../js/jquery.Jcrop.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/custom/common.js"></script>
 <script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style type="text/css">
@@ -226,6 +227,7 @@
 	});
 
 	function initTable(pars) {
+		isTimeOut();
 		$('#resTable')
 				.datagrid(
 						{
