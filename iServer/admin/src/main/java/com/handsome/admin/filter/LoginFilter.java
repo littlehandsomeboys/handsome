@@ -117,6 +117,8 @@ public class LoginFilter implements Filter
 					response.setCharacterEncoding("UTF-8");
 					response.sendError(HttpStatus.UNAUTHORIZED.value(),
 							"您已经太长时间没有操作,请刷新页面");
+					response.setHeader("sessionstatus", "timeout");
+					response.getWriter().print("您已经太长时间没有操作,请刷新页面"); 
 					return;
 				}
 				response.sendRedirect(request.getContextPath()

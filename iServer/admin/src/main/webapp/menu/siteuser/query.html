@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../../js/jquery.min.js"></script>
 <script src="../../js/jquery.Jcrop.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/custom/common.js"></script>
 <script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style type="text/css">
@@ -69,6 +70,7 @@
 	//防止重复提交标志
 	var checkSubmitFlg = true;
 	$(function() {
+		
 		//清空查询条件  
 		$("#btnClear").click(function() {
 			//$('#queryForm').form('clear'); 
@@ -227,6 +229,7 @@
 	});
 
 	function initTable(pars) {
+		isTimeOut();
 		$('#resTable')
 				.datagrid(
 						{
@@ -640,7 +643,7 @@
 		buttons="#dlg-buttons"
 		data-options="iconCls:'icon-save',resizable:true,modal:true">
 		<div class="ftitle" id="mytitle">修改</div>
-		<form id="fmu" method="post" enctype="multipart/form-data">
+		<form id="fmu" enctype="multipart/form-data">
 			<div class="fitem">
 				<label> 账号 </label>
 				<!--  <input name="id" type="hidden"/>   -->

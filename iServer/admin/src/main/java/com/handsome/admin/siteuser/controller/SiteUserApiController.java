@@ -212,7 +212,7 @@ public class SiteUserApiController
 	}
 
 	@ApiOperation("修改管理员")
-	@RequestMapping(value = "/updateSiteUser.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateSiteUser.do", method ={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public Map<String, String> updateSiteUser(HttpServletRequest request)
 	{
