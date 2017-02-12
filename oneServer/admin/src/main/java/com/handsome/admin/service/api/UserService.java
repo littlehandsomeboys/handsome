@@ -18,5 +18,5 @@ public interface UserService {
 	 * @param userAO
 	 * @return
 	 */
-	public List<UserAO> queryUser(UserAO userAO);
+	public List<UserAO> queryUsers(UserAO userAO);
 }
