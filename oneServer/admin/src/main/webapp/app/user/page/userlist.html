@@ -14,6 +14,8 @@
 	<div id="app">
 		<p>{{ message }}</p>
 		<button v-on:click="showData">显示数据</button>
+		<label for="account">账号：</label> <span id="title">{{ message }}</h1>
+        <input type="text" class="form-control" id="account" placeholder="请输入" v-model="message">
 	</div>
 
 	</script>
