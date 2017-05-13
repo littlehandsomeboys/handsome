@@ -25,19 +25,36 @@ function($,Vue,utils){
     var index = new Vue({
 	    el:'#app',
 	    data: {
-	        mes: 'hello vue'
+	    	items : [{"account":"test","email":"cc411360770@sina.com"}],
+			condition : {
+				account : "chencheng"
+			}
 	    },
-	    template: '<div id="app">\
+/*	    template: '<div id="app">\
 	        <input v-model="mes" type="text">\
 	        <br/>\
 	        <span>{{ mes }}</span>\
-	        </div>',
+	        </div>',*/
 	    methods : {
-			showData : function() {
-				
+	    	showData : function() {
+				var _self = this;
+				$.ajax({
+					type : 'GET',
+					dataType : "json",
+					data : _self.condition,
+					url : '/admin/user/queryUsers.do',
+					success : function(data) {
+						//JSON.stringify();
+						_self.items = data.userlist;
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(errorThrown);
+					}
+				});
 			}
 	    }
     });
+    
     
     /**
      * public方法

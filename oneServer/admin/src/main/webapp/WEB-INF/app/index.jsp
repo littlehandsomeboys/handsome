@@ -1,15 +1,29 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
+    	<meta http-equiv="Content-Type" content="text/html" charset="utf-8" /> 
         <script data-main="/admin/app/main.js" src="/admin/static/js/require.min.js"></script>
         <script type="text/javascript" >
         	require(["index"]);
         </script>
     </head>
     <body>
-		<div id="app">
-		<!--你可以在这里写模板也可以在js的Vue实例中写-->
+    	<div id="app">
+			<div>
+		        <input id="account" v-model="condition.account" placeholder="输入">
+		        <br/>
+		        <span  v-text="condition.account" ></span>
+			</div>
+			<input id="jqt" type="button" value="input button" v-on:click="showData()"></input>
+			
+			<div class="list-group">
+				<a v-for="item in items" href="#" class="list-group-item">
+					<h4 class="list-group-item-heading" v-text="item.account"></h4>
+					<p class="list-group-item-text" v-text="item.email"></p>
+				</a>
+			</div>
 		</div>
-		<input id="jqt" type="button" value="input button" onclick="alert(1);fun1()"></input>
     </body>
     <script type="text/javascript">
    

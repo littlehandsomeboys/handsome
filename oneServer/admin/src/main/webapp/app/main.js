@@ -6,14 +6,4 @@ require.config({
     	"bootstrap" : "js/bootstrap.min",
     	"utils" : "js/customized/utils"
     }
-    /*waitSeconds: 15,
-    map: {
-        '*': {
-            'css': 'css/bootstrap.min.css'
-        }
-    },
-    shim : {
-        'util': ['css/bootstrap.min.css']
-    }*/
 });
-//require(["jquery","bootstrap","vue"]);
