@@ -5,6 +5,7 @@ package com.handsome.admin.controller;
 
 import java.util.List;
 
+import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.handsome.admin.ao.UserAO;
 import com.handsome.admin.service.api.UserService;
+import com.handsome.common.bean.ServiceResult;
 
 /**
  * @author dell
@@ -38,10 +40,11 @@ public class UserController {
 	@ResponseBody
 	public String queryUsers(UserAO userAO) {
 		List<UserAO> userAOs = userService.queryUsers(userAO);
-		
-		JSONObject jo = new JSONObject();
-		jo.put("userlist", JSON.toJSON(userAOs));
-		return JSON.toJSONString(jo);
+		ServiceResult sr = new ServiceResult(userAOs);
+		sr.setDraw(1);
+		sr.setRecordsFiltered(2);
+		sr.setRecordsTotal(2);
+		return Json.toJson(sr);
 	}
 	
 }

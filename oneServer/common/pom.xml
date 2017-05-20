@@ -179,6 +179,13 @@
 			<version>1.7.5</version>
 		</dependency>
 
+		<!-- json -->
+		<dependency>
+		    <groupId>org.nutz</groupId>
+		    <artifactId>nutz</artifactId>
+		    <version>1.r.57.r3</version>
+		</dependency>
+
 		<!-- hessian -->
 		<dependency>
 			<groupId>com.caucho</groupId>
