@@ -9,14 +9,13 @@ function($,Vue,utils){
 	/**
 	 * 初始化执行函数
 	 */
-    fun1();
+    init();
     
     /**
      * 定义函数
      */
-    function fun1(){
-    	var v = $("#jqt").val();
-    	console.log(v);
+    function init(){
+    	
     };
     
     /**
@@ -25,9 +24,10 @@ function($,Vue,utils){
     var index = new Vue({
 	    el:'#studentlist',
 	    data: {
+	    	classSelect:[],
 	    	items : [{"name":null,"point":null}],
 			condition : {
-				classId : "1"
+				classId : "0"
 			}
 	    },
 /*	    template: '<div id="app">\
@@ -44,14 +44,41 @@ function($,Vue,utils){
 					data : _self.condition,
 					url : '/admin/app/student/getStudentList.do',
 					success : function(data) {
-						//JSON.stringify();
 						_self.items = data;
 					},
 					error : function(XMLHttpRequest, textStatus, errorThrown) {
 						alert(errorThrown);
 					}
 				});
+			},
+			getClassSelect: function() {
+				var _self = this;
+				$.ajax({
+					type : 'GET',
+					dataType : "json",
+					data : _self.condition,
+					url : '/admin/app/class/selectClass.do',
+					success : function(data) {
+						_self.classSelect = data;
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(errorThrown);
+					}
+				});
 			}
+	    },
+	    watch: {
+	    	condition: {
+	    		handler(curVal,oldVal){
+	    			this.showData();
+			    },
+			    deep:true
+	    	}
+	    },
+	    created: function(){
+	    	var _self = this;
+	    	_self.showData();
+	    	_self.getClassSelect();
 	    }
     });
     
@@ -60,9 +87,8 @@ function($,Vue,utils){
      * public方法
      */
     return {
-  　　　　　　fun1: fun1
+  　　　　　　init: init
   　　　　};
   
 }
-
 )

@@ -13,12 +13,13 @@
     <body>
     	<div id="studentlist">
 			<div>
-		        <input id="classId" v-model="condition.classId" placeholder="输入">
+		        <!-- <input id="classId" v-model="condition.classId" placeholder="输入"> -->
 		        <br/>
-		        <span  v-text="condition.classId" ></span>
+		        <select v-model="condition.classId" >
+		        	<option selected="selected" value="0">全部</option>
+		        	<option v-for="item in classSelect" :value="item.key" v-text="item.value"/>
+		        </select>
 			</div>
-			<input id="jqt" type="button" value="input button" v-on:click="showData()"></input>
-			
 			<div class="list-group">
 				<a v-for="item in items" href="#" class="list-group-item">
 					<h4 class="list-group-item-heading" v-text="item.name"></h4>

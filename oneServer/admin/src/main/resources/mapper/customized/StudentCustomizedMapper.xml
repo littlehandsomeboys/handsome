@@ -33,7 +33,7 @@
 		round(sum(scr.num*pc.proportion*tc.heat)) as point
 		from (
 		SELECT <include refid="columns"/> from t_edu_student stu where 1=1 
-		<if test="search.classId!=null and search.classId!=''">
+		<if test='search.classId!=null and search.classId!="" and search.classId!="0"'>
 			and stu.class_id=#{search.classId}
 		</if>
 		) stu
