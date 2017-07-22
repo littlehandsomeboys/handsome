@@ -21,6 +21,11 @@ public class StudentController {
 	@Resource
 	private IStudentService studentService;
 	
+	@RequestMapping(value="/studentlist", method={RequestMethod.GET})
+	public String getStudentList() {
+		return "app/student/studentlist";
+	}
+	
 	@RequestMapping(value="/getStudentList", method={RequestMethod.GET})
 	@ResponseBody
 	public Object getStudentList(StudentSearch search) {

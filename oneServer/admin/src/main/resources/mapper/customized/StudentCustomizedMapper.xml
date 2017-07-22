@@ -13,20 +13,36 @@
     <result column="point" property="point" jdbcType="BIGINT" />
   </resultMap>
   
+  <sql id="columns">
+	  stu.id,
+	  stu.code,
+	  stu.name,
+	  stu.english_name,
+	  stu.birthday,
+	  stu.`status`,
+	  stu.class_id
+  </sql>
+  
   <select id="getStudentList" resultMap="BaseResultMap">
-	SELECT
-	stu.*,
-	round(sum(scr.num*pc.proportion*tc.heat)) as point
-	from (
-	SELECT * from t_edu_student stu where 1=1 
-	<if test="search.classId!=null and search.classId!=''">
-		and stu.class_id=#{search.classId}
-	</if>
+  	SELECT 
+	<include refid="columns"/>,
+	if(stu.point is null,0,stu.point) as point
+	from(
+		SELECT
+		<include refid="columns"/>,
+		round(sum(scr.num*pc.proportion*tc.heat)) as point
+		from (
+		SELECT <include refid="columns"/> from t_edu_student stu where 1=1 
+		<if test="search.classId!=null and search.classId!=''">
+			and stu.class_id=#{search.classId}
+		</if>
+		) stu
+		LEFT JOIN t_edu_stu_card_rel scr on (scr.student_id=stu.id)
+		LEFT JOIN t_edu_pointcard pc on (pc.id=scr.card_id)
+		LEFT JOIN t_edu_teacher tc on (tc.id=pc.teacher_id)  
+		GROUP BY stu.id
 	) stu
-	LEFT JOIN t_edu_stu_card_rel scr on (scr.student_id=stu.id)
-	LEFT JOIN t_edu_pointcard pc on (pc.id=scr.card_id)
-	LEFT JOIN t_edu_teacher tc on (tc.id=pc.teacher_id)  
-	GROUP BY stu.id
+	ORDER BY stu.point desc
   </select>
   
 </mapper>
