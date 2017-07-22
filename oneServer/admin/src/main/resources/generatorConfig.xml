@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<!--数据库驱动 -->
-	<classPathEntry location="H:/github/handsome/oneServer/lib/mysql-connector-java-5.1.37.jar" />
+	<classPathEntry
+		location="H:/github/handsome/oneServer/lib/mysql-connector-java-5.1.37.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -24,8 +25,7 @@
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!--生成映射文件存放位置 -->
-		<sqlMapGenerator targetPackage="mapper"
-			targetProject="src/main/resources">
+		<sqlMapGenerator targetPackage="mapper.generator" targetProject="src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!--生成Dao类存放位置 -->
@@ -34,9 +34,74 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!--生成对应表及类名 -->
-		<table tableName="t_user" domainObjectName="User"
-			enableCountByExample="true" enableUpdateByExample="true"
-			enableDeleteByExample="true" enableSelectByExample="true"
-			selectByExampleQueryId="true"></table>
+		<!-- <table tableName="t_user" domainObjectName="User" enableCountByExample="true" 
+			enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="true"></table> -->
+		<table tableName="t_edu_admin" domainObjectName="Admin">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="data_id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_campus" domainObjectName="Campus">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_class" domainObjectName="Class">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="course_id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="teacher_id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="campus_id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_course" domainObjectName="Course">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_pointcard" domainObjectName="Pointcard">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="teacher_id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_school" domainObjectName="School">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_student" domainObjectName="Student">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="class_id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_stu_card_rel" domainObjectName="StuCardRel">
+			<columnOverride column="student_id" jdbcType="BIGINT"
+				javaType="String" />
+			<columnOverride column="card_id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_teacher" domainObjectName="Teacher">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
 	</context>
 </generatorConfiguration>

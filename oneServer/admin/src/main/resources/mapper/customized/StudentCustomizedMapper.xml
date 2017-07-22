@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.handsome.admin.dao.api.customized.StudentCustomizedMapper" >
+  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.module.student.StudentAO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="class_id" property="classId" jdbcType="BIGINT" />
+    
+    <result column="point" property="point" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <select id="getStudentList" resultMap="BaseResultMap">
+	SELECT
+	stu.*,
+	round(sum(scr.num*pc.proportion*tc.heat)) as point
+	from (
+	SELECT * from t_edu_student stu where 1=1 
+	<if test="search.classId!=null and search.classId!=''">
+		and stu.class_id=#{search.classId}
+	</if>
+	) stu
+	LEFT JOIN t_edu_stu_card_rel scr on (scr.student_id=stu.id)
+	LEFT JOIN t_edu_pointcard pc on (pc.id=scr.card_id)
+	LEFT JOIN t_edu_teacher tc on (tc.id=pc.teacher_id)  
+	GROUP BY stu.id
+  </select>
+  
+</mapper>
