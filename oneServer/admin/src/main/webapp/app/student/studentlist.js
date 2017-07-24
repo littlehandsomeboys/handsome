@@ -25,9 +25,12 @@ function($,Vue,utils){
 	    el:'#studentlist',
 	    data: {
 	    	classSelect:[],
-	    	items : [{"name":null,"point":null}],
+	    	items : [{"name":null, "point":null, "rowNo":null}],
 			condition : {
 				classId : "0"
+			},
+			temp: {
+				show: null
 			}
 	    },
 /*	    template: '<div id="app">\
@@ -65,6 +68,15 @@ function($,Vue,utils){
 						alert(errorThrown);
 					}
 				});
+			},
+			showTab: function(item) {
+				var _self = this;
+				if (_self.temp.show==item.id) {
+					_self.temp.show=null;
+				}
+				else {
+					_self.temp.show=item.id;
+				}
 			}
 	    },
 	    watch: {

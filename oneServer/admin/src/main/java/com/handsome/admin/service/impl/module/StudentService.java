@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.handsome.admin.ao.common.Page;
 import com.handsome.admin.ao.module.student.StudentAO;
 import com.handsome.admin.ao.module.student.StudentSearch;
 import com.handsome.admin.dao.api.customized.StudentCustomizedMapper;
@@ -25,9 +26,9 @@ public class StudentService implements IStudentService {
 	private StudentCustomizedMapper studentCustomizedMapper;
 
 	@Override
-	public List<StudentAO> getStudentList(StudentSearch search) {
+	public List<StudentAO> getStudentList(StudentSearch search, Page page) {
 		
-		List<StudentAO> list = studentCustomizedMapper.getStudentList(search);
+		List<StudentAO> list = studentCustomizedMapper.getStudentList(search, page);
 		
 		return list;
 	}

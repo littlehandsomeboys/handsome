@@ -9,8 +9,10 @@
     <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="class_id" property="classId" jdbcType="BIGINT" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
     
     <result column="point" property="point" jdbcType="BIGINT" />
+    <result column="rowno" property="rowNo" jdbcType="BIGINT" />
   </resultMap>
   
   <sql id="columns">
@@ -20,13 +22,15 @@
 	  stu.english_name,
 	  stu.birthday,
 	  stu.`status`,
-	  stu.class_id
+	  stu.class_id,
+	  stu.note
   </sql>
   
   <select id="getStudentList" resultMap="BaseResultMap">
   	SELECT 
 	<include refid="columns"/>,
-	if(stu.point is null,0,stu.point) as point
+	if(stu.point is null,0,stu.point) as point,
+	@rowno:=@rowno+1 as rowno
 	from(
 		SELECT
 		<include refid="columns"/>,
@@ -41,8 +45,9 @@
 		LEFT JOIN t_edu_pointcard pc on (pc.id=scr.card_id)
 		LEFT JOIN t_edu_teacher tc on (tc.id=pc.teacher_id)  
 		GROUP BY stu.id
-	) stu
+	) stu, (select @rowno:=0) t
 	ORDER BY stu.point desc
+	limit #{page.begin}, #{page.end}
   </select>
   
 </mapper>

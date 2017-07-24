@@ -17,6 +17,8 @@ public class Student {
 
     private String classId;
 
+    private String note;
+
     public String getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class Student {
 
     public void setClassId(String classId) {
         this.classId = classId;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }
