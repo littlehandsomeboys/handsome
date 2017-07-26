@@ -13,6 +13,7 @@
     
     <result column="point" property="point" jdbcType="BIGINT" />
     <result column="rowno" property="rowNo" jdbcType="BIGINT" />
+    <result column="className" property="className" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="columns">
@@ -30,11 +31,13 @@
   	SELECT 
 	<include refid="columns"/>,
 	if(stu.point is null,0,stu.point) as point,
+	stu.className,
 	@rowno:=@rowno+1 as rowno
 	from(
 		SELECT
 		<include refid="columns"/>,
-		round(sum(scr.num*pc.proportion*tc.heat)) as point
+		round(sum(scr.num*pc.proportion*tc.heat)) as point,
+		cl.name as className
 		from (
 		SELECT <include refid="columns"/> from t_edu_student stu where 1=1 
 		<if test='search.classId!=null and search.classId!="" and search.classId!="0"'>
@@ -43,7 +46,8 @@
 		) stu
 		LEFT JOIN t_edu_stu_card_rel scr on (scr.student_id=stu.id)
 		LEFT JOIN t_edu_pointcard pc on (pc.id=scr.card_id)
-		LEFT JOIN t_edu_teacher tc on (tc.id=pc.teacher_id)  
+		LEFT JOIN t_edu_teacher tc on (tc.id=pc.teacher_id) 
+		LEFT JOIN t_edu_class cl on (cl.id=stu.class_id) 
 		GROUP BY stu.id
 	) stu, (select @rowno:=0) t
 	ORDER BY stu.point desc

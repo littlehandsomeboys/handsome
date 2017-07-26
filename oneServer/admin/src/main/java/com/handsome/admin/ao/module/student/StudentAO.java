@@ -8,6 +8,8 @@ public class StudentAO extends Student {
 
 	private int rowNo;
 	
+	private String className;
+	
 	public Long getPoint() {
 		return point;
 	}
@@ -24,5 +26,12 @@ public class StudentAO extends Student {
 		this.rowNo = rowNo;
 	}
 
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 	
 }
