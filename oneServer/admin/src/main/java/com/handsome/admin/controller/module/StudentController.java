@@ -47,8 +47,19 @@ public class StudentController {
 	@ResponseBody
 	public Object getStudentList(StudentSearch search, Page page) {
 		page.setPageNo(1);//默认第一页
-		page.setLength(50);//每页50条
+		page.setLength(20);//每页50条
 		List<StudentAO> list = studentService.getStudentList(search, page);
+		
+		page.setPageNo(1);
+		page.setLength(3);
+		List<StudentAO> top3 = studentService.getStudentList(new StudentSearch(), page);
+		Map<String, String> map = new HashMap<String, String>();
+		for (StudentAO top : top3) {
+			map.put(top.getId(), String.valueOf(top.getRowNo()));
+		}
+		for (StudentAO stu : list) {
+			stu.setTopNo(map.get(stu.getId()));
+		}
 		return JSON.toJSONString(list);
 	}
 	

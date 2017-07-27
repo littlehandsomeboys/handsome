@@ -10,6 +10,8 @@ public class StudentAO extends Student {
 	
 	private String className;
 	
+	private String topNo;
+	
 	public Long getPoint() {
 		return point;
 	}
@@ -33,5 +35,13 @@ public class StudentAO extends Student {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	
+
+	public String getTopNo() {
+		return topNo;
+	}
+
+	public void setTopNo(String topNo) {
+		this.topNo = topNo;
+	}
+
 }
