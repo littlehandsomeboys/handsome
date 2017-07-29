@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.handsome.admin.dao.api.customized.CampCustomizedMapper" >
+  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.module.camp.CampAO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="columns">
+	  c.id,
+	  c.code,
+	  c.name,
+	  c.sort,
+	  c.`status`
+  </sql>
+  
+  <select id="getCampsList" resultMap="BaseResultMap">
+  	SELECT <include refid="columns"/> from t_edu_camp c where c.`status`=1 ORDER BY sort ASC;
+  </select>
+  
+</mapper>

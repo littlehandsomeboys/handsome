@@ -40,6 +40,9 @@
 		cl.name as className
 		from (
 		SELECT <include refid="columns"/> from t_edu_student stu where 1=1 
+		and (
+		(stu.name is not null and stu.name &lt;&gt; '') or (stu.english_name is not null or stu.english_name &lt;&gt; '')
+		)
 		<if test='search.classId!=null and search.classId!="" and search.classId!="0"'>
 			and stu.class_id=#{search.classId}
 		</if>

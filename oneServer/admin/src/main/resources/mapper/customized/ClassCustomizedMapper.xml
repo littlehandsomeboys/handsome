@@ -9,11 +9,56 @@
     <result column="course_id" property="courseId" jdbcType="BIGINT" />
     <result column="teacher_id" property="teacherId" jdbcType="BIGINT" />
     <result column="campus_id" property="campusId" jdbcType="BIGINT" />
+    
+    <result column="point" property="point" jdbcType="INTEGER" />
   </resultMap>
+  
+  <sql id="columns">
+	  c.id,
+	  c.code,
+	  c.name,
+	  c.`status`,
+	  c.course_id,
+	  c.teacher_id,
+	  c.campus_id
+  </sql>
+  
   <select id="selectClass" resultType="com.handsome.admin.ao.common.SelectDTO">
   	SELECT
 	c.id as `key`,
 	c.`name` as `value`
 	from t_edu_class c
   </select>
+  
+  <select id="getClassRanking" resultMap="BaseResultMap">
+  	SELECT
+	<include refid="columns"/>,
+	c.point
+	FROM
+	(
+		SELECT
+			<include refid="columns"/>,
+		IF (
+			sum(c.point) IS NULL,
+			0,
+			sum(c.point)
+		) AS point
+		FROM
+			(
+				SELECT
+					<include refid="columns"/>,
+					(scr.num * p.proportion) AS point
+				FROM
+					t_edu_class c
+				LEFT JOIN t_edu_student s ON (s.class_id = c.id)
+				LEFT JOIN t_edu_stu_card_rel scr ON (scr.student_id = s.id)
+				LEFT JOIN t_edu_pointcard p ON (p.id = scr.card_id)
+			) c
+		GROUP BY
+			c.id
+	) c
+	ORDER BY
+	c.point DESC
+  </select>
+  
 </mapper>

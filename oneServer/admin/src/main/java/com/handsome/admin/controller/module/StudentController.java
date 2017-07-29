@@ -1,8 +1,6 @@
 package com.handsome.admin.controller.module;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.handsome.admin.ao.common.Page;
-import com.handsome.admin.ao.common.SelectDTO;
 import com.handsome.admin.ao.module.school.SchoolAO;
 import com.handsome.admin.ao.module.student.StudentAO;
 import com.handsome.admin.ao.module.student.StudentSearch;
@@ -50,7 +47,7 @@ public class StudentController {
 		page.setLength(20);//每页50条
 		List<StudentAO> list = studentService.getStudentList(search, page);
 		
-		page.setPageNo(1);
+		/*page.setPageNo(1);
 		page.setLength(3);
 		List<StudentAO> top3 = studentService.getStudentList(new StudentSearch(), page);
 		Map<String, String> map = new HashMap<String, String>();
@@ -59,7 +56,7 @@ public class StudentController {
 		}
 		for (StudentAO stu : list) {
 			stu.setTopNo(map.get(stu.getId()));
-		}
+		}*/
 		return JSON.toJSONString(list);
 	}
 	

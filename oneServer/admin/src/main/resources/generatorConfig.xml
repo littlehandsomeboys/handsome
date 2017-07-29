@@ -37,7 +37,7 @@
 		<!-- <table tableName="t_user" domainObjectName="User" enableCountByExample="true" 
 			enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" 
 			selectByExampleQueryId="true"></table> -->
-		<table tableName="t_edu_admin" domainObjectName="Admin">
+		<!-- <table tableName="t_edu_admin" domainObjectName="Admin">
 			<generatedKey column="id" sqlStatement="select uuid_short()"
 				identity="false" />
 			<columnOverride column="id" jdbcType="BIGINT"
@@ -98,6 +98,18 @@
 				javaType="String" />
 		</table>
 		<table tableName="t_edu_teacher" domainObjectName="Teacher">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+		</table> -->
+		<table tableName="t_edu_title" domainObjectName="Title">
+			<generatedKey column="id" sqlStatement="select uuid_short()"
+				identity="false" />
+			<columnOverride column="id" jdbcType="BIGINT"
+				javaType="String" />
+		</table>
+		<table tableName="t_edu_camp" domainObjectName="Camp">
 			<generatedKey column="id" sqlStatement="select uuid_short()"
 				identity="false" />
 			<columnOverride column="id" jdbcType="BIGINT"

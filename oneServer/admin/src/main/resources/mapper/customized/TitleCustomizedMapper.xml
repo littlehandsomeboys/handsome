@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.handsome.admin.dao.api.customized.TitleCustomizedMapper" >
+  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.module.title.TitleAO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="limit_point" property="limitPoint" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="columns">
+  	t.id,
+  	t.code,
+  	t.name,
+  	t.limit_point,
+  	t.`status`
+  </sql>
+  
+  <select id="getTitles" resultMap="BaseResultMap">
+  	SELECT <include refid="columns"/> from t_edu_title t where 1=1 and t.`status`=1 ORDER BY limit_point DESC
+  </select>
+  
+</mapper>
