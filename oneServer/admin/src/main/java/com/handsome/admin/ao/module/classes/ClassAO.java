@@ -6,6 +6,8 @@ public class ClassAO extends com.handsome.admin.ao.bean.Class {
 
 	private String campName;
 	
+	private String campId;
+	
 	public Long getPoint() {
 		return point;
 	}
@@ -20,6 +22,14 @@ public class ClassAO extends com.handsome.admin.ao.bean.Class {
 
 	public void setCampName(String campName) {
 		this.campName = campName;
+	}
+
+	public String getCampId() {
+		return campId;
+	}
+
+	public void setCampId(String campId) {
+		this.campId = campId;
 	}
 	
 }

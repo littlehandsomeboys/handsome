@@ -16,6 +16,8 @@ public class StudentAO extends Student {
 	
 	private String titleName;
 	
+	private String campId;
+	
 	private String campName;
 	
 	public Long getPoint() {
@@ -72,6 +74,14 @@ public class StudentAO extends Student {
 
 	public void setCampName(String campName) {
 		this.campName = campName;
+	}
+
+	public String getCampId() {
+		return campId;
+	}
+
+	public void setCampId(String campId) {
+		this.campId = campId;
 	}
 
 }

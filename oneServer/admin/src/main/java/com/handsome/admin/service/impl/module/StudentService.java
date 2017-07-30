@@ -1,5 +1,6 @@
 package com.handsome.admin.service.impl.module;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,27 +44,62 @@ public class StudentService implements IStudentService {
 		List<StudentAO> list = studentCustomizedMapper.getStudentList(search, page);
 		
 		List<TitleAO> titles = titleService.getTitleList();
+		Map<Integer, List<TitleAO>> pointCountMap = new HashMap<Integer, List<TitleAO>>();
+		for (TitleAO title : titles) {
+			if (pointCountMap.containsKey(title.getLimitPoint())) {
+				pointCountMap.get(title.getLimitPoint()).add(title);
+			}
+			else {
+				List<TitleAO> ts = new ArrayList<TitleAO>();
+				ts.add(title);
+				pointCountMap.put(title.getLimitPoint(), ts);
+			}
+		}
 		
 		List<ClassAO> classRankings = classService.getClassRanking();
 		
-		Map<String, String> classMap = new HashMap<String, String>(); 
-		
+		Map<String, String> classCampIdMap = new HashMap<String, String>(); 
+		Map<String, String> classCampNameMap = new HashMap<String, String>(); 
 		//构建班级缓存对象
 		for (ClassAO classAO : classRankings) {
-			classMap.put(classAO.getId(), classAO.getCampName());
+			classCampIdMap.put(classAO.getId(), classAO.getCampId());
+			classCampNameMap.put(classAO.getId(), classAO.getCampName());
 		}
 		
 		if (null != list) {
 			for (StudentAO student : list) {
 				//设置班级阵营
-				student.setCampName(classMap.get(student.getClassId()));
-				for (TitleAO title : titles) {
-					//title默认按照pointlimit降序
-					if(student.getPoint() >= title.getLimitPoint()) {
-						//设置学生称号
-						student.setTitleId(title.getId());
-						student.setTitleName(title.getName());
-						break;
+				student.setCampId(classCampIdMap.get(student.getClassId()));
+				student.setCampName(classCampNameMap.get(student.getClassId()));
+				if (null != titles) {
+					for (TitleAO title : titles) {
+						//title已经默认按照pointlimit降序了
+						if(student.getPoint() >= title.getLimitPoint()) {
+							//设置学生称号
+							List<TitleAO> radoms = pointCountMap.get(title.getLimitPoint());
+							//TODO:如果多个分值相同，随机取值
+							if (radoms.size() > 1) {
+								//产生算子 学号+名字+英文名
+								String key = student.getCode()+student.getName()+student.getEnglishName();
+								int hashCode = key.hashCode();
+								//取余
+								int mod = hashCode%radoms.size();
+								TitleAO t = radoms.get(Math.abs(mod));
+								student.setTitleId(t.getId());
+								student.setTitleName(t.getName());
+								
+								System.out.println("key:" + key);
+								System.out.println("hashCode:" + hashCode);
+								System.out.println("mod:" + mod);
+								System.out.println("size:" + radoms.size());
+								System.out.println("Name:" + t.getName());
+							}
+							else {
+								student.setTitleId(title.getId());
+								student.setTitleName(title.getName());
+							}
+							break;
+						}
 					}
 				}
 			}

@@ -37,7 +37,7 @@ public class ClassService implements IClassService {
 		if (null != camps) {
 			for (int i=0 ; i < camps.size() ; i++) {
 				if (classRankings.size() > i) {
-					classRankings.get(i).setCampusId(camps.get(i).getId());
+					classRankings.get(i).setCampId(camps.get(i).getId());
 					classRankings.get(i).setCampName(camps.get(i).getName());
 				}
 			}

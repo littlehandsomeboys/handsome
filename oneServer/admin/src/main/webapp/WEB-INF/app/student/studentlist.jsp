@@ -63,33 +63,42 @@
 							</div>
 						</div>
 						<!-- 积分 -->
-						<div style="float:left;height:68.59px;width: 28%;font-size:15px;color:brown;">
+						<div style="float:left;height:68.59px;width: 25%;font-size:15px;color:brown;">
 							<p style="margin-left:16px;font-size:15px;color:brown;" class="list-group-item-text" v-text="item.point"></p>
+							<img v-if="'1'==item.campId" height="50" src="/admin/static/image/camp/lc_s.png">
+							<img v-if="'2'==item.campId" height="50" src="/admin/static/image/camp/fhc_s.png">
+							<img v-if="'3'==item.campId" height="50" src="/admin/static/image/camp/sc_s.png">
+							<img v-if="'4'==item.campId" height="50" src="/admin/static/image/camp/xlc_s.png">
+							<img v-if="'5'==item.campId" height="50" src="/admin/static/image/camp/lwc_s.png">
+							<img v-if="'6'==item.campId" height="50" src="/admin/static/image/camp/dyc_s.png">
+							<img v-if="'7'==item.campId" height="50" src="/admin/static/image/camp/rlc_s.png">
+							<img v-if="'8'==item.campId" height="50" src="/admin/static/image/camp/yrc_s.png">
+							<img v-if="'9'==item.campId" height="50" src="/admin/static/image/camp/zyc_s.png">
 						</div>
 						<!-- 称号 -->
-						<div v-if="item.topNo=='1'" style="height:68.59px;">
+						<div style="height:68.59px;">
 							<p style="font-size:15px;" >&nbsp;&nbsp;&nbsp;{{item.titleName}}</p>
-							<img height="24" src="/admin/static/image/1.gif">
-						</div>
-						<div v-if="item.topNo=='2'" style="height:68.59px;">
-							<p style="font-size:15px;" >&nbsp;&nbsp;&nbsp;{{item.titleName}}</p>
-							<img height="24" src="/admin/static/image/2.gif">
-						</div>
-						<div v-if="item.topNo=='3'" style="height:68.59px;">
-							<p style="font-size:15px;" >&nbsp;&nbsp;&nbsp;{{item.titleName}}</p>
-							<img height="24" src="/admin/static/image/4.gif">
-						</div>
-						<div v-if="item.topNo==null" style="height:68.59px;">
-							<p style="font-size:15px;" >&nbsp;&nbsp;&nbsp;{{item.titleName}}</p>
-							<!-- <img alt="少尉" height="24" src="/admin/static/image/5.gif"> -->
+							<img v-if="item.titleId=='1'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/cq.png">
+							<img v-if="item.titleId=='2'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/gmqs.png">
+							<img v-if="item.titleId=='3'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/haqs.png">
+							<img v-if="item.titleId=='4'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/hhsj.png">
+							<img v-if="item.titleId=='5'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/wwzj.png">
+							<img v-if="item.titleId=='6'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/tqsj.png">
+							<img v-if="item.titleId=='7'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/hjqs.png">
+							<img v-if="item.titleId=='8'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/byqs.png">
+							<img v-if="item.titleId=='9'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/qtqs.png">
+							<img v-if="item.titleId=='10'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/bz.png">
+							<img v-if="item.titleId=='11'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/bb.png">
+							<img v-if="item.titleId=='12'" style="margin-top:-5px;" height="40" src="/admin/static/image/topic/ys.png">
 						</div>
 					</div>
 					<div v-show="temp.show==item.id" v-model="temp.show" v-value="item.id">
-					<div>
-						<p>{{item.className}}|{{item.campName}}</p>
-						<p><strong>成就&nbsp;&nbsp;</strong>{{item.note}}</p>
+						<div>
+							<p>{{item.className}}{{item.campName == null ? '' : ':'+item.campName}}</p>
+							<strong>荣耀</strong>
+							<p>{{item.note}}</p>
+						</div>
 					</div>
-				</div>
 				</div>
 			</div>
 		</div>
