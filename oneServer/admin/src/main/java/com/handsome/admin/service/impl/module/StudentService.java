@@ -87,12 +87,6 @@ public class StudentService implements IStudentService {
 								TitleAO t = radoms.get(Math.abs(mod));
 								student.setTitleId(t.getId());
 								student.setTitleName(t.getName());
-								
-								System.out.println("key:" + key);
-								System.out.println("hashCode:" + hashCode);
-								System.out.println("mod:" + mod);
-								System.out.println("size:" + radoms.size());
-								System.out.println("Name:" + t.getName());
 							}
 							else {
 								student.setTitleId(title.getId());
