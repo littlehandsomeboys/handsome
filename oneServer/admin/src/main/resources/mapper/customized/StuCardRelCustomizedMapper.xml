@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.handsome.admin.dao.api.customized.StuCardRelCustomizedMapper" >
+  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.module.student.StuCardRelAO" >
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="BIGINT" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    
+     <result column="cardName" property="cardName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="columns" >
+	  scr.student_id,
+	  scr.card_id,
+	  scr.num,
+	  scr.create_time,
+	  scr.remark
+  </sql>
+  
+    
+  <select id="getStuCardRel" resultMap="BaseResultMap">
+  	SELECT 
+	scr.*,
+	pc.`name` as cardName
+	from (
+	SELECT * from t_edu_stu_card_rel scr where 
+	scr.student_id=#{studentId}
+	)scr
+	LEFT JOIN t_edu_pointcard pc on (scr.card_id=pc.id)
+	ORDER BY scr.create_time desc
+	limit #{page.begin}, #{page.end}
+  </select>
+  
+</mapper>

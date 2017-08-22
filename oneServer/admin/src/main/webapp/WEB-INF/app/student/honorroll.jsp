@@ -152,11 +152,12 @@
 										</td> 
 										<td valign="top">
 											<strong>来自</strong>
-											<p/>
-											<p>${item.className}</p>
-											<c:if test="${item.campName != null}">
-												<p>【${item.campName}】</p>
-											</c:if>
+											<p>${item.className}
+												<c:if test="${item.campName != null}">
+													<br/>
+													【${item.campName}】
+												</c:if>
+											</p>
 										</td> 
 									</tr>
 								</table>

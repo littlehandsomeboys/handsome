@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.handsome.admin.dao.api.generator.StuCardRelMapper" >
-  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.bean.StuCardRel" >
+<mapper namespace="com.handsome.admin.dao.api.generator.CcLlMapper" >
+  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.bean.CcLl" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="student_id" property="studentId" jdbcType="BIGINT" />
-    <result column="card_id" property="cardId" jdbcType="BIGINT" />
-    <result column="num" property="num" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="select1" property="select1" jdbcType="VARCHAR" />
+    <result column="select2" property="select2" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, student_id, card_id, num, create_time, remark
+    id, select1, select2, note
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.handsome.admin.ao.bean.StuCardRelExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.handsome.admin.ao.bean.CcLlExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_edu_stu_card_rel
+    from t_cc_ll
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,98 +85,78 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
     select 
     <include refid="Base_Column_List" />
-    from t_edu_stu_card_rel
+    from t_cc_ll
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="String" >
-    delete from t_edu_stu_card_rel
+    delete from t_cc_ll
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.handsome.admin.ao.bean.StuCardRelExample" >
-    delete from t_edu_stu_card_rel
+  <delete id="deleteByExample" parameterType="com.handsome.admin.ao.bean.CcLlExample" >
+    delete from t_cc_ll
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.handsome.admin.ao.bean.StuCardRel" >
+  <insert id="insert" parameterType="com.handsome.admin.ao.bean.CcLl" >
     <selectKey resultType="String" keyProperty="id" order="BEFORE" >
       select uuid_short()
     </selectKey>
-    insert into t_edu_stu_card_rel (id, student_id, card_id, 
-      num, create_time, remark
-      )
-    values (#{id,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, #{cardId,jdbcType=BIGINT}, 
-      #{num,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into t_cc_ll (id, select1, select2, 
+      note)
+    values (#{id,jdbcType=BIGINT}, #{select1,jdbcType=VARCHAR}, #{select2,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.handsome.admin.ao.bean.StuCardRel" >
+  <insert id="insertSelective" parameterType="com.handsome.admin.ao.bean.CcLl" >
     <selectKey resultType="String" keyProperty="id" order="BEFORE" >
       select uuid_short()
     </selectKey>
-    insert into t_edu_stu_card_rel
+    insert into t_cc_ll
     <trim prefix="(" suffix=")" suffixOverrides="," >
       id,
-      <if test="studentId != null" >
-        student_id,
+      <if test="select1 != null" >
+        select1,
       </if>
-      <if test="cardId != null" >
-        card_id,
+      <if test="select2 != null" >
+        select2,
       </if>
-      <if test="num != null" >
-        num,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="remark != null" >
-        remark,
+      <if test="note != null" >
+        note,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       #{id,jdbcType=BIGINT},
-      <if test="studentId != null" >
-        #{studentId,jdbcType=BIGINT},
+      <if test="select1 != null" >
+        #{select1,jdbcType=VARCHAR},
       </if>
-      <if test="cardId != null" >
-        #{cardId,jdbcType=BIGINT},
+      <if test="select2 != null" >
+        #{select2,jdbcType=VARCHAR},
       </if>
-      <if test="num != null" >
-        #{num,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.handsome.admin.ao.bean.StuCardRelExample" resultType="java.lang.Integer" >
-    select count(*) from t_edu_stu_card_rel
+  <select id="countByExample" parameterType="com.handsome.admin.ao.bean.CcLlExample" resultType="java.lang.Integer" >
+    select count(*) from t_cc_ll
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update t_edu_stu_card_rel
+    update t_cc_ll
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.studentId != null" >
-        student_id = #{record.studentId,jdbcType=BIGINT},
+      <if test="record.select1 != null" >
+        select1 = #{record.select1,jdbcType=VARCHAR},
       </if>
-      <if test="record.cardId != null" >
-        card_id = #{record.cardId,jdbcType=BIGINT},
+      <if test="record.select2 != null" >
+        select2 = #{record.select2,jdbcType=VARCHAR},
       </if>
-      <if test="record.num != null" >
-        num = #{record.num,jdbcType=INTEGER},
-      </if>
-      <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.remark != null" >
-        remark = #{record.remark,jdbcType=VARCHAR},
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -186,45 +164,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update t_edu_stu_card_rel
+    update t_cc_ll
     set id = #{record.id,jdbcType=BIGINT},
-      student_id = #{record.studentId,jdbcType=BIGINT},
-      card_id = #{record.cardId,jdbcType=BIGINT},
-      num = #{record.num,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      select1 = #{record.select1,jdbcType=VARCHAR},
+      select2 = #{record.select2,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.handsome.admin.ao.bean.StuCardRel" >
-    update t_edu_stu_card_rel
+  <update id="updateByPrimaryKeySelective" parameterType="com.handsome.admin.ao.bean.CcLl" >
+    update t_cc_ll
     <set >
-      <if test="studentId != null" >
-        student_id = #{studentId,jdbcType=BIGINT},
+      <if test="select1 != null" >
+        select1 = #{select1,jdbcType=VARCHAR},
       </if>
-      <if test="cardId != null" >
-        card_id = #{cardId,jdbcType=BIGINT},
+      <if test="select2 != null" >
+        select2 = #{select2,jdbcType=VARCHAR},
       </if>
-      <if test="num != null" >
-        num = #{num,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.handsome.admin.ao.bean.StuCardRel" >
-    update t_edu_stu_card_rel
-    set student_id = #{studentId,jdbcType=BIGINT},
-      card_id = #{cardId,jdbcType=BIGINT},
-      num = #{num,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.handsome.admin.ao.bean.CcLl" >
+    update t_cc_ll
+    set select1 = #{select1,jdbcType=VARCHAR},
+      select2 = #{select2,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

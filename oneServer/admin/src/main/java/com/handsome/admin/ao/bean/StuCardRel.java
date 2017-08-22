@@ -3,6 +3,8 @@ package com.handsome.admin.ao.bean;
 import java.util.Date;
 
 public class StuCardRel {
+    private String id;
+
     private String studentId;
 
     private String cardId;
@@ -10,6 +12,16 @@ public class StuCardRel {
     private Integer num;
 
     private Date createTime;
+
+    private String remark;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getStudentId() {
         return studentId;
@@ -41,5 +53,13 @@ public class StuCardRel {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }

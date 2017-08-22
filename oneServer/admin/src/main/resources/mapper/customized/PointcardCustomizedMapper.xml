@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.handsome.admin.dao.api.customized.PointcardCustomizedMapper" >
+  <resultMap id="BaseResultMap" type="com.handsome.admin.ao.bean.Pointcard" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="proportion" property="proportion" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="BIGINT" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectPointCards" resultType="com.handsome.admin.ao.common.SelectDTO">
+  	SELECT pc.id as `key`,pc.`name` as `value` from t_edu_pointcard pc
+  	order by id asc
+  </select>
+  
+</mapper>

@@ -1,6 +1,7 @@
 package com.handsome.admin.service.impl.module;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,14 +9,22 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.handsome.admin.ao.bean.StuCardRel;
+import com.handsome.admin.ao.bean.StuCardRelExample;
+import com.handsome.admin.ao.bean.Student;
+import com.handsome.admin.ao.bean.StudentExample;
 import com.handsome.admin.ao.common.Page;
 import com.handsome.admin.ao.module.classes.ClassAO;
+import com.handsome.admin.ao.module.student.StuCardRelAO;
 import com.handsome.admin.ao.module.student.StudentAO;
 import com.handsome.admin.ao.module.student.StudentSearch;
 import com.handsome.admin.ao.module.title.TitleAO;
+import com.handsome.admin.dao.api.customized.StuCardRelCustomizedMapper;
 import com.handsome.admin.dao.api.customized.StudentCustomizedMapper;
+import com.handsome.admin.dao.api.generator.StuCardRelMapper;
 import com.handsome.admin.dao.api.generator.StudentMapper;
 import com.handsome.admin.service.api.module.IClassService;
 import com.handsome.admin.service.api.module.IStudentService;
@@ -31,7 +40,13 @@ public class StudentService implements IStudentService {
 	
 	@Resource
 	private StudentCustomizedMapper studentCustomizedMapper;
+	
+	@Resource
+	private StuCardRelCustomizedMapper stuCardRelCustomizedMapper;
 
+	@Resource
+	private StuCardRelMapper stuCardRelMapper;
+	
 	@Resource
 	private ITitleService titleService;
 	
@@ -99,6 +114,47 @@ public class StudentService implements IStudentService {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<StudentAO> getClassStudents(String classId) {
+		StudentExample se = new StudentExample();
+		StudentExample.Criteria sec = se.createCriteria();
+		sec.andClassIdEqualTo(classId);
+		sec.andStatusEqualTo("1");
+		List<Student> students = studentMapper.selectByExample(se);
+		List<StudentAO> s = new ArrayList<StudentAO>();
+		if (null != students) {
+			for (Student student : students) {
+				StudentAO sa = new StudentAO();
+				BeanUtils.copyProperties(student, sa);
+				s.add(sa);
+			}
+		}
+		return s;
+	}
+
+	@Override
+	public List<StuCardRelAO> getStuCardRel(String studentId, Page page) {
+		List<StuCardRelAO> scrs = stuCardRelCustomizedMapper.getStuCardRel(studentId, page);
+		return scrs;
+	}
+
+	@Override
+	public void addStuCardRel(Integer num, String studentId, String cardId,
+			String remark) {
+		StuCardRel scr = new StuCardRel();
+		scr.setCardId(cardId);
+		scr.setNum(num);
+		scr.setRemark(remark);
+		scr.setStudentId(studentId);
+		scr.setCreateTime(new Date());
+		stuCardRelMapper.insert(scr);
+	}
+
+	@Override
+	public void deleteStuCardRel(String id) {
+		stuCardRelMapper.deleteByPrimaryKey(id);
 	}
 	
 }

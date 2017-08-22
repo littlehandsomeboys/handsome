@@ -10,13 +10,21 @@ public interface StuCardRelMapper {
 
     int deleteByExample(StuCardRelExample example);
 
+    int deleteByPrimaryKey(String id);
+
     int insert(StuCardRel record);
 
     int insertSelective(StuCardRel record);
 
     List<StuCardRel> selectByExample(StuCardRelExample example);
 
+    StuCardRel selectByPrimaryKey(String id);
+
     int updateByExampleSelective(@Param("record") StuCardRel record, @Param("example") StuCardRelExample example);
 
     int updateByExample(@Param("record") StuCardRel record, @Param("example") StuCardRelExample example);
+
+    int updateByPrimaryKeySelective(StuCardRel record);
+
+    int updateByPrimaryKey(StuCardRel record);
 }
