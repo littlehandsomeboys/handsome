@@ -84,7 +84,7 @@
 		</init-param>
 		<init-param>
 			<param-name>remotingPass</param-name>
-			<param-value>/admin/remoting/Hessian</param-value>
+			<param-value>/mrfu/remoting/Hessian</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

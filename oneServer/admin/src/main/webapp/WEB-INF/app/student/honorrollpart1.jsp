@@ -8,17 +8,17 @@
 							<div>
 								<c:if test="${status.index == '0'}">
 									<div style="float:left; height:68.59px; width: 14%;">
-									    <img style="height:68.59px;" src="/admin/static/image/1.png"/>
+									    <img style="height:68.59px;" src="/mrfu/static/image/1.png"/>
 									</div>
 								</c:if>
 								<c:if test="${status.index == '1'}">
 									<div style="float:left; height:68.59px; width: 14%;">
-									    <img style="height:68.59px;" src="/admin/static/image/2.png"/>
+									    <img style="height:68.59px;" src="/mrfu/static/image/2.png"/>
 									</div>
 								</c:if>
 								<c:if test="${status.index == '2'}">
 									<div style="float:left; height:68.59px; width: 14%;">
-									    <img style="height:68.59px;" src="/admin/static/image/3.png"/>
+									    <img style="height:68.59px;" src="/mrfu/static/image/3.png"/>
 									</div>
 								</c:if>
 								<c:if test="${status.index!='0' && status.index!='1' && status.index!='2'}">
@@ -35,70 +35,70 @@
 								<div style="float:left;height:68.59px;width: 21%;font-size:15px;color:brown;">
 									<p style="margin-left:16px;font-size:15px;color:brown;" class="list-group-item-text">${item.point}</p>
 									<c:if test="${'1'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/lc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/lc_done.png">
 									</c:if>
 									<c:if test="${'2'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/fhc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/fhc_done.png">
 									</c:if>
 									<c:if test="${'3'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/sc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/sc_done.png">
 									</c:if>
 									<c:if test="${'4'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/xlc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/xlc_done.png">
 									</c:if>
 									<c:if test="${'5'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/lwc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/lwc_done.png">
 									</c:if>
 									<c:if test="${'6'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/dyc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/dyc_done.png">
 									</c:if>
 									<c:if test="${'7'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/rlc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/rlc_done.png">
 									</c:if>
 									<c:if test="${'8'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/yrc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/yrc_done.png">
 									</c:if>
 									<c:if test="${'9'==item.campId}">
-										<img height="50" src="/admin/static/image/camp/zyc_done.png">
+										<img height="50" src="/mrfu/static/image/camp/zyc_done.png">
 									</c:if>
 								</div>
 								<div style="height:68.59px;" align="center">
 									<p style="font-size:15px;" >&nbsp;&nbsp;&nbsp;${item.titleName}</p>
 									<c:if test="${item.titleId=='1'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/cq.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/cq.png">
 									</c:if>
 									<c:if test="${item.titleId=='2'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/gmqs.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/gmqs.png">
 									</c:if>
 									<c:if test="${item.titleId=='3'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/haqs.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/haqs.png">
 									</c:if>
 									<c:if test="${item.titleId=='4'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/hhsj.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/hhsj.png">
 									</c:if>
 									<c:if test="${item.titleId=='5'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/wwzj.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/wwzj.png">
 									</c:if>
 									<c:if test="${item.titleId=='6'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/tqsj.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/tqsj.png">
 									</c:if>
 									<c:if test="${item.titleId=='7'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/hjqs.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/hjqs.png">
 									</c:if>
 									<c:if test="${item.titleId=='8'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/byqs.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/byqs.png">
 									</c:if>
 									<c:if test="${item.titleId=='9'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/qtqs.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/qtqs.png">
 									</c:if>
 									<c:if test="${item.titleId=='10'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/bz.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/bz.png">
 									</c:if>
 									<c:if test="${item.titleId=='11'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/bb.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/bb.png">
 									</c:if>
 									<c:if test="${item.titleId=='12'}">
-										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/admin/static/image/topic/ys.png">
+										<img style="margin-top:-5px;margin-left:5px;" height="40" src="/mrfu/static/image/topic/ys.png">
 									</c:if>
 								</div>
 							</div>

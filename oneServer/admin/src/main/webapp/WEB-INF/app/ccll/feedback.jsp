@@ -8,7 +8,7 @@
 			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     	<meta http-equiv="Content-Type" content="text/html" charset="utf-8" /> 
         <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-        <!-- <script type="text/javascript" src="../../admin/static/js/bootstrap.min.js"></script> -->
+        <!-- <script type="text/javascript" src="../../mrfu/static/js/bootstrap.min.js"></script> -->
         <script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css"></link>
         
@@ -24,8 +24,8 @@
     	<div>
     		<div align="center">
     		<!-- <div> -->
-	    		<img style="width:100%;" src="/admin/static/image/xhw.jpg"/>
-	    		<!-- <img style="width:100%; height:100%; " src="/admin/static/image/flower.png"/> -->
+	    		<img style="width:100%;" src="/mrfu/static/image/xhw.jpg"/>
+	    		<!-- <img style="width:100%; height:100%; " src="/mrfu/static/image/flower.png"/> -->
     		</div>
     	</div>
     	<br/>
@@ -103,7 +103,7 @@
    			$.ajax({
 				type : 'POST',
 				data : ccll,
-				url : '/admin/xhw/submit.do',
+				url : '/mrfu/xhw/submit.do',
 				success : function(data) {
 					if ('0'==s2) {
 						alert("似乎是提交成功了~");

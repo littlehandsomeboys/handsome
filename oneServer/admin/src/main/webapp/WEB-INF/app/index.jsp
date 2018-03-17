@@ -3,7 +3,7 @@
 <html>
     <head>
     	<meta http-equiv="Content-Type" content="text/html" charset="utf-8" /> 
-        <script data-main="/admin/app/main.js" src="/admin/static/js/require.min.js"></script>
+        <script data-main="/mrfu/app/main.js" src="/mrfu/static/js/require.min.js"></script>
         <script type="text/javascript" >
         	require(["index"]);
         </script>

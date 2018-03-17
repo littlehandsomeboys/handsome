@@ -75,7 +75,7 @@
 				type : 'GET',
 				dataType : "html",
 				data : condition,
-				url : '/admin/app/teacher/studentlist.do',
+				url : '/mrfu/app/teacher/studentlist.do',
 				success : function(data) {
 					$('#studentclasslist').html(data);
 				},
@@ -95,7 +95,7 @@
 					type : 'GET',
 					dataType : "html",
 					data : condition,
-					url : '/admin/app/teacher/addrecord.do',
+					url : '/mrfu/app/teacher/addrecord.do',
 					success : function(data) {
 						$('#addrecord').html(data);
 						var light=document.getElementById(tag);
@@ -113,7 +113,7 @@
 					type : 'GET',
 					dataType : "html",
 					data : condition,
-					url : '/admin/app/teacher/getlastrecords.do',
+					url : '/mrfu/app/teacher/getlastrecords.do',
 					success : function(data) {
 						$('#lastrecords').html(data);
 						var light=document.getElementById(tag);
@@ -149,7 +149,7 @@
    			$.ajax({
 				type : 'POST',
 				data : condition,
-				url : '/admin/app/teacher/submit.do',
+				url : '/mrfu/app/teacher/submit.do',
 				success : function(data) {
 					if ("ok" == data) {
 						alert("成功了");
@@ -175,7 +175,7 @@
    			$.ajax({
 				type : 'POST',
 				data : condition,
-				url : '/admin/app/teacher/deleteStuCardRel.do',
+				url : '/mrfu/app/teacher/deleteStuCardRel.do',
 				success : function(data) {
 					if ("ok" == data) {
 						alert("成功了");

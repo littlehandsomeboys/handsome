@@ -9,13 +9,13 @@
 		<version>${pro-version}</version>
 	</parent>
 
-	<artifactId>admin</artifactId>
+	<artifactId>mrfu</artifactId>
 	<packaging>war</packaging>
-	<name>admin Maven Webapp</name>
+	<name>mrfu Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<build>
-		<finalName>admin</finalName>
+		<finalName>mrfu</finalName>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
@@ -43,7 +43,7 @@
 				<version>8.1.10.v20130312</version>
 				<configuration>
 					<webAppConfig>
-						<contextPath>/admin</contextPath>
+						<contextPath>/mrfu</contextPath>
 					</webAppConfig>
 				</configuration>
 			</plugin>
