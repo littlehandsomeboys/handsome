@@ -190,12 +190,6 @@
 		</dependency> -->
 
 		<dependency>
-			<groupId>com.handsome</groupId>
-			<artifactId>user.api</artifactId>
-			<version>${pro-version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>

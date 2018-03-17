@@ -9,9 +9,9 @@
 		<version>${pro-version}</version>
 	</parent>
 
-	<artifactId>mrfu</artifactId>
+	<artifactId>admin</artifactId>
 	<packaging>war</packaging>
-	<name>mrfu Maven Webapp</name>
+	<name>admin Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<build>

@@ -16,7 +16,7 @@
 			<value>http://127.0.0.1:8200/admin/remoting/HessianUserService</value>
 		</property>
 		<!-- 接口定义 -->
-		<property name="serviceInterface" value="com.handsome.user.api.service.UserService"/>
+		<!-- <property name="serviceInterface" value="com.handsome.user.api.service.UserService"/> -->
 	</bean>
 	
 </beans>

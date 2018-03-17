@@ -34,7 +34,7 @@
 
 	<bean id="customSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath*:mapper//**/*Mapper.xml" />
+		<property name="mapperLocations" value="classpath*:mapper/**/*Mapper.xml" />
 		<property name="configLocation" value="classpath:config/mybatis_settings.xml"/>
 		<!-- <property name="mapperInterface" value="com.handsome.admin.auth.orm.mapper.SiteUserMapper" /> -->
 	</bean>
